@@ -1,4 +1,4 @@
-package test.bombgame;
+package bombgame;
 
 import junit.framework.TestCase;
 
