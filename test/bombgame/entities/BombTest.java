@@ -17,5 +17,9 @@ public final class BombTest extends TestCase {
 		assertEquals(2, expl.getX());
 		assertEquals(2, expl.getY());
 	}
+	
+	public void testGetDelay() {
+		assertEquals(5, bomb.getDelay());
+	}
 
 }
