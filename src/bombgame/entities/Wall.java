@@ -1,4 +1,4 @@
-package bombgame;
+package bombgame.entities;
 
 public final class Wall extends GameObject {
 
