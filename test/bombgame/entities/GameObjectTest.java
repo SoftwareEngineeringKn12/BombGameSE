@@ -1,7 +1,7 @@
-package bombgame;
+package bombgame.entities;
 
 import bombgame.entities.GameObject;
-import bombgame.entities.Man;
+import bombgame.entities.Wall;
 import junit.framework.TestCase;
 
 public class GameObjectTest extends TestCase {
@@ -9,7 +9,7 @@ public class GameObjectTest extends TestCase {
 	GameObject go;
 	
 	public void setUp() {
-		go = new Man(2, 2);
+		go = new Wall(2, 2);
 	}
 	
 	public void testGetX() {

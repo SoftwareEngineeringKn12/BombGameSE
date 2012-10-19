@@ -1,4 +1,4 @@
-package bombgame;
+package bombgame.controller;
 
 import junit.framework.TestCase;
 

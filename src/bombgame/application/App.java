@@ -1,4 +1,4 @@
-package bombgame;
+package bombgame.application;
 
 public final class App {
 

@@ -1,4 +1,4 @@
-package bombgame;
+package bombgame.entities;
 
 import bombgame.entities.Bomb;
 import bombgame.entities.Explosion;
@@ -14,6 +14,8 @@ public final class BombTest extends TestCase {
 	
 	public void testExplode() {
 		Explosion expl = bomb.explode();
+		assertEquals(2, expl.getX());
+		assertEquals(2, expl.getY());
 	}
 
 }
