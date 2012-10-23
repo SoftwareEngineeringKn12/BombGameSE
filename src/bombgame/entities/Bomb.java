@@ -1,17 +1,41 @@
 package bombgame.entities;
 
+
+/**
+ * This class represents a Bomb that has a delay until it explodes and then creates an Explosion-object.
+ * @author JeGa, Roofighter
+ *
+ */
 public final class Bomb extends GameObject {
 	
+	/**
+	 * Delay until bomb explodes.
+	 */
 	private int delay = 5;
 
+	/**
+	 * Creates a Bomb-object with the specified coordinates.
+	 * @param x - x-coordinate
+	 * @param y - y-coordinate
+	 */
 	public Bomb(int x, int y) {
 		super(x, y);
 	}
 	
+	
+	/**
+	 * Returns am Bomb-object with the same coordinates as the Bomb.
+	 * @return - new Explosion-object
+	 */
 	public Explosion explode() {
 		return new Explosion(getX(), getY());
 	}
 	
+	
+	/**
+	 * Returns explosion-delay of the Bomb-object
+	 * @return
+	 */
 	public int getDelay() {
 		return delay;
 	}
