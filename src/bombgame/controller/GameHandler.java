@@ -54,7 +54,7 @@ public final class GameHandler {
 		return men;
 	}
 	
-	public ArrayList<Bomb> getBomb() {
+	public ArrayList<Bomb> getBombs() {
 		return bombs;
 	}
 }
