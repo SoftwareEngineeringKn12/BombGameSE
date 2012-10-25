@@ -9,7 +9,7 @@ import bombgame.entities.Man;
 
 /**
  * This class handles the game mechanics and manages the objects on the field. The field is built as a 2D matrix of GameObjects.
- * @author JeGA, Rookfighter
+ * @author JeGa, Rookfighter
  *
  */
 public final class GameHandler {
@@ -41,7 +41,8 @@ public final class GameHandler {
 	 * Creates a new GameHandler including a field of 10x10 elements.
 	 */
 	public GameHandler() {
-		field = new GameObject[fieldWidth][fieldHeight];
+		//field = new GameObject[fieldWidth][fieldHeight];
+		field = MapGenerator.generateTestMap(fieldWidth, fieldHeight);
 		men = new ArrayList<Man>();
 		bombs = new ArrayList<Bomb>();
 	}
@@ -53,7 +54,8 @@ public final class GameHandler {
 	 * @param height - height of the new field
 	 */
 	public GameHandler(final int width, final int height) {
-		field = new GameObject[width][height];
+		//field = new GameObject[width][height];
+		field = MapGenerator.generateTestMap(width, height);
 		men = new ArrayList<Man>();
 		bombs = new ArrayList<Bomb>();
 	}

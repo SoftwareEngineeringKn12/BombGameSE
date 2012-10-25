@@ -10,14 +10,11 @@ import junit.framework.TestCase;
 public final class GameHandlerTest extends TestCase {
 
 	GameHandler gh;
+	GameHandler gh_param;
 	
 	public void setUp() {
 		gh = new GameHandler();
-	}
-	
-	public void testGameHandlerConstructor() {
-		gh = new GameHandler(10, 10);
-		//!!
+		gh_param = new GameHandler(10, 10);
 	}
 	
 	public void testGetField() {
@@ -62,7 +59,6 @@ public final class GameHandlerTest extends TestCase {
 		gh.removeObject(o1);
 		assertNull(gh.getField()[3][4]);
 		
-		
 		GameObject o2 = new Man(6,3);
 		gh.addObject(o2);
 		gh.removeObject(o2);
@@ -77,7 +73,6 @@ public final class GameHandlerTest extends TestCase {
 		gh.addObject(o4);
 		gh.removeObject(o4);
 		assertNull(gh.getField()[1][5]);
-		
-		
 	}
+	
 }
