@@ -10,7 +10,7 @@ import bombgame.entities.Wall;
 
 /**
  * This class handles the game mechanics and manages the objects on the field. The field is built as a 2D matrix of GameObjects.
- * @author JeGA, Rookfighter
+ * @author JeGa, Rookfighter
  *
  */
 public final class GameHandler {
@@ -54,7 +54,8 @@ public final class GameHandler {
 	 * @param height - height of the new field
 	 */
 	public GameHandler(final int width, final int height) {
-		field = new GameObject[width][height];
+		//field = new GameObject[width][height];
+		field = MapGenerator.generateTestMap(width, height);
 		men = new ArrayList<Man>();
 		bombs = new ArrayList<Bomb>();
 	}
@@ -127,6 +128,7 @@ public final class GameHandler {
 	}
 	
 	
+	/**
 	/**
 	 * This method tries to move the specified Man-object to the direction given by man.getDirection(). This is
 	 * only possible if the aimed coordinate is not already used by a Wall-object or is out of the range of the field.

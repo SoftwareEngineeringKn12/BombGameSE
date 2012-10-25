@@ -17,11 +17,6 @@ public final class GameHandlerTest extends TestCase {
 		gh2 = new GameHandler(2, 3);
 	}
 	
-	public void testGameHandlerConstructor() {
-		gh = new GameHandler(10, 10);
-		//!!
-	}
-	
 	public void testGetField() {
 		assertNotNull(gh1.getField());
 	}
@@ -55,7 +50,6 @@ public final class GameHandlerTest extends TestCase {
 		GameObject o5 = new Explosion(2,4);
 		gh1.addObject(o5);
 		assertSame(o5, gh1.getField()[2][4]);
-		
 	}
 	
 	public void testRemoveObject() {
@@ -63,7 +57,6 @@ public final class GameHandlerTest extends TestCase {
 		gh1.addObject(o1);
 		gh1.removeObject(o1);
 		assertNull(gh1.getField()[3][4]);
-		
 		
 		GameObject o2 = new Man(6,3);
 		gh1.addObject(o2);
@@ -76,11 +69,10 @@ public final class GameHandlerTest extends TestCase {
 		assertNull(gh1.getField()[2][7]);
 		
 		GameObject o4 = new Explosion(1,5);
+
 		gh1.addObject(o4);
 		gh1.removeObject(o4);
 		assertNull(gh1.getField()[1][5]);
-		
-		
 	}
 	
 	public void testMoveMan() {
