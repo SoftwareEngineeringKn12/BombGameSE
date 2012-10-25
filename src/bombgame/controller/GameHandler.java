@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import bombgame.entities.Bomb;
 import bombgame.entities.GameObject;
 import bombgame.entities.Man;
+import bombgame.entities.Wall;
 
 
 /**
@@ -123,5 +124,63 @@ public final class GameHandler {
 	 */
 	public ArrayList<Bomb> getBombs() {
 		return bombs;
+	}
+	
+	
+	/**
+	 * This method tries to move the specified Man-object to the direction given by man.getDirection(). This is
+	 * only possible if the aimed coordinate is not already used by a Wall-object or is out of the range of the field.
+	 * @param man - Man-object that should move
+	 */
+	public void moveMan( final Man man) {
+		
+		switch(man.getDirection()) {
+		
+		case Man.NO_DIR:
+			break;
+			
+		case Man.UP:
+			if( man.getY() != 0 && !(field[man.getX()][man.getY() - 1] instanceof Wall) ) {
+				
+				field[man.getX()][man.getY()] = null;
+				man.setPos(man.getX(), man.getY() - 1);
+				field[man.getX()][man.getY()] = man;
+				
+			}
+			break;
+			
+		case Man.DOWN:
+			if( man.getY() != (field[0].length - 1) && !(field[man.getX()][man.getY() + 1] instanceof Wall) ) {
+				
+				field[man.getX()][man.getY()] = null;
+				man.setPos(man.getX(), man.getY() + 1);
+				field[man.getX()][man.getY()] = man;
+				
+			}
+			break;
+			
+		case Man.LEFT:
+			if( man.getX() != 0 && !(field[man.getX() - 1][man.getY()] instanceof Wall) ) {
+				
+				field[man.getX()][man.getY()] = null;
+				man.setPos(man.getX() - 1, man.getY());
+				field[man.getX()][man.getY()] = man;
+				
+			}
+			break;
+			
+		case Man.RIGHT:
+			if( man.getX() != (field.length - 1) && !(field[man.getX() + 1][man.getY()] instanceof Wall) ) {
+				
+				field[man.getX()][man.getY()] = null;
+				man.setPos(man.getX() + 1, man.getY());
+				field[man.getX()][man.getY()] = man;
+				
+			}
+			break;
+		}
+		
+		
+		
 	}
 }

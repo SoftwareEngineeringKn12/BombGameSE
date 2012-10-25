@@ -25,5 +25,6 @@ public final class ManTest extends TestCase {
 	public void testSetDirection() {
 		man.setDirection(1);
 		assertEquals(1, man.getDirection());
+		
 	}
 }

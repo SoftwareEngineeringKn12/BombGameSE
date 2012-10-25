@@ -74,7 +74,7 @@ public final class Man extends GameObject {
 	 * Sets the direction of the Man-object to the specified value.
 	 * @param dir - value to set direction
 	 */
-	public void setDirection(int dir) {
+	public void setDirection(int dir) {		
 		direction = dir;
 	}
 	
