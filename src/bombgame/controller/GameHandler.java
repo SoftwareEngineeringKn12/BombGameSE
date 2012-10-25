@@ -15,26 +15,33 @@ import bombgame.entities.Man;
 public final class GameHandler {
 	
 	/**
-	 * matrix holding all GameObjects in the game
+	 * matrix holding all GameObjects in the game.
+	 * The array indices specify the position on the field.
 	 */
 	private GameObject field[][];
 	
 	/**
-	 * List holding all Man-objects in the game
+	 * List holding all Man-objects in the game.
 	 */
 	private ArrayList<Man> men;
 	
 	/**
-	 * List holding all Bomb-objects in the game 
+	 * List holding all Bomb-objects in the game.
 	 */
 	private ArrayList<Bomb> bombs;
+	
+	/**
+	 * Field width and height
+	 */
+	private static final int fieldWidth = 10;
+	private static final int fieldHeight = 10;
 	
 	
 	/**
 	 * Creates a new GameHandler including a field of 10x10 elements.
 	 */
 	public GameHandler() {
-		field = new GameObject[10][10];
+		field = new GameObject[fieldWidth][fieldHeight];
 		men = new ArrayList<Man>();
 		bombs = new ArrayList<Bomb>();
 	}

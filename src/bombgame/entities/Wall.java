@@ -6,7 +6,6 @@ package bombgame.entities;
  *
  */
 public final class Wall extends GameObject {
-
 	
 	/**
 	 * Creates a Wall-object with the specified Coordinates.

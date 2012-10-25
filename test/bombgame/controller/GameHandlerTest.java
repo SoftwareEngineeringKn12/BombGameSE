@@ -15,6 +15,11 @@ public final class GameHandlerTest extends TestCase {
 		gh = new GameHandler();
 	}
 	
+	public void testGameHandlerConstructor() {
+		gh = new GameHandler(10, 10);
+		//!!
+	}
+	
 	public void testGetField() {
 		assertNotNull(gh.getField());
 	}

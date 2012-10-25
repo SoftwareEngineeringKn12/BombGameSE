@@ -20,7 +20,8 @@ public abstract class GameObject {
 	
 	/**
 	 * Creates a GameObject with the specified coordinates. This constructors only purpose is to 
-	 * simplify things for sub-classes.
+	 * simplify things for sub-classes. These coordinates are not pixel coordinates. They describe
+	 * the position in a 2-Dimensional matrix field.
 	 * @param x - x-coordinate
 	 * @param y - y-coordinate
 	 */

@@ -6,12 +6,11 @@ package bombgame.entities;
  *
  */
 public final class Explosion extends GameObject {
-
 	
 	/**
 	 * spreading range of the explosion
 	 */
-	private final int range;
+	private final int range = 3;
 	
 	/**
 	 * Creates an Explosion-object with the specified coordinates and a range of 3.
@@ -20,7 +19,6 @@ public final class Explosion extends GameObject {
 	 */
 	public Explosion(int x, int y) {
 		super(x, y);
-		range = 3;
 	}
 	
 	/**
