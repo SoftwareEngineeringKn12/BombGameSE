@@ -42,7 +42,7 @@ public final class TextUI {
 	 */
 	public void printAllPlayers() {
 		System.out.println("Players:");
-		player.printStatus();
+		System.out.println(player);
 		// ki.printStatus() if more ki -> loop from list
 	}
 	

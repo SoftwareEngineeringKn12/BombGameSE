@@ -37,15 +37,22 @@ public final class PlayerTUI {
 		// Bomb
 
 		in.close();
-		printStatus();
 	}
-
+	
 	/**
-	 * Prints the status of the man object:
-	 * x and y coordinates, direction
+	 * Returns the status of the man object:
+	 * - x and y coordinates
+	 * - direction
 	 */
-	public void printStatus() {
-		System.out.println("-> Player position: [" + man.getX() + "] ["
-				+ man.getY() + "Direction: " + man.getDirection());
+	@Override
+	public String toString() {
+		StringBuilder str = new StringBuilder();
+		
+		str.append("-> Player: ");
+		str.append("[" + man.getX() + "]");
+		str.append(" [" + man.getY() + "]");
+		str.append(" Direction: " + man.getDirection());
+		
+		return str.toString();
 	}
 }

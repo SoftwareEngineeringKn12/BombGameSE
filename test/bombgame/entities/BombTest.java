@@ -21,5 +21,32 @@ public final class BombTest extends TestCase {
 	public void testGetDelay() {
 		assertEquals(5, bomb.getDelay());
 	}
-
+	
+	public void testGetTimer() {
+		assertEquals(bomb.getDelay(), bomb.getTimer());
+	}
+	
+	public void testDecrementTimer() {
+		// normal
+		bomb.decrementTimer();
+		assertEquals(bomb.getDelay()-1, bomb.getTimer());
+		
+		// explode
+		for(int i = 0; i < bomb.getDelay(); i++) {
+			bomb.decrementTimer();
+		}
+		
+		// check explode!
+	}
+	
+	public void testToString() {
+		StringBuilder str = new StringBuilder();
+		
+		str.append("-> Bomb: ");
+		str.append("[" + bomb.getX() + "]");
+		str.append(" [" + bomb.getY() + "]");
+		str.append(" Timer: " + bomb.getTimer());
+		
+		assertEquals(bomb.toString(), str.toString());
+	}
 }
