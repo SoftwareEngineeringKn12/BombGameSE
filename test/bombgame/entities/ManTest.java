@@ -25,6 +25,13 @@ public final class ManTest extends TestCase {
 	public void testSetDirection() {
 		man.setDirection(1);
 		assertEquals(1, man.getDirection());
+	}
+	
+	public void testSetGetPlaceBomb() {
+		man.setPlaceBomb(true);
+		assertTrue(man.getPlaceBomb());
 		
+		man.setPlaceBomb(false);
+		assertFalse(man.getPlaceBomb());
 	}
 }

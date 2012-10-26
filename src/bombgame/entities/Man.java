@@ -39,6 +39,11 @@ public final class Man extends GameObject {
 	 */
 	private int direction;
 	
+	/**
+	 * Indicates if the man places a bomb in his turn.
+	 */
+	private boolean placeBomb = false;
+	
 	
 	/**
 	 * Creates a Man-object with the specified coordinates.
@@ -78,4 +83,18 @@ public final class Man extends GameObject {
 		direction = dir;
 	}
 	
+	/**
+	 * 
+	 * @return status of placeBomb (if the man wants to place a bomb).
+	 */
+	public boolean getPlaceBomb() {
+		return placeBomb;
+	}
+	
+	/**
+	 * Sets placeBomb variable.
+	 */
+	public void setPlaceBomb(boolean placeBomb) {
+		this.placeBomb = placeBomb;
+	}
 }

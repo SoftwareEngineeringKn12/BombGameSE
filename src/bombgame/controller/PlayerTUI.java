@@ -24,15 +24,17 @@ public final class PlayerTUI {
 	public void move() {
 		Scanner in = new Scanner(System.in);
 
-		if (in.next().equals('W')) {
-			// man.move
-		} else if (in.next().equals('S')) {
-
-		} else if (in.next().equals('A')) {
-
-		} else if (in.next().equals('D')) {
-
+		if (in.next().equals('w')) {
+			man.setDirection(1);
+		} else if (in.next().equals('s')) {
+			man.setDirection(2);
+		} else if (in.next().equals('d')) {
+			man.setDirection(3);
+		} else if (in.next().equals('a')) {
+			man.setDirection(4);
 		}
+		
+		// Bomb
 
 		in.close();
 		printStatus();
