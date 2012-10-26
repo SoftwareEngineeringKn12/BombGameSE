@@ -32,6 +32,7 @@ public final class GameHandler {
 	 */
 	private ArrayList<Bomb> bombs;
 	
+	private ArrayList<ArrayList<Explosion>> explosions; 
 	/**
 	 * Field width and height
 	 */
@@ -47,6 +48,7 @@ public final class GameHandler {
 		field =  MapGenerator.generateTestMap(FIELDWIDTH, FIELDHEIGHT);
 		men = new ArrayList<Man>();
 		bombs = new ArrayList<Bomb>();
+		explosions = new ArrayList<ArrayList<Explosion>>();
 	}
 	
 	
@@ -61,12 +63,18 @@ public final class GameHandler {
 		field = MapGenerator.generateTestMap(width, height);
 		men = new ArrayList<Man>();
 		bombs = new ArrayList<Bomb>();
+		explosions = new ArrayList<ArrayList<Explosion>>();
 	}
 	
+	/**
+	 * Creates a new GameHandler with the specified field f.
+	 * @param f
+	 */
 	public GameHandler(final GameObject f[][]) {
 		field = f;
 		men = new ArrayList<Man>();
 		bombs = new ArrayList<Bomb>();
+		explosions = new ArrayList<ArrayList<Explosion>>();
 	}
 	
 	
@@ -88,6 +96,15 @@ public final class GameHandler {
 			bombs.add((Bomb) obj);
 		}
 		
+		if(obj instanceof Explosion) {
+			ArrayList<Explosion> exp = calculateExplosion((Explosion) obj);
+			explosions.add(exp);
+			for(Explosion e : exp) {
+				field[e.getX()][e.getY()] = e;
+			}
+			return;
+		}
+		
 		field[obj.getX()][obj.getY()] = obj;
 	}
 	
@@ -104,6 +121,18 @@ public final class GameHandler {
 		
 		if (obj instanceof Bomb) {
 			bombs.remove((Bomb) obj);
+		}
+		if(obj instanceof Explosion) {
+			
+			ArrayList<Explosion> list = getExplosion((Explosion) obj);
+			for(Explosion e : list) {
+				
+				field[e.getX()][e.getY()] = null;
+				
+			}
+			
+			explosions.remove(list);
+			return;
 		}
 		
 		field[obj.getX()][obj.getY()] = null;
@@ -136,13 +165,40 @@ public final class GameHandler {
 		return bombs;
 	}
 	
+	/**
+	 * Returns the List of Lists of Explosions.
+	 * @return - List of Lists of Explosions
+	 */
+	public ArrayList<ArrayList<Explosion>> getExplosionList() {
+		return explosions;
+	}
+	
+	/**
+	 * Returns the List of Explosion-objects in which the specified Explosion-oject is included.
+	 * If the specified object is not found the Method returns null.
+	 * @param exp - Explosion-object to be found
+	 * @return - ArrayList of Explosion-objects
+	 */
+	public ArrayList<Explosion> getExplosion(Explosion exp){
+		for(ArrayList<Explosion> el : explosions) {
+			for(Explosion e : el) {
+				if(e==exp) {
+					return el;
+				}
+			}
+		}
+		
+		return null;
+		
+	}
+	
 	
 	/**
 	 * This method tries to move the specified Man-object to the direction given by man.getDirection(). This is
 	 * only possible if the aimed coordinate is not already used by a Wall-object or is out of the range of the field.
 	 * @param man - Man-object that should move
 	 */
-	public void moveMan( final Man man) {
+	private void moveMan( final Man man) {
 		
 		switch(man.getDirection()) {
 		
@@ -194,47 +250,47 @@ public final class GameHandler {
 		
 	}
 	
-	public void calculateExplosion(final Explosion explosion) {
+	/**
+	 * Calculates the spread of the specified Explosion-object.
+	 * @param explosion - source of explosion
+	 * @return - ArrayList of all Explosions included in the spread
+	 */
+	private ArrayList<Explosion> calculateExplosion(final Explosion explosion) {
 		
-		if(explosion.getSpread() != 0) {
-			return;
-		}
+		ArrayList<Explosion> list = new ArrayList<Explosion>();
+		list.add(explosion);
 		
-		int x;
-		int y;
+		boolean free[] = {true, true, true, true};
 		for(int i = 1; i <= Explosion.RANGE; i++) {
 				
 			//right
-			x = explosion.getX() + i;
-			y = explosion.getY();
-			if( x < field[1].length && !(field[x][y] instanceof Wall)) {
-				addObject(new Explosion(x, y, i));
-			}
+			free[0] = nextExplosion(explosion.getX() + i, explosion.getY(),free[0], list);
 			
 			//left
-			x = explosion.getX() - i;
-			y = explosion.getY();
-			addObject(new Explosion(explosion.getX() - i, explosion.getY(), i));
-			if( x < field[1].length && !(field[x][y] instanceof Wall)) {
-				addObject(new Explosion(x, y, i));
-			}
+			free[1] = nextExplosion(explosion.getX() - i, explosion.getY(),free[1], list);
 			
 			//down
-			x = explosion.getX();
-			y = explosion.getY() + i;
-			addObject(new Explosion(explosion.getX(), explosion.getY() + i, i));
-			if( x < field[1].length && !(field[x][y] instanceof Wall)) {
-				addObject(new Explosion(x, y, i));
-			}
+			free[2] = nextExplosion(explosion.getX(), explosion.getY() + i,free[2], list);
 			
 			//up
-			x = explosion.getX();
-			y = explosion.getY() - i;
-			addObject(new Explosion(explosion.getX(), explosion.getY() - i, i));
-			if( x < field[1].length && !(field[x][y] instanceof Wall)) {
-				addObject(new Explosion(x, y, i));
-			}
+			free[3] = nextExplosion(explosion.getX(), explosion.getY() - i,free[3], list);
 		}
 		
+		return list;
+		
+	}
+	
+	private boolean nextExplosion(int x, int y, boolean free, ArrayList<Explosion> list) {
+		if( free && x < field[1].length && x >= 0 && y < field.length && y >= 0 && !(field[x][y] instanceof Wall)) {
+			
+			list.add(new Explosion(x, y));
+			
+			return true;
+			
+		} else {
+			
+			return false;
+			
+		}
 	}
 }
