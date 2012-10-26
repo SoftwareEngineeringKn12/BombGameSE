@@ -66,14 +66,9 @@ public final class GameHandler {
 	}
 	
 	/**
-<<<<<<< HEAD
 	 * Creates a new GameHandler with the given field.
 	 * (for testing purposes)
 	 * @param f - field
-=======
-	 * Creates a new GameHandler with the specified field f.
-	 * @param f
->>>>>>> branch 'master' of https://github.com/SoftwareEngineeringKn12/BombGameSE.git
 	 */
 	public GameHandler(final GameObject f[][]) {
 		field = f;
@@ -202,7 +197,7 @@ public final class GameHandler {
 	 * only possible if the aimed coordinate is not already used by a Wall-object or is out of the range of the field.
 	 * @param man - Man-object that should move
 	 */
-	private void moveMan( final Man man) {
+	protected void moveMan( final Man man) {
 		
 		switch(man.getDirection()) {
 		
@@ -259,7 +254,7 @@ public final class GameHandler {
 	 * @param explosion - source of explosion
 	 * @return - ArrayList of all Explosions included in the spread
 	 */
-	private ArrayList<Explosion> calculateExplosion(final Explosion explosion) {
+	protected ArrayList<Explosion> calculateExplosion(final Explosion explosion) {
 		
 		ArrayList<Explosion> list = new ArrayList<Explosion>();
 		list.add(explosion);
@@ -284,7 +279,7 @@ public final class GameHandler {
 		
 	}
 	
-	private boolean nextExplosion(int x, int y, boolean free, ArrayList<Explosion> list) {
+	protected boolean nextExplosion(int x, int y, boolean free, ArrayList<Explosion> list) {
 		if( free && x < field[1].length && x >= 0 && y < field.length && y >= 0 && !(field[x][y] instanceof Wall)) {
 			
 			list.add(new Explosion(x, y));
