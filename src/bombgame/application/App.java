@@ -1,13 +1,16 @@
 package bombgame.application;
 
+import bombgame.tui.TextUI;
+
 public final class App {
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		TextUI tui = new TextUI();
+		// LOOP
+		while(tui.update()) { };
 	}
 
 }

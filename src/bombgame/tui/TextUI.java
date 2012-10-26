@@ -1,5 +1,7 @@
 package bombgame.tui;
 
+import java.util.Scanner;
+
 import bombgame.controller.GameHandler;
 import bombgame.controller.PlayerTUI;
 import bombgame.entities.Bomb;
@@ -17,7 +19,7 @@ public final class TextUI {
 	
 	private GameHandler handler;
 	private PlayerTUI player;
-	// KI - Maybbe List to store ki
+	// KI - Maybe List to store ki
 	
 	/**
 	 * Creates a GameHandler with standard Constructor.
@@ -35,8 +37,11 @@ public final class TextUI {
 	 * Updates the KI calculation, movement of Man-objects, placement of Bombs
 	 * and the calculation of Explosions (in this order).
 	 */
-	public void update() {
+	public boolean update() {
 		//!! look at the order.
+		//scan input false;
+		//Scanner in = new Scanner(System.in);
+		
 		
 		//calcKI()
 		player.move();
@@ -48,6 +53,7 @@ public final class TextUI {
 		printAllPlayers();
 		printBombs();
 		printField();
+		return true;
 	}
 	
 	/**
