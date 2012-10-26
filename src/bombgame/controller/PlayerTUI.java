@@ -34,6 +34,8 @@ public final class PlayerTUI {
 			man.setDirection(4);
 		} else if (in.next().equals('j')) {
 			man.setPlaceBomb(true);	
+		} else {
+			man.setDirection(Man.NO_DIR);
 		}
 
 		in.close();

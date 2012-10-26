@@ -58,23 +58,23 @@ public final class TextUI {
 		GameObject[][] field = handler.getField();
 		
 		//print offscreen
-		for(GameObject[] line : field) {
+		for(int i = 0; i < field[0].length; i++) {
 			
-			for(GameObject go : line) {
+			for(int j = 0; j < field.length; j++) {
 				
-				if(go instanceof Wall) {
+				if(field[j][i] instanceof Wall) {
 					
 					sb.append(" # ");
 					
-				} else if(go instanceof Man) {
+				} else if(field[j][i] instanceof Man) {
 				
 					sb.append(" M ");
 					
-				} else if(go instanceof Bomb) {
+				} else if(field[j][i] instanceof Bomb) {
 					
 					sb.append(" O ");
 					
-				}  else if(go instanceof Explosion) {
+				}  else if(field[j][i] instanceof Explosion) {
 					
 					sb.append(" X ");
 					
