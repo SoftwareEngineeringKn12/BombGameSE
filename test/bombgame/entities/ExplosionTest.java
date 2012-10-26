@@ -9,8 +9,4 @@ public final class ExplosionTest extends TestCase {
 	public void setUp() {
 		ex = new Explosion(1, 1);
 	}
-	
-	public void testGetRange() {
-		assertEquals(3, ex.getRange());
-	}
 }

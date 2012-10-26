@@ -3,6 +3,7 @@ package bombgame.controller;
 import java.util.ArrayList;
 
 import bombgame.entities.Bomb;
+import bombgame.entities.Explosion;
 import bombgame.entities.GameObject;
 import bombgame.entities.Man;
 import bombgame.entities.Wall;
@@ -190,6 +191,50 @@ public final class GameHandler {
 		}
 		
 		
+		
+	}
+	
+	public void calculateExplosion(final Explosion explosion) {
+		
+		if(explosion.getSpread() != 0) {
+			return;
+		}
+		
+		int x;
+		int y;
+		for(int i = 1; i <= Explosion.RANGE; i++) {
+				
+			//right
+			x = explosion.getX() + i;
+			y = explosion.getY();
+			if( x < field[1].length && !(field[x][y] instanceof Wall)) {
+				addObject(new Explosion(x, y, i));
+			}
+			
+			//left
+			x = explosion.getX() - i;
+			y = explosion.getY();
+			addObject(new Explosion(explosion.getX() - i, explosion.getY(), i));
+			if( x < field[1].length && !(field[x][y] instanceof Wall)) {
+				addObject(new Explosion(x, y, i));
+			}
+			
+			//down
+			x = explosion.getX();
+			y = explosion.getY() + i;
+			addObject(new Explosion(explosion.getX(), explosion.getY() + i, i));
+			if( x < field[1].length && !(field[x][y] instanceof Wall)) {
+				addObject(new Explosion(x, y, i));
+			}
+			
+			//up
+			x = explosion.getX();
+			y = explosion.getY() - i;
+			addObject(new Explosion(explosion.getX(), explosion.getY() - i, i));
+			if( x < field[1].length && !(field[x][y] instanceof Wall)) {
+				addObject(new Explosion(x, y, i));
+			}
+		}
 		
 	}
 }

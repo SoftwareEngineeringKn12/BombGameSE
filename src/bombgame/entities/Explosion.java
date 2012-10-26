@@ -7,10 +7,25 @@ package bombgame.entities;
  */
 public final class Explosion extends GameObject {
 	
+	
+	//public static final int NO_DIR = 0;
+	
+	//public static final int UP = 1;
+	
+	//public static final int DOWN = 2;
+	
+	//public static final int RIGHT = 3;
+	
+	//public static final int LEFT = 4;
+	
 	/**
 	 * spreading range of the explosion
 	 */
-	private final int range = 3;
+	public static final int RANGE = 3;
+	
+	private int spread;
+	
+	//private int direction;
 	
 	/**
 	 * Creates an Explosion-object with the specified coordinates and a range of 3.
@@ -19,14 +34,16 @@ public final class Explosion extends GameObject {
 	 */
 	public Explosion(int x, int y) {
 		super(x, y);
+		spread = 0;
 	}
 	
-	/**
-	 * Returns the range of the Explosion-object.
-	 * @return
-	 */
-	public int getRange() {
-		return range;
+	public Explosion(int x, int y, int spread) {
+		super(x,y);
+		this.spread = spread;
+	}
+	
+	public int getSpread() {
+		return spread;
 	}
 
 }
