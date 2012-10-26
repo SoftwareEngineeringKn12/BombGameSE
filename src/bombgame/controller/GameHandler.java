@@ -34,28 +34,36 @@ public final class GameHandler {
 	/**
 	 * Field width and height
 	 */
-	private static final int fieldWidth = 10;
-	private static final int fieldHeight = 10;
+	private static final int FIELDWIDTH = 10;
+	private static final int FIELDHEIGHT = 10;
 	
 	
 	/**
-	 * Creates a new GameHandler including a field of 10x10 elements.
+	 * Creates a new GameHandler including a field of 10x10 elements with randomly
+	 * generated environment.
 	 */
 	public GameHandler() {
-		field = new GameObject[fieldWidth][fieldHeight];
+		field =  MapGenerator.generateTestMap(FIELDWIDTH, FIELDHEIGHT);
 		men = new ArrayList<Man>();
 		bombs = new ArrayList<Bomb>();
 	}
 	
 	
 	/**
-	 * Creates a new GameHandler including a field of widthxheight elements.
+	 * Creates a new GameHandler including a field of widthxheight elements with randomly
+	 * generated environment.
 	 * @param width - width of the new field
 	 * @param height - height of the new field
 	 */
 	public GameHandler(final int width, final int height) {
-		//field = new GameObject[width][height];
+		
 		field = MapGenerator.generateTestMap(width, height);
+		men = new ArrayList<Man>();
+		bombs = new ArrayList<Bomb>();
+	}
+	
+	public GameHandler(final GameObject f[][]) {
+		field = f;
 		men = new ArrayList<Man>();
 		bombs = new ArrayList<Bomb>();
 	}
@@ -128,7 +136,6 @@ public final class GameHandler {
 	}
 	
 	
-	/**
 	/**
 	 * This method tries to move the specified Man-object to the direction given by man.getDirection(). This is
 	 * only possible if the aimed coordinate is not already used by a Wall-object or is out of the range of the field.

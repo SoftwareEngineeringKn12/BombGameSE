@@ -11,10 +11,15 @@ public final class GameHandlerTest extends TestCase {
 
 	GameHandler gh1;
 	GameHandler gh2;
+	GameHandler gh3;
+	GameHandler gh4;
 	
 	public void setUp() {
-		gh1 = new GameHandler();
-		gh2 = new GameHandler(2, 3);
+		
+		gh1 = new GameHandler(new GameObject[10][10]);
+		gh2 = new GameHandler(new GameObject[2][3]);
+		gh3 = new GameHandler(2, 3);
+		gh4 = new GameHandler();
 	}
 	
 	public void testGetField() {
