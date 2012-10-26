@@ -32,12 +32,21 @@ public final class PlayerTUI {
 			man.setDirection(3);
 		} else if (in.next().equals('a')) {
 			man.setDirection(4);
+		} else if (in.next().equals('j')) {
+			man.setPlaceBomb(true);	
 		}
-		
-		// Bomb
 
 		in.close();
 	}
+	
+	/**
+	 * Returns the man object of the player
+	 * @return
+	 */
+	/*public Man getMan() {
+		return man;
+	}
+	*/
 	
 	/**
 	 * Returns the status of the man object:

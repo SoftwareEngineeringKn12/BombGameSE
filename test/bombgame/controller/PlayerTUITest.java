@@ -16,4 +16,16 @@ public final class PlayerTUITest extends TestCase {
 		// User-input - then prints the man status
 	}
 	
+	/*
+	public void testToString() {
+		StringBuilder str = new StringBuilder();
+		
+		str.append("-> Player: ");
+		str.append("[" + man.getX() + "]");
+		str.append(" [" + man.getY() + "]");
+		str.append(" Direction: " + man.getDirection());
+		
+		assertEquals();
+	}*/
+	
 }

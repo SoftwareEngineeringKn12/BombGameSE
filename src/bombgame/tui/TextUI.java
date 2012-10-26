@@ -17,14 +17,17 @@ public final class TextUI {
 	
 	private GameHandler handler;
 	private PlayerTUI player;
+	// KI - Maybbe List to store ki
 	
 	/**
 	 * Creates a GameHandler with standard Constructor.
 	 */
 	public TextUI() {
-		Man manPlayer = new Man(0, 0);
+		Man manPlayer = new Man(0, 0); // Man for player
+		
 		handler = new GameHandler();
 		player = new PlayerTUI(manPlayer);
+		// new KI
 		handler.addObject(manPlayer);
 	}
 
@@ -33,13 +36,19 @@ public final class TextUI {
 	 * and the calculation of Explosions (in this order).
 	 */
 	public void update() {
-		//calcKI()
-		//moveObjects
-		//placeBombs
-		//calcExplosions
+		//!! look at the order.
 		
+		//calcKI()
+		player.move();
+		
+		handler.moveAll();
+		handler.updateBombs();
+		handler.placeBombs();
+		
+		printAllPlayers();
+		printBombs();
+		printField();
 	}
-	
 	
 	/**
 	 * Prints the current Map on the standard output.
@@ -93,7 +102,7 @@ public final class TextUI {
 	public void printAllPlayers() {
 		System.out.println("Players:");
 		System.out.println(player);
-		// ki.printStatus() if more ki -> loop from list
+		// syso(ki) if more ki -> loop from list
 	}
 	
 	/**
@@ -102,7 +111,7 @@ public final class TextUI {
 	public void printBombs() {
 		System.out.println("Bombs:");
 		for (Bomb bomb : handler.getBombs()) {
-			System.out.println(bomb.toString());
+			System.out.println(bomb);
 		}
 	}
 }

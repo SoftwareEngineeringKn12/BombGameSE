@@ -61,6 +61,7 @@ public final class Man extends GameObject {
 	 * @return - created Bomb-object
 	 */
 	public Bomb placeBomb() {
+		placeBomb = false;
 		return new Bomb(getX(), getY());
 	}
 	

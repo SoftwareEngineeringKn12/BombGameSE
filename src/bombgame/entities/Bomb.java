@@ -58,11 +58,12 @@ public final class Bomb extends GameObject {
 	 * Decrements the timer variable and 'explodes'
 	 * when the value is 0.
 	 */
-	public void decrementTimer() {
+	public Explosion decrementTimer() {
 		if (timer > 0) {
 			timer--;
+			return null;
 		} else {
-			//!! EXPLODE
+			return explode();
 		}
 	}
 	

@@ -57,18 +57,21 @@ public final class GameHandler {
 	 * @param height - height of the new field
 	 */
 	public GameHandler(final int width, final int height) {
-		
 		field = MapGenerator.generateTestMap(width, height);
 		men = new ArrayList<Man>();
 		bombs = new ArrayList<Bomb>();
 	}
 	
+	/**
+	 * Creates a new GameHandler with the given field.
+	 * (for testing purposes)
+	 * @param f - field
+	 */
 	public GameHandler(final GameObject f[][]) {
 		field = f;
 		men = new ArrayList<Man>();
 		bombs = new ArrayList<Bomb>();
 	}
-	
 	
 	/**
 	 * Adds the given GameObject to the field and the specified List, if Position is not already in use except Bomb-objects.
@@ -236,5 +239,28 @@ public final class GameHandler {
 			}
 		}
 		
+	}
+	
+	public void moveAll() {
+		for (Man man : men) {
+			moveMan(man);
+		}
+	}
+	
+	public void placeBombs() {
+		for (Man man : men) {
+			if (man.getPlaceBomb()) {
+				addObject(man.placeBomb());
+			}
+		}
+	}
+	
+	public void updateBombs() {
+		for (Bomb bomb : bombs) {
+			Explosion expl = bomb.decrementTimer();
+			if (expl != null) {
+				addObject(expl);
+			}
+		}
 	}
 }

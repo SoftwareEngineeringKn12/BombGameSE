@@ -10,4 +10,15 @@ public final class TextUITest extends TestCase {
 		tui = new TextUI();
 	}
 	
+	public void testTextUI() {
+		
+	}
+	
+	public void testUpdate()  {
+		
+	}
+	
+	public void testPrintField() {
+		
+	}
 }
