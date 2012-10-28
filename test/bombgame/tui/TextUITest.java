@@ -1,24 +1,102 @@
 package bombgame.tui;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+import bombgame.entities.Bomb;
+import bombgame.entities.Explosion;
+import bombgame.entities.GameObject;
+import bombgame.entities.Man;
+import bombgame.entities.Wall;
 import junit.framework.TestCase;
 
 public final class TextUITest extends TestCase {
 
-	TextUI tui;
+	private TextUI tui1;
+	private TextUI tui2;
+	
 	
 	public void setUp() {
-		tui = new TextUI();
+		tui1 = new TextUI();
+		tui2 = new TextUI(new GameObject[10][10]);
 	}
 	
-	public void testTextUI() {
-		
-	}
 	
 	public void testUpdate()  {
 		
 	}
 	
 	public void testPrintField() {
+		PrintStream original = System.out;
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
+		PrintStream ps = new PrintStream(os);
+		System.setOut(ps);
+		String separator = System.getProperty("line.separator");
 		
+		tui2.printField();
+		assertEquals(tui2.createTUI() + separator, os.toString());
+		
+		tui2.getGameHandler().addObject(new Bomb(1,2));
+		tui2.getGameHandler().addObject(new Explosion(3,5));
+		tui2.getGameHandler().addObject(new Man(2,1));
+		tui2.getGameHandler().addObject(new Wall(5,6));
+		
+		os = new ByteArrayOutputStream();
+		ps = new PrintStream(os);
+		System.setOut(ps);
+		
+		tui2.printField();
+		assertEquals(tui2.createTUI() + separator, os.toString());
+		
+		System.setOut(original);
+	}
+	
+	public void testPrintAllPlayers() {
+		PrintStream original = System.out;
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
+		PrintStream ps = new PrintStream(os);
+		System.setOut(ps);
+		String separator = System.getProperty("line.separator");
+		
+		tui1.printAllPlayers();
+		assertEquals("Players:" + separator + tui1.getPlayer().toString() + separator,os.toString());
+		
+		System.setOut(original);
+		
+	}
+	
+	public void testPrintBombs() {
+		PrintStream original = System.out;
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
+		PrintStream ps = new PrintStream(os);
+		System.setOut(ps);
+		String separator = System.getProperty("line.separator");
+		
+		StringBuilder result = new StringBuilder("Bombs:");
+		result.append(separator);
+		
+		tui2.getGameHandler().addObject(new Bomb(2,3));
+		
+		for(Bomb b : tui2.getGameHandler().getBombs()) {
+			result.append(b.toString()).append(separator);
+		}
+		
+		tui2.printBombs();
+		
+		assertEquals(result.toString(),os.toString());
+		
+		System.setOut(original);
+	}
+	
+	public void testGetPlayer() {
+		assertNotNull(tui1.getPlayer());
+	}
+	
+	public void testSetPlayer() {
+		tui2.setPlayer(new Man(3,4));
+		assertNotNull(tui2.getPlayer());
+	}
+	public void testGetGameHandler() {
+		assertNotNull(tui1.getGameHandler());
 	}
 }

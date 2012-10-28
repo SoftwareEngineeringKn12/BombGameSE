@@ -1,7 +1,5 @@
 package bombgame.tui;
 
-import java.util.Scanner;
-
 import bombgame.controller.GameHandler;
 import bombgame.controller.PlayerTUI;
 import bombgame.entities.Bomb;
@@ -32,6 +30,10 @@ public final class TextUI {
 		// new KI
 		handler.addObject(manPlayer);
 	}
+	
+	public TextUI(final GameObject[][] field) {
+		handler = new GameHandler(field);
+	}
 
 	/**
 	 * Updates the KI calculation, movement of Man-objects, placement of Bombs
@@ -60,10 +62,20 @@ public final class TextUI {
 	 * Prints the current Map on the standard output.
 	 */
 	public void printField() {
+		
+		//print on screen
+		System.out.println(createTUI());
+	}
+	
+	/**
+	 * Creates and returns the String-object displaying the Interface of the Game.
+	 * @return - String-object, that represents User Interface
+	 */
+	protected String createTUI() {
+		
 		StringBuilder sb = new StringBuilder();
 		GameObject[][] field = handler.getField();
 		
-		//print offscreen
 		for(int i = 0; i < field[0].length; i++) {
 			
 			for(int j = 0; j < field.length; j++) {
@@ -95,9 +107,7 @@ public final class TextUI {
 			sb.append("\n");
 			
 		}
-		
-		//print on screen
-		System.out.println(sb.toString());
+		return sb.toString();
 	}
 	
 	
@@ -119,6 +129,18 @@ public final class TextUI {
 		for (Bomb bomb : handler.getBombs()) {
 			System.out.println(bomb);
 		}
+	}
+	
+	public GameHandler getGameHandler() {
+		return handler;
+	}
+	
+	public void setPlayer(final Man man) {
+		player = new PlayerTUI(man);
+	}
+	
+	public PlayerTUI getPlayer() {
+		return player;
 	}
 	
 }
