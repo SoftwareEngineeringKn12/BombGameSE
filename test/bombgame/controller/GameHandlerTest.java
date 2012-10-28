@@ -1,5 +1,7 @@
 package bombgame.controller;
 
+import java.util.ArrayList;
+
 import bombgame.entities.Bomb;
 import bombgame.entities.Explosion;
 import bombgame.entities.GameObject;
@@ -32,6 +34,19 @@ public final class GameHandlerTest extends TestCase {
 	
 	public void testGetBombs() {
 		assertNotNull(gh1.getBombs());
+	}
+	
+	public void testGetExplosion() {
+		Explosion exp = new Explosion(3,4);
+		assertNull(gh1.getExplosion(exp));
+		gh1.addObject(exp);
+		assertNotNull(gh1.getExplosion(exp));
+		exp = new Explosion(2,1);
+		assertNull(gh1.getExplosion(exp));
+	}
+	
+	public void testGetExplosionList() {
+		assertNotNull(gh1.getExplosionList());
 	}
 	
 	public void testAddObject() {
@@ -178,5 +193,14 @@ public final class GameHandlerTest extends TestCase {
 		gh2.moveMan(man);
 		assertEquals(man.getX(), 0);
 		assertEquals(man.getY(), 1);
+	}
+	
+	public void testNextExplosion() {
+		gh1.addObject(new Wall(3,4));
+		ArrayList<Explosion> al = new ArrayList<Explosion>();
+		assertFalse(gh1.nextExplosion(-1, 0, true, al));
+		assertFalse(gh1.nextExplosion(15, 0, true, al));
+		assertFalse(gh1.nextExplosion(-0, -1, true, al));
+		assertFalse(gh1.nextExplosion(0, 15, true, al));
 	}
 }

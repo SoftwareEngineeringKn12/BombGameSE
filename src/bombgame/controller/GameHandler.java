@@ -279,6 +279,16 @@ public final class GameHandler {
 		
 	}
 	
+	/**
+	 * Creates a new Explosion-object with the specified coordinates, adds that object to the specified ArrayList
+	 * and returns true, if the coordinate is not blocked by a Wall-object and free is true.
+	 * Else it returns false.
+	 * @param x - x-coordinate of the new explosion
+	 * @param y - y coordinate of the new explosion
+	 * @param free - determines if the explosion ist sill spreading
+	 * @param list - list to which explosion will be added
+	 * @return - returns true if Explosion-object was successfully created
+	 */
 	protected boolean nextExplosion(int x, int y, boolean free, ArrayList<Explosion> list) {
 		if( free && x < field[1].length && x >= 0 && y < field.length && y >= 0 && !(field[x][y] instanceof Wall)) {
 			
