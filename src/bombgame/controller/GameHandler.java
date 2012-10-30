@@ -207,9 +207,16 @@ public final class GameHandler {
 		case Man.UP:
 			if( man.getY() != 0 && !(field[man.getX()][man.getY() - 1] instanceof Wall) ) {
 				
-				field[man.getX()][man.getY()] = null;
+				if(field[man.getX()][man.getY()] == man) {
+					//only replace with null if man i the user of the field
+					field[man.getX()][man.getY()] = null;
+				}
 				man.setPos(man.getX(), man.getY() - 1);
-				field[man.getX()][man.getY()] = man;
+				
+				if(field[man.getX()][man.getY()] == null) {
+					//if field is already used e.g. by a bomb or explosion
+					field[man.getX()][man.getY()] = man;
+				}
 				
 			}
 			break;
@@ -217,9 +224,16 @@ public final class GameHandler {
 		case Man.DOWN:
 			if( man.getY() != (field[0].length - 1) && !(field[man.getX()][man.getY() + 1] instanceof Wall) ) {
 				
-				field[man.getX()][man.getY()] = null;
+				if(field[man.getX()][man.getY()] == man) {
+					//only replace with null if man i the user of the field
+					field[man.getX()][man.getY()] = null;
+				}
 				man.setPos(man.getX(), man.getY() + 1);
-				field[man.getX()][man.getY()] = man;
+				
+				if(field[man.getX()][man.getY()] == null) {
+					//if field is already used e.g. by a bomb or explosion
+					field[man.getX()][man.getY()] = man;
+				}
 				
 			}
 			break;
@@ -227,9 +241,16 @@ public final class GameHandler {
 		case Man.LEFT:
 			if( man.getX() != 0 && !(field[man.getX() - 1][man.getY()] instanceof Wall) ) {
 				
-				field[man.getX()][man.getY()] = null;
+				if(field[man.getX()][man.getY()] == man) {
+					//only replace with null if man i the user of the field
+					field[man.getX()][man.getY()] = null;
+				}
 				man.setPos(man.getX() - 1, man.getY());
-				field[man.getX()][man.getY()] = man;
+				
+				if(field[man.getX()][man.getY()] == null) {
+					//if field is already used e.g. by a bomb or explosion
+					field[man.getX()][man.getY()] = man;
+				}
 				
 			}
 			break;
@@ -237,9 +258,16 @@ public final class GameHandler {
 		case Man.RIGHT:
 			if( man.getX() != (field.length - 1) && !(field[man.getX() + 1][man.getY()] instanceof Wall) ) {
 				
-				field[man.getX()][man.getY()] = null;
+				if(field[man.getX()][man.getY()] == man) {
+					//only replace with null if man i the user of the field
+					field[man.getX()][man.getY()] = null;
+				}
 				man.setPos(man.getX() + 1, man.getY());
-				field[man.getX()][man.getY()] = man;
+				
+				if(field[man.getX()][man.getY()] == null) {
+					//if field is already used e.g. by a bomb or explosion
+					field[man.getX()][man.getY()] = man;
+				}
 				
 			}
 			break;
@@ -318,9 +346,12 @@ public final class GameHandler {
 	}
 	
 	public void updateBombs() {
-		for (Bomb bomb : bombs) {
+		//new ArrayList is needed to remove a bomb during iteration
+				ArrayList<Bomb> bs = new ArrayList<Bomb>(bombs);
+		for (Bomb bomb : bs) {
 			Explosion expl = bomb.decrementTimer();
 			if (expl != null) {
+				removeObject(bomb);
 				addObject(expl);
 			}
 		}
