@@ -124,17 +124,25 @@ public final class GameHandler {
 		if(obj instanceof Explosion) {
 			
 			ArrayList<Explosion> list = getExplosion((Explosion) obj);
-			for(Explosion e : list) {
-				
-				field[e.getX()][e.getY()] = null;
-				
-			}
-			
-			explosions.remove(list);
+			removeExplosionList(list);
 			return;
 		}
 		
 		field[obj.getX()][obj.getY()] = null;
+	}
+	
+	
+	/**
+	 * Removes the specified List of Explosion-object from the field.
+	 * @param list - ArrayList of Explosion-objects.
+	 */
+	private void removeExplosionList(ArrayList<Explosion> list) {
+		
+		for(Explosion e : list) {
+			field[e.getX()][e.getY()] = null;
+		}
+		
+		explosions.remove(list);
 	}
 	
 	
@@ -347,12 +355,28 @@ public final class GameHandler {
 	
 	public void updateBombs() {
 		//new ArrayList is needed to remove a bomb during iteration
-				ArrayList<Bomb> bs = new ArrayList<Bomb>(bombs);
+		ArrayList<Bomb> bs = new ArrayList<Bomb>(bombs);
 		for (Bomb bomb : bs) {
 			Explosion expl = bomb.decrementTimer();
 			if (expl != null) {
 				removeObject(bomb);
 				addObject(expl);
+			}
+		}
+	}
+	
+	/**
+	 * Decrements the duration of the explosions until they reach a duration of 0. Then they will be removed.
+	 */
+	public void updateExplosion() {
+		//new ArrayList is needed to remove a Explosionlist during iteration
+		ArrayList<ArrayList<Explosion>> explist = new ArrayList<ArrayList<Explosion>>(explosions); 
+		for(ArrayList<Explosion> explosion : explist) {
+			Explosion exp = explosion.get(0);
+			exp.decrementDuration();
+			
+			if(exp.getDuration() <= 0) {
+				removeExplosionList(explosion);
 			}
 		}
 	}

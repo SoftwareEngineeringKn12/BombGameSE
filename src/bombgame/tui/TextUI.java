@@ -51,6 +51,7 @@ public final class TextUI {
 		handler.moveAll();
 		handler.updateBombs();
 		handler.placeBombs();
+		handler.updateExplosion();
 		
 		printAllPlayers();
 		printBombs();
