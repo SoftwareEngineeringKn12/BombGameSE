@@ -45,7 +45,7 @@ public final class GameHandler {
 	 * generated environment.
 	 */
 	public GameHandler() {
-		initializeField(0, 0);
+		initializeField(FIELDWIDTH, FIELDHEIGHT);
 		men = new ArrayList<Man>();
 		bombs = new ArrayList<Bomb>();
 		explosions = new ArrayList<ArrayList<Explosion>>();
@@ -407,14 +407,9 @@ public final class GameHandler {
 	 * @param height - height of field
 	 */
 	private void initializeField(final int width, final int height) {
-		MazeGen generator;
-		if (width == 0 && height == 0) {
-			generator = new MazeGen(FIELDWIDTH, FIELDHEIGHT);
-			field = new GameObject[FIELDWIDTH][FIELDHEIGHT];
-		} else {
-			generator = new MazeGen(width, height);
-			field = new GameObject[width][height];
-		}
+		MazeGen generator = new MazeGen(width, height);
+		field = new GameObject[width][height];
+
 		generator.genNonPerfectMaze();
 		//System.out.println(generator);
 		Cell[][] cellArray = generator.getMaze();
