@@ -128,7 +128,9 @@ public final class GameHandler {
 			return;
 		}
 		
-		field[obj.getX()][obj.getY()] = null;
+		if(field[obj.getX()][obj.getY()] == obj) {
+			field[obj.getX()][obj.getY()] = null;
+		}
 	}
 	
 	
@@ -216,7 +218,7 @@ public final class GameHandler {
 			if( man.getY() != 0 && !(field[man.getX()][man.getY() - 1] instanceof Wall) ) {
 				
 				if(field[man.getX()][man.getY()] == man) {
-					//only replace with null if man i the user of the field
+					//only replace with null if man is the user of the field
 					field[man.getX()][man.getY()] = null;
 				}
 				man.setPos(man.getX(), man.getY() - 1);
@@ -233,7 +235,7 @@ public final class GameHandler {
 			if( man.getY() != (field[0].length - 1) && !(field[man.getX()][man.getY() + 1] instanceof Wall) ) {
 				
 				if(field[man.getX()][man.getY()] == man) {
-					//only replace with null if man i the user of the field
+					//only replace with null if man is the user of the field
 					field[man.getX()][man.getY()] = null;
 				}
 				man.setPos(man.getX(), man.getY() + 1);
@@ -250,7 +252,7 @@ public final class GameHandler {
 			if( man.getX() != 0 && !(field[man.getX() - 1][man.getY()] instanceof Wall) ) {
 				
 				if(field[man.getX()][man.getY()] == man) {
-					//only replace with null if man i the user of the field
+					//only replace with null if man is the user of the field
 					field[man.getX()][man.getY()] = null;
 				}
 				man.setPos(man.getX() - 1, man.getY());
@@ -267,7 +269,7 @@ public final class GameHandler {
 			if( man.getX() != (field.length - 1) && !(field[man.getX() + 1][man.getY()] instanceof Wall) ) {
 				
 				if(field[man.getX()][man.getY()] == man) {
-					//only replace with null if man i the user of the field
+					//only replace with null if man is the user of the field
 					field[man.getX()][man.getY()] = null;
 				}
 				man.setPos(man.getX() + 1, man.getY());
@@ -340,8 +342,14 @@ public final class GameHandler {
 	}
 	
 	public void moveAll() {
-		for (Man man : men) {
-			moveMan(man);
+		//new ArrayList is needed to remove a man during iteration
+		ArrayList<Man> m = new ArrayList<Man>(men);
+		for (Man man : m) {
+			if(checkHit(man)) {
+				removeObject(man);
+			} else {
+				moveMan(man);
+			}
 		}
 	}
 	
@@ -379,5 +387,15 @@ public final class GameHandler {
 				removeExplosionList(explosion);
 			}
 		}
+	}
+	
+	/**
+	 * Checks if the specified Man-object is hit by an Explosion. Returns true if the man is on a field
+	 * which is already use by an Explosion-object, else returns false.
+	 * @param man - Man-object to check
+	 * @return - returns true if man is hit
+	 */
+	private boolean checkHit(Man man) {
+		return field[man.getX()][man.getY()] instanceof Explosion;
 	}
 }
