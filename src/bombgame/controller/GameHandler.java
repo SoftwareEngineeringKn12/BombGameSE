@@ -41,7 +41,7 @@ public final class GameHandler {
 	
 	
 	/**
-	 * Creates a new GameHandler including a field of 10x10 elements with randomly
+	 * Creates a new GameHandler including a field of FIELDWIDTH x FIELDHEIGHT elements with randomly
 	 * generated environment.
 	 */
 	public GameHandler() {
@@ -52,7 +52,7 @@ public final class GameHandler {
 	}
 	
 	/**
-	 * Creates a new GameHandler including a field of widthxheight elements with randomly
+	 * Creates a new GameHandler including a field of width x height elements with randomly
 	 * generated environment.
 	 * @param width - width of the new field
 	 * @param height - height of the new field
@@ -322,7 +322,7 @@ public final class GameHandler {
 	 * Else it returns false.
 	 * @param x - x-coordinate of the new explosion
 	 * @param y - y coordinate of the new explosion
-	 * @param free - determines if the explosion ist sill spreading
+	 * @param free - determines if the explosion is sill spreading
 	 * @param list - list to which explosion will be added
 	 * @return - returns true if Explosion-object was successfully created
 	 */
