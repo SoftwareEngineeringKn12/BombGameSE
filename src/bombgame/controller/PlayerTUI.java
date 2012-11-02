@@ -48,10 +48,9 @@ public final class PlayerTUI {
 	 * Returns the man object of the player
 	 * @return
 	 */
-	/*public Man getMan() {
+	public Man getMan() {
 		return man;
 	}
-	*/
 	
 	/**
 	 * Returns the status of the man object:

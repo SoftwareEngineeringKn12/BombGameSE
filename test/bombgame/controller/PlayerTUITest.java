@@ -6,17 +6,22 @@ import junit.framework.TestCase;
 public final class PlayerTUITest extends TestCase {
 
 	PlayerTUI player;
+	Man man;
 	
 	public void setUp() {
-		player = new PlayerTUI(new Man(0, 0));
+		man = new Man(0, 0);
+		player = new PlayerTUI(man);
 	}
 	
-	public void testMove() {
+	/*public void testMove() {
 		player.move();
 		// User-input - then prints the man status
+	}*/
+	
+	public void testGetMan() {
+		assertEquals(man, player.getMan());
 	}
 	
-	/*
 	public void testToString() {
 		StringBuilder str = new StringBuilder();
 		
@@ -25,7 +30,6 @@ public final class PlayerTUITest extends TestCase {
 		str.append(" [" + man.getY() + "]");
 		str.append(" Direction: " + man.getDirection());
 		
-		assertEquals();
-	}*/
-	
+		assertEquals(str.toString(), player.toString());
+	}
 }
