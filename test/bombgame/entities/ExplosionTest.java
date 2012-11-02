@@ -12,11 +12,11 @@ public final class ExplosionTest extends TestCase {
 	
 	
 	public void testGetDuration() {
-		assertEquals(ex.getDuration(),4);
+		assertEquals(ex.getTimer(),4);
 	}
 	
 	public void testDecrementDuration() {
-		ex.decrementDuration();
-		assertEquals(ex.getDuration(), 3);
+		ex.decrementTimer();
+		assertEquals(ex.getTimer(), 3);
 	}
 }

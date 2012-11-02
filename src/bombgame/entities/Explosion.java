@@ -12,10 +12,12 @@ public final class Explosion extends GameObject {
 	 */
 	public static final int RANGE = 3;
 	
+	public static final int DURATION = 4;
+	
 	/**
 	 * time the explosion stays in the field
 	 */
-	private  int duration = 4;
+	private  int timer = DURATION;
 	
 	/**
 	 * Creates an Explosion-object with the specified coordinates and a range of 3.
@@ -31,16 +33,16 @@ public final class Explosion extends GameObject {
 	 * Returns the current remaining duration of the Explosion-object.
 	 * @return - remaining duration
 	 */
-	public int getDuration() {
-		return duration;
+	public int getTimer() {
+		return timer;
 	}
 	
 	
 	/**
 	 * Decrements the duration of the Explosion-object
 	 */
-	public void decrementDuration() {
-		duration--;
+	public void decrementTimer() {
+		timer--;
 	}
 
 }

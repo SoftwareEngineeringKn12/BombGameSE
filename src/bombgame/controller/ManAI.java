@@ -5,12 +5,16 @@ import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.TreeSet;
 
+import bombgame.entities.Bomb;
+import bombgame.entities.Explosion;
 import bombgame.entities.Man;
 import bombgame.entities.Wall;
 
 public class ManAI {
 
 	private Man man;
+	
+	private static final int B_COST = 6;
 	
 	private GameHandler handler;
 	
@@ -159,10 +163,28 @@ public class ManAI {
 		
 		c.calcCosts();
 		
+		//if is blocking the way immediatly put to closed list
 		if(handler.getField()[c.x][c.y] instanceof Wall) {
 			addClosedList(c);
 			return;
 		}
+		
+		//if an explosion is in the way
+		if(handler.getField()[c.x][c.y] instanceof Explosion) {
+			Explosion exp = (Explosion) handler.getField()[c.x][c.y];
+			if(exp.getTimer() >= c.pathcost) {
+				addClosedList(c);
+				return;
+			}
+			
+		}
+		
+		//if is in danger of bomb increase cost
+		if(isInBombRange(c)) {
+			c.cost += B_COST;
+		}
+		
+		
 		
 		for(Cell tmp : openlist) {
 			if(tmp.equals(c)) {
@@ -177,6 +199,25 @@ public class ManAI {
 		//not found
 		openlist.add(c);
 		
+	}
+	
+	
+	/**
+	 * Returns true if the given Cell is probably in danger of being hit by an
+	 * Explosion.
+	 * @param c - Cell that is to be proofed to be out of danger
+	 * @return - 
+	 */
+	private boolean isInBombRange(Cell c) {
+		for(Bomb b : handler.getBombs()) {
+			//simple and ineffective algorythm!!!
+			int dx = Math.abs(c.x - b.getX());
+			int dy = Math.abs(c.y - b.getY());
+			if(dx <= Explosion.RANGE || dy <= Explosion.RANGE) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	

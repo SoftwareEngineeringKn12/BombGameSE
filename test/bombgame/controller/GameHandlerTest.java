@@ -284,7 +284,7 @@ public final class GameHandlerTest extends TestCase {
 		Explosion exp = new Explosion(1,1);
 		gh1.addObject(exp);
 		
-		while(exp.getDuration() > 0) {
+		while(exp.getTimer() > 0) {
 			gh1.updateExplosion();
 		}
 		

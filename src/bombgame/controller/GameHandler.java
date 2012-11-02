@@ -380,9 +380,9 @@ public final class GameHandler {
 		ArrayList<ArrayList<Explosion>> explist = new ArrayList<ArrayList<Explosion>>(explosions); 
 		for(ArrayList<Explosion> explosion : explist) {
 			Explosion exp = explosion.get(0);
-			exp.decrementDuration();
+			exp.decrementTimer();
 			
-			if(exp.getDuration() <= 0) {
+			if(exp.getTimer() <= 0) {
 				removeExplosionList(explosion);
 			}
 		}
