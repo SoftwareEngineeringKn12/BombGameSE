@@ -1,6 +1,9 @@
 package bombgame.tui;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ByteArrayInputStream;
 import java.io.PrintStream;
 
 import bombgame.entities.Bomb;
@@ -19,11 +22,6 @@ public final class TextUITest extends TestCase {
 	public void setUp() {
 		tui1 = new TextUI();
 		tui2 = new TextUI(new GameObject[10][10]);
-	}
-	
-	
-	public void testUpdate()  {
-		
 	}
 	
 	public void testPrintField() {
@@ -99,4 +97,14 @@ public final class TextUITest extends TestCase {
 	public void testGetGameHandler() {
 		assertNotNull(tui1.getGameHandler());
 	}
+	
+	public void testUpdate() {
+		
+		InputStream stdin = System.in;
+		ByteArrayInputStream myin = new ByteArrayInputStream("j".getBytes());
+		System.setIn(myin);
+		assertTrue(tui1.update());
+		System.setIn(stdin);
+	}
+	
 }
