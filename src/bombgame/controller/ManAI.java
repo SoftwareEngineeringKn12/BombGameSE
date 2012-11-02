@@ -160,7 +160,6 @@ public class ManAI {
 		c.calcCosts();
 		
 		if(handler.getField()[c.x][c.y] instanceof Wall) {
-			c.blocked = true;
 			addClosedList(c);
 			return;
 		}
@@ -186,8 +185,6 @@ public class ManAI {
 		private int y;
 		
 		private Cell prev;
-		
-		private boolean blocked;
 		
 		private int pathcost;
 		private int heucost;
