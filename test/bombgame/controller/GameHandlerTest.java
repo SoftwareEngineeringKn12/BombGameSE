@@ -193,6 +193,49 @@ public final class GameHandlerTest extends TestCase {
 		gh2.moveMan(man);
 		assertEquals(man.getX(), 0);
 		assertEquals(man.getY(), 1);
+		
+		
+		//#############
+		man = new Man(1,1);
+		gh1.addObject(man);
+		gh1.addObject(new Man(0,1));
+		gh1.addObject(new Man(1,0));
+		gh1.addObject(new Man(1,2));
+		gh1.addObject(new Man(2,1));
+		
+		
+		man.setDirection(Man.LEFT);
+		gh1.moveMan(man);
+		assertEquals(man.getX(), 0);
+		assertEquals(man.getY(), 1);
+		
+		man.setDirection(Man.UP);
+		gh1.moveMan(man);
+		man.setDirection(Man.RIGHT);
+		gh1.moveMan(man);
+		assertEquals(man.getX(), 1);
+		assertEquals(man.getY(), 0);
+		
+		man.setDirection(Man.RIGHT);
+		gh1.moveMan(man);
+		man.setDirection(Man.DOWN);
+		gh1.moveMan(man);
+		assertEquals(man.getX(), 2);
+		assertEquals(man.getY(), 1);
+		
+		man.setDirection(Man.DOWN);
+		gh1.moveMan(man);
+		man.setDirection(Man.LEFT);
+		gh1.moveMan(man);
+		assertEquals(man.getX(), 1);
+		assertEquals(man.getY(), 2);
+		
+		man.setDirection(Man.LEFT);
+		gh1.moveMan(man);
+		man.setDirection(Man.UP);
+		gh1.moveMan(man);
+		assertEquals(man.getX(), 0);
+		assertEquals(man.getY(), 1);
 	}
 	
 	public void testNextExplosion() {
@@ -202,5 +245,51 @@ public final class GameHandlerTest extends TestCase {
 		assertFalse(gh1.nextExplosion(15, 0, true, al));
 		assertFalse(gh1.nextExplosion(-0, -1, true, al));
 		assertFalse(gh1.nextExplosion(0, 15, true, al));
+	}
+	
+	public void testMoveAll() {
+		gh1.addObject(new Man(1,1));
+		Man m = new Man(1,2);
+		m.setDirection(Man.LEFT);
+		gh1.addObject(m);
+		gh1.addObject(new Explosion(0,0));
+		gh1.moveAll();
+		gh1.moveAll();
+		assertEquals(gh1.getMen().size(), 1);
+	}
+	
+	public void testPlaceBombs() {
+		Man m = new Man(0,0);
+		m.setPlaceBomb(true);
+		gh1.addObject(new Man(1,1));
+		gh1.addObject(m);
+		gh1.placeBombs();
+		assertEquals(gh1.getBombs().size(),1);
+		
+	}
+	
+	public void testUpdateBombs() {
+		Bomb b = new Bomb(1,1);
+		gh1.addObject(b);
+		while(b.getTimer() > 0) {
+			gh1.updateBombs();
+		}
+		gh1.updateBombs();
+		
+		assertEquals(gh1.getBombs().size(),0);
+	}
+	
+	public void testUpdateExplosion() {
+		
+		Explosion exp = new Explosion(1,1);
+		gh1.addObject(exp);
+		
+		while(exp.getDuration() > 0) {
+			gh1.updateExplosion();
+		}
+		
+		assertEquals(gh1.getExplosionList().size(),0);
+		
+		
 	}
 }
