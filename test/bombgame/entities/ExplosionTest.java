@@ -9,4 +9,14 @@ public final class ExplosionTest extends TestCase {
 	public void setUp() {
 		ex = new Explosion(1, 1);
 	}
+	
+	
+	public void testGetDuration() {
+		assertEquals(ex.getDuration(),4);
+	}
+	
+	public void testDecrementDuration() {
+		ex.decrementDuration();
+		assertEquals(ex.getDuration(), 3);
+	}
 }

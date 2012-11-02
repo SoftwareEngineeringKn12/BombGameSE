@@ -26,20 +26,21 @@ public final class BombTest extends TestCase {
 		assertEquals(bomb.getDelay(), bomb.getTimer());
 	}
 	
-	// Changed new test needed!!
-	/*
+	// Changed new test needed!
 	public void testDecrementTimer() {
 		// normal
 		bomb.decrementTimer();
 		assertEquals(bomb.getDelay()-1, bomb.getTimer());
 		
 		// explode
+		Explosion exp = null;
 		for(int i = 0; i < bomb.getDelay(); i++) {
-			bomb.decrementTimer();
+			exp = bomb.decrementTimer();
 		}
 		
+		assertNotNull(exp);
 		// check explode!
-	}*/
+	}
 	
 	public void testToString() {
 		StringBuilder str = new StringBuilder();
