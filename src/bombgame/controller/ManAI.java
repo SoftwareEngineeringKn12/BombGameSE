@@ -349,11 +349,16 @@ public class ManAI {
 	
 	/**
 	 * Sets the direction of the controlled Man-object to the calculated value. The value is calculated
-	 * using the next cell from path and the current location of the Man-object.
+	 * using the next cell from path and the current location of the Man-object. If path is empty, this
+	 * method does nothing.
 	 */
 	private void calcManDirection() {
 		
 		Cell c = path.peek();
+		
+		if( c == null) {
+			return;
+		}
 		
 		int dx = c.x - man.getX();
 		int dy = c.y - man.getY();
@@ -412,6 +417,22 @@ public class ManAI {
 		
 	}
 	
+	/**
+	 * Returns the current target Cell of the AI.
+	 * @return - target of the AI
+	 */
+	public Cell getTarget() {
+		return target;
+	}
+	
+	
+	/**
+	 * Sets the target Cell of the AI to the specified Cell.
+	 * @param c - Cell-object that should be the new target.
+	 */
+	public void setTarget(final Cell c) {
+		target = c;
+	}
 	
 	/**
 	 * Returns the String-form of a ManAI-object.

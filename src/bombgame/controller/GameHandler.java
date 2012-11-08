@@ -51,6 +51,7 @@ public final class GameHandler {
 		explosions = new ArrayList<ArrayList<Explosion>>();
 	}
 	
+	
 	/**
 	 * Creates a new GameHandler including a field of width x height elements with randomly
 	 * generated environment.
@@ -64,6 +65,7 @@ public final class GameHandler {
 		explosions = new ArrayList<ArrayList<Explosion>>();
 	}
 	
+	
 	/**
 	 * Creates a new GameHandler with the given field.
 	 * (for testing purposes)
@@ -75,6 +77,7 @@ public final class GameHandler {
 		bombs = new ArrayList<Bomb>();
 		explosions = new ArrayList<ArrayList<Explosion>>();
 	}
+	
 	
 	/**
 	 * Adds the given GameObject to the field and the specified List, if Position is not already in use except Bomb-objects.
@@ -143,6 +146,7 @@ public final class GameHandler {
 		explosions.remove(list);
 	}
 	
+	
 	/**
 	 * Calculates a new next by position for the specified Man-object if the current position
 	 * is already used.
@@ -203,6 +207,7 @@ public final class GameHandler {
 		return bombs;
 	}
 	
+	
 	/**
 	 * Returns the List of Lists of Explosions.
 	 * @return - List of Lists of Explosions
@@ -210,6 +215,7 @@ public final class GameHandler {
 	public ArrayList<ArrayList<Explosion>> getExplosionList() {
 		return explosions;
 	}
+	
 	
 	/**
 	 * Returns the List of Explosion-objects in which the specified Explosion-oject is included.
@@ -316,6 +322,7 @@ public final class GameHandler {
 		
 	}
 	
+	
 	/**
 	 * Calculates the spread of the specified Explosion-object.
 	 * @param explosion - source of explosion
@@ -346,6 +353,7 @@ public final class GameHandler {
 		
 	}
 	
+	
 	/**
 	 * Creates a new Explosion-object with the specified coordinates, adds that object to the specified ArrayList
 	 * and returns true, if the coordinate is not blocked by a Wall-object and free is true.
@@ -370,6 +378,10 @@ public final class GameHandler {
 		}
 	}
 	
+	
+	/**
+	 * Moves all Man-objects kept in men.
+	 */
 	public void moveAll() {
 		//new ArrayList is needed to remove a man during iteration
 		ArrayList<Man> m = new ArrayList<Man>(men);
@@ -382,6 +394,10 @@ public final class GameHandler {
 		}
 	}
 	
+	
+	/**
+	 * Checks if any Man-object from men wants to place a bomb. If so a Bomb-object is added.
+	 */
 	public void placeBombs() {
 		for (Man man : men) {
 			if (man.getPlaceBomb()) {
@@ -390,6 +406,11 @@ public final class GameHandler {
 		}
 	}
 	
+	
+	/**
+	 * Decrements the timer of the Bomb-object kept in bombs. If they explode the Bomb-object is removed
+	 * and an Explosion-object is added.
+	 */
 	public void updateBombs() {
 		//new ArrayList is needed to remove a bomb during iteration
 		ArrayList<Bomb> bs = new ArrayList<Bomb>(bombs);
@@ -458,6 +479,11 @@ public final class GameHandler {
 		}
 	}
 	
+	
+	/**
+	 * Returns a String-representation of the explosionlist of this GameHandler-object.
+	 * @return
+	 */
 	public String explosionListToString() {
 		StringBuilder sb = new StringBuilder();
 		for(ArrayList<Explosion> list : explosions) {
