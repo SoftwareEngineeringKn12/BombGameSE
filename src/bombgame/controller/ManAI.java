@@ -11,30 +11,74 @@ import bombgame.entities.Explosion;
 import bombgame.entities.Man;
 import bombgame.entities.Wall;
 
+/**
+ * 
+ * @author Fabian
+ *
+ */
 public class ManAI {
 
+	/**
+	 * Man-object controlled by AI
+	 */
 	private Man man;
 	
+	/**
+	 * Extra-cost for cells threatened by a Bomb-object
+	 */
 	private static final int B_COST = 6;
 	
+	/**
+	 * Handler wich handles this ManAI-object
+	 */
 	private GameHandler handler;
 	
+	/**
+	 * List of closed Cells
+	 */
 	private TreeSet<Cell> closedlist;
 	
+	/**
+	 * List of known cells
+	 */
 	private PriorityQueue<Cell> openlist;
 	
+	/**
+	 * Maps isclosed statement to field positions
+	 */
 	private boolean inclosed[][];
 	
+	/**
+	 * target Cell of the AI
+	 */
 	private Cell target;
 	
+	/**
+	 * Path which was calculated by A*
+	 */
 	private Deque<Cell> path;
 	
+	/**
+	 * determines if Man-object should place a bomb at the target
+	 */
 	private boolean placebomb;
 	
+	/**
+	 * turns until next refresh of path
+	 */
 	private int turns;
 	
+	/**
+	 * difference between two refreshs
+	 */
 	public static final int REFRESH_RATE = 2;
 	
+	
+	/**
+	 * Creates a ManAI-object controlling the specified Man-object and living in the specified GameHandler-object.
+	 * @param man - Man-object controlled by AI
+	 * @param handler - GameHandler in which AI acts
+	 */
 	public ManAI (Man man, GameHandler handler) {
 		this.man = man;
 		this.handler = handler;
@@ -45,7 +89,10 @@ public class ManAI {
 	}
 	
 	
-	
+	/**
+	 * Calculates the next step of the Man-object, including pathfinding, setting the Man-objects direction and
+	 * placing bombs.
+	 */
 	public void calcNextStep() {
 		
 		if(checkTargetReached()) {
@@ -75,6 +122,10 @@ public class ManAI {
 	}
 	
 	
+	/**
+	 * Calculates the shortest and most harmless way to the Cell given in target with A*.
+	 * If target is null the Method does nothing.
+	 */
 	private void calculatePathToTarget() {
 		if(target == null) {
 			return;
@@ -107,8 +158,9 @@ public class ManAI {
 		
 	}
 	
+	
 	/**
-	 * Adds all neighbour of the specified Cell-object to the openlist.
+	 * Adds all neighbours of the specified Cell-object to the openlist.
 	 * @param c - Cell-object whose neighbours are examined 
 	 */
 	private void addNeighbours(Cell c) {
@@ -138,6 +190,7 @@ public class ManAI {
 		}
 	}
 	
+	
 	/**
 	 * Adds the specified Cell-object to the closedlist.
 	 * @param c - Cell-object that will bei added to the closedlist
@@ -151,8 +204,15 @@ public class ManAI {
 		
 	}
 		
+	
 	/**
 	 * Adds the specified Cell-Object to the openlist.
+	 * If the given Cell points to a Wall-object, the Cell will be immediately moved to the closedlist.
+	 * If the given Cell points to an Explosion and the pathcost up to this Cell is lower than the timer
+	 * of the Explosion-object, the given Cell will be immediately moved to the closedlist.
+	 * If the given Cell is in the Range of a Bomb, its overall cost will be increased by B_COST.
+	 * If the given Cell is equals to one in the openlist and has lower overall cost than the one already
+	 * in the list, the cost and its predecessor will be overwritten.
 	 * @param c - Cell-object that will be added to the openlist.
 	 */
 	private void addOpenList(Cell c) {
@@ -163,7 +223,7 @@ public class ManAI {
 		
 		c.calcCosts();
 		
-		//if is blocking the way immediatly put to closed list
+		//if is blocking the way immediately put to closed list
 		if(handler.getField()[c.x][c.y] instanceof Wall) {
 			//System.out.println(c + " is blocking");
 			addClosedList(c);
@@ -205,6 +265,10 @@ public class ManAI {
 		
 	}
 	
+	
+	/**
+	 * Searches a new target for the AI by searching the nearest Man-object and target it.
+	 */
 	private void searchTarget() {
 		List<Man> targets = handler.getMen();
 		Man kill = null;
@@ -252,6 +316,10 @@ public class ManAI {
 		return false;
 	}
 	
+	
+	/**
+	 * Clears the lists openlist, closedlist and inclosed.
+	 */
 	private void clearLists() {
 		openlist.clear();
 		closedlist.clear();
@@ -262,6 +330,10 @@ public class ManAI {
 		}
 	}
 	
+	
+	/**
+	 * Pushes the path referenced by target.prev onto path.
+	 */
 	private void pushOnPath() {
 		path.clear();
 		
@@ -274,6 +346,11 @@ public class ManAI {
 		}
 	}
 	
+	
+	/**
+	 * Sets the direction of the controlled Man-object to the calculated value. The value is calculated
+	 * using the next cell from path and the current location of the Man-object.
+	 */
 	private void calcManDirection() {
 		
 		Cell c = path.peek();
@@ -303,20 +380,28 @@ public class ManAI {
 	}
 	
 	
+	/**
+	 * Checks if the coordinates of the target Cell and the ones of the Man-object are the same.
+	 * If so, target is set to null and placebomb of the Man-object is set to the AI's placebomb value.
+	 * @return - returns true if target was reached
+	 */
 	private boolean checkTargetReached() {
 		
 		if(target != null && man.getX() == target.x && man.getY() == target.y) {
 			target = null;
-			if(placebomb) {
-				man.setPlaceBomb(true);
-				placebomb = false;
-			}
+			man.setPlaceBomb(placebomb);
+			placebomb = false;
 			return true;
 		}
 		return false;
 		
 	}
 	
+	
+	/**
+	 * Decrements turns and if turns is 0 turns will be set to the value of REFRESH_RATE
+	 * and path is cleared.
+	 */
 	private void decrementTurns() {
 		if(turns == 0) {
 			turns = REFRESH_RATE;
@@ -326,6 +411,11 @@ public class ManAI {
 		turns--;
 		
 	}
+	
+	
+	/**
+	 * Returns the String-form of a ManAI-object.
+	 */
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("-> AI: ");
@@ -340,22 +430,56 @@ public class ManAI {
 	}
 	
 	
+	/**
+	 * This class is used for A*. It provides a Reference on a Cell-object to connect Cells
+	 * like a linkedList to recreate the shortest way calculated by A*.
+	 * @author Fabian
+	 *
+	 */
 	private class Cell implements Comparable<Cell> {
 		private int x;
 		private int y;
 		
+		/**
+		 * Reference to previous Cell
+		 */
 		private Cell prev;
 		
+		/**
+		 * Costs of the path to get up to this Cell
+		 */
 		private int pathcost;
+		
+		/**
+		 * Costs of the path to get from this Cell to the target
+		 */
 		private int heucost;
+		
+		/**
+		 * allover costs
+		 */
 		private int cost;
 		
+		
+		/**
+		 * Creates a Cell-object with the specified x- and y-coordinates and reference
+		 * to the specified Cell. All costs are initialized with 0.
+		 * @param x - x-coordinate
+		 * @param y - y-coordinate
+		 * @param prev - previous Cell-object
+		 */
 		private Cell(int x, int y, Cell prev) {
 			this.x = x;
 			this.y = y;
 			this.prev = prev;
 		}
 		
+		
+		/**
+		 * Calculates pathcosts as pathcosts of the previous Cell-object + 1 and the heuristic pathcost 
+		 * as the logically needed steps to get to the target.
+		 * The allover costs are the sum of pathcost and heucost.
+		 */
 		private void calcCosts() {
 			if(prev != null) {
 				pathcost = prev.pathcost + 1;
@@ -367,6 +491,10 @@ public class ManAI {
 			
 		}
 		
+		
+		/**
+		 * Two Cells are equal if they have the same x- and y-coordinates.
+		 */
 		@Override
 		public boolean equals(Object o) {
 			if(o instanceof Cell) {
@@ -376,6 +504,11 @@ public class ManAI {
 			return false;
 		}
 
+		
+		/**
+		 * A Cell is bigger (>) than another if the allover costs are higher than the allover
+		 * costs of the other one.
+		 */
 		@Override
 		public int compareTo(Cell c) {
 			if(this.equals(c)) {
@@ -388,6 +521,10 @@ public class ManAI {
 			}
 		}
 		
+		
+		/**
+		 * Returns the String-form of a Cell-object.
+		 */
 		@Override
 		public String toString() {
 			StringBuilder sb = new StringBuilder("C: ");

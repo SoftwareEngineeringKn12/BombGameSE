@@ -132,8 +132,9 @@ public final class TextUI {
 		// syso(ki) if more ki -> loop from list
 	}
 	
+	
 	/**
-	 * Prints the location of all bombs in game.
+	 * Prints the location of all bombs in the game.
 	 */
 	public void printBombs() {
 		System.out.println("Bombs:");
@@ -142,11 +143,19 @@ public final class TextUI {
 		}
 	}
 	
+	
+	/**
+	 * Prints the location of all explosions in the game.
+	 */
 	public void printExplosions() {
 		System.out.println("Explosions:");
 		System.out.println(handler.explosionListToString());
 	}
 	
+	
+	/**
+	 * Prints the location of all ManAI-objects in the game.
+	 */
 	public void printAI() {
 		System.out.println("AI:");
 		for(ManAI ai : ais) {
@@ -154,14 +163,29 @@ public final class TextUI {
 		}
 	}
 	
+	
+	/**
+	 * Returns the GameHandler-object currently used by the TextUI.
+	 * @return - GameHandler-object used by TextUI
+	 */
 	public GameHandler getGameHandler() {
 		return handler;
 	}
 	
+	
+	/**
+	 * Creates a new Player controlling the specified Man-object.
+	 * @param man - Man-object controlled by the new Player
+	 */
 	public void setPlayer(final Man man) {
 		player = new PlayerTUI(man);
 	}
 	
+	
+	/**
+	 * Returns the currently use Player.
+	 * @return - Player-object currently in use
+	 */
 	public PlayerTUI getPlayer() {
 		return player;
 	}

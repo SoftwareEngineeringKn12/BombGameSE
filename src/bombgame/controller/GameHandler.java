@@ -82,12 +82,9 @@ public final class GameHandler {
 	 * @param obj - GameObject that should be added to the field
 	 */
 	public void addObject(GameObject obj) {
-		if (field[obj.getX()][obj.getY()] != null && !(obj instanceof Bomb)) { 
-			return;
-		}
 		
 		if (obj instanceof Man) {
-			men.add((Man) obj);
+			spawnMan((Man) obj);
 		}
 		
 		if (obj instanceof Bomb) {
@@ -144,6 +141,39 @@ public final class GameHandler {
 		}
 		
 		explosions.remove(list);
+	}
+	
+	/**
+	 * Calculates a new next by position for the specified Man-object if the current position
+	 * is already used.
+	 * @param m - spawning Man-object
+	 */
+	private void spawnMan(Man m) {
+		if(field[m.getX()][m.getY()] == null) {
+			men.add(m);
+			return;
+		}
+		
+		
+		for(int i = 1; i < 7; i++ ) {
+			if(m.getX() + i < field.length) {
+				m.setPos(m.getX() + i, m.getY());
+				break;
+			}
+			if(m.getX() - i >= 0) {
+				m.setPos(m.getX() - i, m.getY());
+				break;
+			}
+			if(m.getY() + i < field[0].length) {
+				m.setPos(m.getX(), m.getY() + i);
+				break;
+			}
+			if(m.getY() - i > 0) {
+				m.setPos(m.getX(), m.getY() - i);
+				break;
+			}
+		}
+		men.add(m);
 	}
 	
 	
