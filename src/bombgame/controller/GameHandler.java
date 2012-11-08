@@ -427,4 +427,22 @@ public final class GameHandler {
 			}
 		}
 	}
+	
+	public String explosionListToString() {
+		StringBuilder sb = new StringBuilder();
+		for(ArrayList<Explosion> list : explosions) {
+			sb.append("->Explosion: { ");
+			int i = 0;
+			for(Explosion exp : list) {
+				if(i < list.size() - 1) {
+					sb.append("[").append(exp.getX()).append("] [").append(exp.getY()).append("], ");
+				} else {
+					sb.append("[").append(exp.getX()).append("] [").append(exp.getY()).append("] }\n");
+				}
+				i++;
+			}
+		}
+		
+		return sb.toString();
+	}
 }

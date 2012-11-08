@@ -31,65 +31,56 @@ public class ManAI {
 	
 	private boolean placebomb;
 	
+	private int turns;
+	
+	public static final int REFRESH_RATE = 2;
+	
 	public ManAI (Man man, GameHandler handler) {
 		this.man = man;
 		this.handler = handler;
 		openlist = new PriorityQueue<Cell>();
 		closedlist = new TreeSet<Cell>();
-		inclosed = new boolean[handler.getField()[0].length] [handler.getField().length];
+		inclosed = new boolean[handler.getField().length] [handler.getField()[0].length];
 		path = new LinkedList<Cell>();
 	}
 	
 	
+	
 	public void calcNextStep() {
-		if(placebomb && man.getX() == target.x && man.getY() == target.y) {
-			man.setPlaceBomb(true);
-			placebomb = false;
+		
+		if(checkTargetReached()) {
 			return;
 		}
 		
+		decrementTurns();
+		
 		if(path.isEmpty()) {
+			//System.out.println("path is empty");
 			searchTarget();
 			calculatePathToTarget();
 		}
 		
-		Cell c = path.pop();
-		
-		if(c.x == man.getX() && c.y == man.getY()) {
-			c = path.pop();
+		if(path.isEmpty()) {
+			return;
 		}
 		
-		int dx = c.x - man.getX();
-		int dy = c.y - man.getY();
+		Cell c = path.pop();
+		if(c.x != man.getX() || c.y != man.getY()) {
+			path.clear();
+			return;
+		}
+		calcManDirection();
 		
-		if(dx == 1) {
-			
-			man.setDirection(Man.RIGHT);
-			
-		} else if(dx == -1) {
-			
-			man.setDirection(Man.LEFT);
-			
-		} else if(dy == 1) {
-			
-			man.setDirection(Man.DOWN);
-			
-		} else if( dy == -1) {
-			
-			man.setDirection(Man.UP);
-			
-		} else {
-			man.setDirection(Man.NO_DIR);
-		} 
 		
 	}
+	
+	
 	private void calculatePathToTarget() {
 		if(target == null) {
 			return;
 		}
-		openlist.clear();
-		closedlist.clear();
 		
+		clearLists();		
 		
 		addOpenList(new Cell(man.getX(), man.getY(), null));
 		
@@ -97,9 +88,12 @@ public class ManAI {
 		while(!openlist.isEmpty()) {
 			
 			Cell c = openlist.poll();
+			//System.out.println("-> Popped: " + c);
 			addClosedList(c);
 			
 			if(inclosed[target.x][target.y]) {
+				//System.out.println("=> found Target " + c);
+				target = c;
 				break;
 			}
 			
@@ -108,13 +102,7 @@ public class ManAI {
 		}
 		
 		//put path in path deque
-		path.clear();
-		
-		if(inclosed[target.x][target.y]) {
-			for(Cell q = target; q != null; q = q.prev) {
-				path.push(q);
-			}
-		}
+		pushOnPath();
 		
 		
 	}
@@ -177,6 +165,7 @@ public class ManAI {
 		
 		//if is blocking the way immediatly put to closed list
 		if(handler.getField()[c.x][c.y] instanceof Wall) {
+			//System.out.println(c + " is blocking");
 			addClosedList(c);
 			return;
 		}
@@ -185,6 +174,7 @@ public class ManAI {
 		if(handler.getField()[c.x][c.y] instanceof Explosion) {
 			Explosion exp = (Explosion) handler.getField()[c.x][c.y];
 			if(exp.getTimer() >= c.pathcost) {
+				//System.out.println(c + " is Explosion in way");
 				addClosedList(c);
 				return;
 			}
@@ -200,6 +190,7 @@ public class ManAI {
 		
 		for(Cell tmp : openlist) {
 			if(tmp.equals(c)) {
+				//System.out.println(c + " already in openlist");
 				if(c.cost < tmp.cost) {
 					tmp.prev = c.prev;
 					tmp.calcCosts();
@@ -209,12 +200,13 @@ public class ManAI {
 		}
 		
 		//not found
+		//System.out.println(c + " added to openlist");
 		openlist.add(c);
 		
 	}
 	
 	private void searchTarget() {
-		List<Man> targets= handler.getMen();
+		List<Man> targets = handler.getMen();
 		Man kill = null;
 		int steps = 99999999 ;
 		for(Man m : targets) {
@@ -237,6 +229,7 @@ public class ManAI {
 			return;
 		}
 		target = new Cell(kill.getX(), kill.getY(), null);
+		//System.out.println("Set target: " + target);
 		placebomb = true;
 	}
 	
@@ -257,6 +250,93 @@ public class ManAI {
 			}
 		}
 		return false;
+	}
+	
+	private void clearLists() {
+		openlist.clear();
+		closedlist.clear();
+		for( int i = 0; i < inclosed.length; i++) {
+			for( int j = 0; j < inclosed[0].length; j++) {
+				inclosed[i][j] = false;
+			}
+		}
+	}
+	
+	private void pushOnPath() {
+		path.clear();
+		
+		if(target.prev != null) {
+			//System.out.println("-----------------------");
+			for(Cell q = target; q != null; q = q.prev) {
+				//System.out.println("Pushing " + q);
+				path.push(q);
+			}
+		}
+	}
+	
+	private void calcManDirection() {
+		
+		Cell c = path.peek();
+		
+		int dx = c.x - man.getX();
+		int dy = c.y - man.getY();
+		
+		if(dx == 1) {
+			
+			man.setDirection(Man.RIGHT);
+			
+		} else if(dx == -1) {
+			
+			man.setDirection(Man.LEFT);
+			
+		} else if(dy == 1) {
+			
+			man.setDirection(Man.DOWN);
+			
+		} else if( dy == -1) {
+			
+			man.setDirection(Man.UP);
+			
+		} else {
+			man.setDirection(Man.NO_DIR);
+		} 
+	}
+	
+	
+	private boolean checkTargetReached() {
+		
+		if(target != null && man.getX() == target.x && man.getY() == target.y) {
+			target = null;
+			if(placebomb) {
+				man.setPlaceBomb(true);
+				placebomb = false;
+			}
+			return true;
+		}
+		return false;
+		
+	}
+	
+	private void decrementTurns() {
+		if(turns == 0) {
+			turns = REFRESH_RATE;
+			path.clear();
+			return;
+		}
+		turns--;
+		
+	}
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("-> AI: ");
+		sb.append("[").append(man.getX()).append("] [").append(man.getY()).append("]");
+		sb.append(" T: ");
+		if(target == null) {
+			sb.append("NULL");
+		} else {
+			sb.append("[").append(target.x).append("] [").append(target.y).append("]");
+		}
+		return sb.toString();
 	}
 	
 	
@@ -306,6 +386,14 @@ public class ManAI {
 			} else {
 				return 1;
 			}
+		}
+		
+		@Override
+		public String toString() {
+			StringBuilder sb = new StringBuilder("C: ");
+			sb.append("[").append(x).append("] [").append(y).append("] ");
+			sb.append("Cost: ").append(cost);
+			return sb.toString();
 		}
 		
 	}

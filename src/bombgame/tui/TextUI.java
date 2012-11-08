@@ -34,6 +34,7 @@ public final class TextUI {
 		ais[0] =  new ManAI(manAi, handler);
 		handler.addObject(manPlayer);
 		handler.addObject(manAi);
+		printField();
 	}
 	
 	public TextUI(final GameObject[][] field) {
@@ -61,7 +62,9 @@ public final class TextUI {
 		handler.updateExplosion();
 		
 		printAllPlayers();
+		printAI();
 		printBombs();
+		printExplosions();
 		printField();
 		return true;
 	}
@@ -136,6 +139,18 @@ public final class TextUI {
 		System.out.println("Bombs:");
 		for (Bomb bomb : handler.getBombs()) {
 			System.out.println(bomb);
+		}
+	}
+	
+	public void printExplosions() {
+		System.out.println("Explosions:");
+		System.out.println(handler.explosionListToString());
+	}
+	
+	public void printAI() {
+		System.out.println("AI:");
+		for(ManAI ai : ais) {
+			System.out.println(ai);
 		}
 	}
 	

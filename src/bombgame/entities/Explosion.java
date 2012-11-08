@@ -44,5 +44,12 @@ public final class Explosion extends GameObject {
 	public void decrementTimer() {
 		timer--;
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("Explosion: ");
+		sb.append("[").append(getX()).append("] [").append(getY()).append("]");
+		return sb.toString();
+	}
 
 }
