@@ -1,6 +1,7 @@
 package bombgame.tui;
 
 import bombgame.controller.GameHandler;
+import bombgame.controller.ManAI;
 import bombgame.controller.PlayerTUI;
 import bombgame.entities.Bomb;
 import bombgame.entities.Explosion;
@@ -17,6 +18,7 @@ public final class TextUI {
 	
 	private GameHandler handler;
 	private PlayerTUI player;
+	private ManAI[] ais;
 	// KI - Maybe List to store ki
 	
 	/**
@@ -24,11 +26,14 @@ public final class TextUI {
 	 */
 	public TextUI() {
 		Man manPlayer = new Man(0, 0); // Man for player
+		Man manAi = new Man(8,8);
 		
 		handler = new GameHandler();
 		player = new PlayerTUI(manPlayer);
-		// new KI
+		ais = new ManAI[1];
+		ais[0] =  new ManAI(manAi, handler);
 		handler.addObject(manPlayer);
+		handler.addObject(manAi);
 	}
 	
 	public TextUI(final GameObject[][] field) {
@@ -45,7 +50,9 @@ public final class TextUI {
 		//Scanner in = new Scanner(System.in);
 		
 		
-		//calcKI()
+		for(ManAI ai : ais) {
+			ai.calcNextStep();
+		}
 		player.move();
 		
 		handler.moveAll();
