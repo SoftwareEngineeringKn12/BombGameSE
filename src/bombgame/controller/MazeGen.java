@@ -16,9 +16,9 @@ import java.util.Random;
  */
 public final class MazeGen {
 
-	private int xLength = 60;
-	private int yLength = 15;
-	private final int numberOfDeletionsPerLine = (int) (xLength * 0.4);
+	private int xLength;
+	private int yLength;
+	private int numberOfDeletionsPerLine;
 	private Cell maze[][];
 	private LinkedList<Cell> backtrack = new LinkedList<Cell>();
 	private Random rand = new Random();
@@ -38,12 +38,13 @@ public final class MazeGen {
 	}
 
 	public MazeGen() {
-
+		this(60, 15);
 	}
 
 	public MazeGen(int xLength, int yLength) {
 		this.xLength = xLength;
 		this.yLength = yLength;
+		numberOfDeletionsPerLine = (int) (xLength * 0.4);
 	}
 
 	private void generate() {
