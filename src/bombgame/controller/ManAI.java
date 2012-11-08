@@ -2,6 +2,7 @@ package bombgame.controller;
 
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.PriorityQueue;
 import java.util.TreeSet;
 
@@ -28,6 +29,8 @@ public class ManAI {
 	
 	private Deque<Cell> path;
 	
+	private boolean placebomb;
+	
 	public ManAI (Man man, GameHandler handler) {
 		this.man = man;
 		this.handler = handler;
@@ -39,8 +42,15 @@ public class ManAI {
 	
 	
 	public void calcNextStep() {
+		if(placebomb && man.getX() == target.x && man.getY() == target.y) {
+			man.setPlaceBomb(true);
+			placebomb = false;
+			return;
+		}
+		
 		if(path.isEmpty()) {
-			//calculatePathTo(x, y)
+			searchTarget();
+			calculatePathToTarget();
 		}
 		
 		Cell c = path.pop();
@@ -73,13 +83,15 @@ public class ManAI {
 		} 
 		
 	}
-	private void calculatePathTo(int x, int y) {
+	private void calculatePathToTarget() {
+		if(target == null) {
+			return;
+		}
 		openlist.clear();
 		closedlist.clear();
-		target = new Cell(x, y, null);
 		
 		
-		openlist.add(new Cell(man.getX(), man.getY(), null));
+		addOpenList(new Cell(man.getX(), man.getY(), null));
 		
 		//search path
 		while(!openlist.isEmpty()) {
@@ -113,7 +125,7 @@ public class ManAI {
 	 */
 	private void addNeighbours(Cell c) {
 		
-		if(c.x + 1 < inclosed[0].length && !(inclosed[c.x+1][c.y])) {
+		if(c.x + 1 < inclosed.length && !(inclosed[c.x+1][c.y])) {
 			
 			addOpenList(new Cell(c.x+1, c.y, c));
 			
@@ -201,6 +213,33 @@ public class ManAI {
 		
 	}
 	
+	private void searchTarget() {
+		List<Man> targets= handler.getMen();
+		Man kill = null;
+		int steps = 99999999 ;
+		for(Man m : targets) {
+			if(m == man) {
+				continue;
+			}
+			if(kill == null) {
+				kill = m;
+				continue;
+			}
+			
+			int tmp = Math.abs(man.getX() - m.getX()) + Math.abs(man.getY() - m.getY());
+			if(tmp < steps ) {
+				steps = tmp;
+				kill = m;
+			}
+		}
+		if(kill == null) {
+			target = null;
+			return;
+		}
+		target = new Cell(kill.getX(), kill.getY(), null);
+		placebomb = true;
+	}
+	
 	
 	/**
 	 * Returns true if the given Cell is probably in danger of being hit by an
@@ -238,7 +277,11 @@ public class ManAI {
 		}
 		
 		private void calcCosts() {
-			pathcost = prev.pathcost + 1;
+			if(prev != null) {
+				pathcost = prev.pathcost + 1;
+			} else {
+				pathcost = 0;
+			}
 			heucost = Math.abs(this.x - target.x) + Math.abs(this.y - target.y);
 			cost = heucost + pathcost;
 			
