@@ -15,6 +15,7 @@ public final class GameHandlerTest extends TestCase {
 	GameHandler gh2;
 	GameHandler gh3;
 	GameHandler gh4;
+	GameHandler gh5;
 	
 	public void setUp() {
 		
@@ -22,6 +23,7 @@ public final class GameHandlerTest extends TestCase {
 		gh2 = new GameHandler(new GameObject[2][3]);
 		gh3 = new GameHandler(2, 3);
 		gh4 = new GameHandler();
+		gh5 = new GameHandler(new GameObject[3][3]);
 	}
 	
 	public void testGetField() {
@@ -62,14 +64,50 @@ public final class GameHandlerTest extends TestCase {
 		gh1.addObject(o3);
 		assertSame(o3, gh1.getField()[1][8]);
 		
-		//because (3/4) already used by o1, don't add 
-		GameObject o4 = new Explosion(3,4);
-		gh1.addObject(o4);
-		assertNotSame(o4, gh1.getField()[3][4]);
 		
-		GameObject o5 = new Explosion(2,4);
+		GameObject o4 = new Man(3,4);
+		gh1.addObject(o4);
+		assertSame(o4, gh1.getField()[4][4]);
+		
+		gh1.addObject(new Wall(9,9));
+		
+		GameObject o5 = new Man(9,9);
 		gh1.addObject(o5);
-		assertSame(o5, gh1.getField()[2][4]);
+		assertSame(o5, gh1.getField()[8][9]);
+		
+		gh1.addObject(new Wall(9,5));
+		gh1.addObject(new Wall(8,5));
+		
+		GameObject o6 = new Man(9,5);
+		gh1.addObject(o6);
+		assertSame(o6, gh1.getField()[9][6]);
+		
+		gh1.addObject(new Wall(0,9));
+		gh1.addObject(new Wall(1,9));
+		
+		GameObject o7 = new Man(0,9);
+		gh1.addObject(o7);
+		assertSame(o7, gh1.getField()[0][8]);
+		//###########################
+		
+		for(int i = 0; i<3; i++) {
+			for(int j = 0; j<3; j++) {
+				gh5.addObject(new Wall(i,j));
+			}
+		}
+		GameObject o9 = new Man(1,1);
+		gh5.addObject(o9);
+		assertSame(o9, gh5.getField()[1][1]);
+		//because (3/4) already used by o1, don't add 
+		//GameObject o4 = new Explosion(3,4);
+		//gh1.addObject(o4);
+		//assertNotSame(o4, gh1.getField()[3][4]);
+		
+		GameObject o27 = new Explosion(2,4);
+		gh1.addObject(o27);
+		assertSame(o27, gh1.getField()[2][4]);
+		
+		
 	}
 	
 	public void testRemoveObject() {
@@ -291,5 +329,13 @@ public final class GameHandlerTest extends TestCase {
 		assertEquals(gh1.getExplosionList().size(),0);
 		
 		
+	}
+	
+	public void testExplosionToString() {
+		gh1.addObject(new Explosion(0,0));
+		gh1.addObject(new Explosion(9,9));
+		String s1 = gh1.explosionListToString();
+		String s2 = "->Explosion: { [0] [0], [1] [0], [0] [1], [2] [0], [0] [2], [3] [0], [0] [3] }\n->Explosion: { [9] [9], [8] [9], [9] [8], [7] [9], [9] [7], [6] [9], [9] [6] }\n";
+		assertEquals(s1,s2);
 	}
 }

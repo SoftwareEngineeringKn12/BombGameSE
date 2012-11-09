@@ -160,19 +160,19 @@ public final class GameHandler {
 		
 		
 		for(int i = 1; i < 7; i++ ) {
-			if(m.getX() + i < field.length) {
+			if(m.getX() + i < field.length && !(field[m.getX() + i][m.getY()] instanceof Wall)) {
 				m.setPos(m.getX() + i, m.getY());
 				break;
 			}
-			if(m.getX() - i >= 0) {
+			if(m.getX() - i >= 0 && !(field[m.getX() - i][m.getY()] instanceof Wall)) {
 				m.setPos(m.getX() - i, m.getY());
 				break;
 			}
-			if(m.getY() + i < field[0].length) {
+			if(m.getY() + i < field[0].length && !(field[m.getX()][m.getY() + i] instanceof Wall)) {
 				m.setPos(m.getX(), m.getY() + i);
 				break;
 			}
-			if(m.getY() - i > 0) {
+			if(m.getY() - i >= 0 && !(field[m.getX()][m.getY() - i] instanceof Wall)) {
 				m.setPos(m.getX(), m.getY() - i);
 				break;
 			}
