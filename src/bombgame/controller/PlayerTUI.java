@@ -14,6 +14,10 @@ public final class PlayerTUI {
 
 	private Man man;
 
+	/**
+	 * Creates new player with given man.
+	 * @param man
+	 */
 	public PlayerTUI(Man man) {
 		this.man = man;
 	}
@@ -27,13 +31,13 @@ public final class PlayerTUI {
 		String str = in.next();
 
 		if (str.equals("w")) {
-			man.setDirection(1);
+			man.setDirection(Man.UP);
 		} else if (str.equals("s")) {
-			man.setDirection(2);
+			man.setDirection(Man.DOWN);
 		} else if (str.equals("d")) {
-			man.setDirection(3);
+			man.setDirection(Man.RIGHT);
 		} else if (str.equals("a")) {
-			man.setDirection(4);
+			man.setDirection(Man.LEFT);
 		} else if (str.equals("j")) {
 			man.setPlaceBomb(true);	
 			man.setDirection(Man.NO_DIR);
