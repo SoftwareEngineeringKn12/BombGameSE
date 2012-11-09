@@ -36,8 +36,8 @@ public final class GameHandler {
 	/**
 	 * Field width and height
 	 */
-	private static final int FIELDWIDTH = 30;
-	private static final int FIELDHEIGHT = 20;
+	private static final int DEFWIDTH = 30;
+	private static final int DEFHEIGHT = 20;
 	
 	
 	/**
@@ -45,7 +45,7 @@ public final class GameHandler {
 	 * generated environment.
 	 */
 	public GameHandler() {
-		initializeField(FIELDWIDTH, FIELDHEIGHT);
+		initializeField(DEFWIDTH, DEFHEIGHT);
 		men = new ArrayList<Man>();
 		bombs = new ArrayList<Bomb>();
 		explosions = new ArrayList<ArrayList<Explosion>>();
