@@ -75,6 +75,8 @@ public class ManAI {
 	
 	private Deque<Integer> directionHistory;
 	
+	public static final int HISTORYLENGTH = 6;
+	
 	
 	
 	/**
@@ -398,6 +400,7 @@ public class ManAI {
 		if(target != null && man.getX() == target.x && man.getY() == target.y) {
 			target = null;
 			man.setPlaceBomb(placebomb);
+			man.setDirection(Man.NO_DIR);
 			placebomb = false;
 			return true;
 		}
@@ -601,7 +604,7 @@ public class ManAI {
 			if( this.equals(q)) {
 				return 0;
 			}
-			if(this.x + this.y > q.x + q.y) {
+			if(this.x + this.y + this.directions > q.x + q.y + q.directions) {
 				return 1;
 			} else {
 				return -1;
