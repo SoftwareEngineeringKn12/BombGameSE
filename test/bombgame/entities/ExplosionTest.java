@@ -19,4 +19,10 @@ public final class ExplosionTest extends TestCase {
 		ex.decrementTimer();
 		assertEquals(ex.getTimer(), 3);
 	}
+	
+	public void testToString() {
+		String s1 = ex.toString();
+		String s2 = "Explosion: [1] [1]";
+		assertEquals(s1,s2);
+	}
 }
