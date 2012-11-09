@@ -73,6 +73,9 @@ public class ManAI {
 	 */
 	public static final int REFRESH_RATE = 2;
 	
+	private Deque<Integer> directionHistory;
+	
+	
 	
 	/**
 	 * Creates a ManAI-object controlling the specified Man-object and living in the specified GameHandler-object.
@@ -457,7 +460,7 @@ public class ManAI {
 	 * @author Fabian
 	 *
 	 */
-	private class Cell implements Comparable<Cell> {
+	class Cell implements Comparable<Cell> {
 		private int x;
 		private int y;
 		
@@ -489,7 +492,7 @@ public class ManAI {
 		 * @param y - y-coordinate
 		 * @param prev - previous Cell-object
 		 */
-		private Cell(int x, int y, Cell prev) {
+		public Cell(int x, int y, Cell prev) {
 			this.x = x;
 			this.y = y;
 			this.prev = prev;
@@ -552,6 +555,57 @@ public class ManAI {
 			sb.append("[").append(x).append("] [").append(y).append("] ");
 			sb.append("Cost: ").append(cost);
 			return sb.toString();
+		}
+		
+	}
+	
+	class Node implements Comparable<Node> {
+		
+		private final int x;
+		private final int y;
+		
+		private final int directions;
+		
+		private final boolean[] direction;
+		
+		public Node(int x, int y, int directions, boolean[] direction) {
+			this.x = x;
+			this.y = y;
+			this.directions = directions;
+			this.direction = direction;
+		}
+		
+		public Node(int x, int y, int directions, boolean up, boolean down, boolean left, boolean right) {
+			this.x = x;
+			this.y = y;
+			this.directions = directions;
+			this.direction = new boolean[4];
+			direction[0] = up;
+			direction[1] = down;
+			direction[2] = left;
+			direction[3] = right;
+		}
+		
+		@Override
+		public boolean equals(Object o) {
+			if( o instanceof Node) {
+				Node n = (Node) o;
+				return (this.x == n.x && this.y == n.y);
+			} else {
+				return false;
+			}
+		}
+
+		@Override
+		public int compareTo(Node q) {
+			if( this.equals(q)) {
+				return 0;
+			}
+			if(this.x + this.y > q.x + q.y) {
+				return 1;
+			} else {
+				return -1;
+			}
 		}
 		
 	}
