@@ -1,13 +1,17 @@
 package bombgame.controller;
 
+import java.util.Arrays;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NavigableSet;
 import java.util.PriorityQueue;
+import java.util.Random;
 import java.util.TreeSet;
 
 import bombgame.entities.Bomb;
 import bombgame.entities.Explosion;
+import bombgame.entities.GameObject;
 import bombgame.entities.Man;
 import bombgame.entities.Wall;
 
@@ -23,10 +27,12 @@ public class ManAI {
 	 */
 	private Man man;
 	
+	private Man focusedEnemy;
+	
 	/**
 	 * Extra-cost for cells threatened by a Bomb-object
 	 */
-	private static final int B_COST = 6;
+	private static final int B_COST = 8;
 	
 	/**
 	 * Handler wich handles this ManAI-object
@@ -73,9 +79,19 @@ public class ManAI {
 	 */
 	public static final int REFRESH_RATE = 2;
 	
+	public static final int FOCUS_RATE = 100;
+	
+	private Random rand;
+	
 	private Deque<Integer> directionHistory;
 	
-	public static final int HISTORYLENGTH = 6;
+	private int[] directionCount;
+	
+	public static final int HISTORYLENGTH = 4;
+	
+	private NavigableSet<Node> nodes;
+	
+	
 	
 	
 	
@@ -91,6 +107,11 @@ public class ManAI {
 		closedlist = new TreeSet<Cell>();
 		inclosed = new boolean[handler.getField().length] [handler.getField()[0].length];
 		path = new LinkedList<Cell>();
+		rand = new Random();
+		directionHistory = new LinkedList<Integer>();
+		directionCount = new int[5];
+		nodes = new TreeSet<Node>();
+		findAllNodes();
 	}
 	
 	
@@ -99,16 +120,19 @@ public class ManAI {
 	 * placing bombs.
 	 */
 	public void calcNextStep() {
-		
 		if(checkTargetReached()) {
 			return;
 		}
 		
-		decrementTurns();
+		incrementTurns();
+		
+		updateHistory();
+		
+		
 		
 		if(path.isEmpty()) {
 			//System.out.println("path is empty");
-			searchTarget();
+			searchTargetAttack();
 			calculatePathToTarget();
 		}
 		
@@ -302,6 +326,186 @@ public class ManAI {
 		placebomb = true;
 	}
 	
+	private void searchTargetAttack() {
+		
+		//initialize directionCount with 0
+		Arrays.fill(directionCount,  0);
+		
+		for( Integer i : directionHistory) {
+			directionCount[i]++;
+		}
+		
+		//get direction with highest count
+		int direction = getMaxIndex(directionCount);
+		directionCount[direction] = 0;
+		
+		//find suitable Node as Target
+		calculateTarget(focusedEnemy.getX(), focusedEnemy.getY(), direction);
+		
+	}
+	
+	private void calculateTarget(int x, int y, int direction) {
+		if(focusedEnemy == null) {
+			return;
+		}
+		
+		target = null;
+
+		switch(direction) {
+		
+		case Man.UP:
+			findTargetUP(x,y);
+			break;
+			
+		case Man.DOWN:
+			findTargetDOWN(x,y);
+			break;
+			
+		case Man.RIGHT:
+			findTargetRIGHT(x, y);
+			break;
+			
+		case Man.LEFT:
+			findTargetLEFT(x, y);
+			break;
+		default:
+			if(sum(directionCount) <= 0) {
+				target = new Cell(x, y, null);
+				return;
+			}
+			chooseRandomTargetDirection(x,y);
+		}
+	}
+	
+	private void findTargetUP(int x, int y) {
+		GameObject[][] field = handler.getField();
+		
+		int i = 0;
+		while(y - i >= 0) {
+			if(field[x][y - i] instanceof Wall) {
+				//if way is blocked by Wall break the loop
+				break;
+			}
+			
+			//check if found node has same coordinates
+			Node q = nodes.ceiling(new Node(x, y - i,0,null));
+			if(q.x == x && q.y == y - i) {
+				target = new Cell(x, y - i, null);
+				placebomb = true;
+				return;
+			}
+			i++;
+		}
+		//no suitable node found (Wall blocked or out of field)
+		int direction = getMaxIndex(directionCount);
+		directionCount[direction] = 0;
+		calculateTarget(x, y - i + 1, direction);
+	}
+	
+	private void findTargetDOWN(int x, int y) {
+		GameObject[][] field = handler.getField();
+		
+		int i = 0;
+		while( y + i < field[0].length) {
+			//if way is blocked by Wall break the loop
+			if(field[x][y + i] instanceof Wall) {
+				break;
+			}
+			
+			//check if found node has same coordinates
+			Node q = nodes.ceiling(new Node(x, y + i,0,null));
+			if(q.x == x && q.y == y + i) {
+				target = new Cell(x, y + i, null);
+				placebomb = true;
+				return;
+			}
+			i++;
+		}
+		//no suitable node found (Wall blocked or out of field)
+		int direction = getMaxIndex(directionCount);
+		directionCount[direction] = 0;
+		calculateTarget(x, y + i - 1 , direction);
+	}
+
+	private void findTargetRIGHT(int x, int y) {
+		GameObject[][] field = handler.getField();
+		
+		int i = 0;
+		while( x + i < field.length) {
+			//if way is blocked by Wall break the loop
+			if(field[x + i][y] instanceof Wall) {
+				break;
+			}
+			
+			//check if found node has same coordinates
+			Node q = nodes.ceiling(new Node(x + i, y, 0, null));
+			if(q.x == x + i && q.y == y) {
+				target = new Cell(x + i, y, null);
+				placebomb = true;
+				return;
+			}
+			i++;
+		}
+		//no suitable node found (Wall blocked or out of field)
+		int direction = getMaxIndex(directionCount);
+		directionCount[direction] = 0;
+		calculateTarget(x + i - 1, y, direction);
+	}
+
+	private void findTargetLEFT(int x, int y) {
+		GameObject[][] field = handler.getField();
+		int i = 0;
+		while( x - i >= 0) {
+			//if way is blocked by Wall break the loop
+			if(field[x - i][y] instanceof Wall) {
+				break;
+			}
+			
+			//check if found node has same coordinates
+			Node q = nodes.ceiling(new Node(x - i, y,0,null));
+			if(q.x == x - i && q.y == y) {
+				target = new Cell(x - i, y, null);
+				placebomb = true;
+				return;
+			}
+			i++;
+		}
+		//no suitable node found (Wall blocked or out of field)
+		int direction = getMaxIndex(directionCount);
+		directionCount[direction] = 0;
+		calculateTarget(x - i + 1, y, direction);
+	}
+	
+	private void chooseRandomTargetDirection(int x, int y) {
+		Random rand = new Random();
+		while(true) {
+			int i = rand.nextInt(5);
+			if(i != Man.NO_DIR) {
+				calculateTarget(x, y, i);
+				return;
+			}
+		}
+	}
+	
+	private int getMaxIndex(int[] ia) {
+		int maxval = 0;
+		int maxindex = 0;
+		for(int i = 0; i < ia.length; i++) {
+			if(ia[i] > maxval ) {
+				maxval = ia[i];
+				maxindex = i;
+			}
+		}
+		return maxindex;
+	}
+	
+	private int sum(int[] ia) {
+		int sum = 0;
+		for(int i: ia) {
+			sum+=i;
+		}
+		return sum;
+	}
 	
 	/**
 	 * Returns true if the given Cell is probably in danger of being hit by an
@@ -410,16 +614,17 @@ public class ManAI {
 	
 	
 	/**
-	 * Decrements turns and if turns is 0 turns will be set to the value of REFRESH_RATE
-	 * and path is cleared.
+	 * Increments turns. If turns is a multiple of REFRESH_RATE path is cleared.
+	 * If turn is a multiple of FOCUS_RATE, a new enemy is focused.
 	 */
-	private void decrementTurns() {
-		if(turns == 0) {
-			turns = REFRESH_RATE;
+	private void incrementTurns() {
+		if(turns % REFRESH_RATE == 0) {
 			path.clear();
-			return;
 		}
-		turns--;
+		if(turns % FOCUS_RATE == 0) {
+			focusEnemy();
+		}
+		turns++;
 		
 	}
 	
@@ -440,6 +645,89 @@ public class ManAI {
 		target = c;
 	}
 	
+	private void findAllNodes() {
+		for(int i = 0; i < handler.getField().length; i++) {
+			for(int j = 0; j < handler.getField()[0].length; j++) {
+				createNode(i,j);
+			}
+		}
+	}
+	
+	private void createNode(int x, int y) {
+		GameObject field[][] = handler.getField();
+		if(field[x][y] instanceof Wall) {
+			return;
+		}
+		
+		boolean direction[] = { false, false, false, false };
+		int directions = 0;
+		
+		if(x + 1 < field.length && !(field[x + 1][y] instanceof Wall)) {
+			direction[Node.RIGHT] = true;
+			directions++;
+		}
+		if(x - 1 >= 0 && !(field[x - 1][y] instanceof Wall)) {
+			direction[Node.LEFT] = true;
+			directions++;
+		}
+		if(y + 1 < field[0].length && !(field[x][y + 1] instanceof Wall)) {
+			direction[Node.DOWN] = true;
+			directions++;
+		}
+		if(y - 1 >= field[0].length && !(field[x][y - 1] instanceof Wall)) {
+			direction[Node.UP] = true;
+			directions++;
+		}
+		Node q = new Node(x, y, directions, direction);
+		addNode(q);
+		
+	}
+	
+	private void addNode(final Node q) {
+		
+		if(q.directions == 1) {
+			return;
+		} else if(q.directions == 2) {
+			if( ( q.direction[Node.UP] && q.direction[Node.DOWN] ) || (q.direction[Node.RIGHT] && q.direction[Node.LEFT]) ) {
+				return;
+			}
+			
+		}
+		
+		nodes.add(q);
+	}
+	
+	private void updateHistory() {
+		if(focusedEnemy != null) {
+			addHistoryValue(focusedEnemy.getDirection());
+		}
+	}
+	
+	private void addHistoryValue(int value) {
+		if(directionHistory.size() >= HISTORYLENGTH) {
+			directionHistory.poll();
+		}
+		
+		directionHistory.offer(value);
+		
+	}
+	
+	
+	private void focusEnemy() {
+		focusedEnemy = null;
+		int size = handler.getMen().size();
+		while(size > 0) {
+			int i = rand.nextInt(size);
+			Man m = handler.getMen().get(i);
+			if( m != this.man) {
+				focusedEnemy = m;
+				return;
+			}
+		}
+		
+	}
+	
+	
 	/**
 	 * Returns the String-form of a ManAI-object.
 	 */
@@ -456,6 +744,9 @@ public class ManAI {
 		return sb.toString();
 	}
 	
+//##############################################################
+//####################### Nested Classes #######################
+//##############################################################
 	
 	/**
 	 * This class is used for A*. It provides a Reference on a Cell-object to connect Cells
@@ -571,6 +862,11 @@ public class ManAI {
 		
 		private final boolean[] direction;
 		
+		private static final int UP = 0;
+		private static final int DOWN = 1;
+		private static final int LEFT = 2;
+		private static final int RIGHT = 3;
+		
 		public Node(int x, int y, int directions, boolean[] direction) {
 			this.x = x;
 			this.y = y;
@@ -583,10 +879,10 @@ public class ManAI {
 			this.y = y;
 			this.directions = directions;
 			this.direction = new boolean[4];
-			direction[0] = up;
-			direction[1] = down;
-			direction[2] = left;
-			direction[3] = right;
+			direction[UP] = up;
+			direction[DOWN] = down;
+			direction[LEFT] = left;
+			direction[RIGHT] = right;
 		}
 		
 		@Override
