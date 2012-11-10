@@ -23,16 +23,34 @@ import bombgame.entities.Wall;
 public class ManAI {
 
 	/**
+	 * Extra-cost for cells threatened by a Bomb-object
+	 */
+	private static final int B_COST = 9;
+	
+	/**
+	 * difference between two refreshs
+	 */
+	public static final int REFRESH_RATE = 5;
+	
+	/**
+	 * difference between two refocuses
+	 */
+	public static final int FOCUS_RATE = 15;
+	
+	
+	public static final int ATK_MODE = 0;
+	
+	public static final int FLEE_MODE = 1;
+	
+	/**
 	 * Man-object controlled by AI
 	 */
 	private Man man;
 	
-	private Man focusedEnemy;
-	
 	/**
-	 * Extra-cost for cells threatened by a Bomb-object
+	 * Man-object that is focused by this AI
 	 */
-	private static final int B_COST = 8;
+	private Man focusedEnemy;
 	
 	/**
 	 * Handler wich handles this ManAI-object
@@ -75,21 +93,34 @@ public class ManAI {
 	private int turns;
 	
 	/**
-	 * difference between two refreshs
+	 * random generator
 	 */
-	public static final int REFRESH_RATE = 2;
-	
-	public static final int FOCUS_RATE = 100;
-	
 	private Random rand;
 	
+	/**
+	 * history of the focused enemy is stored in this queue
+	 */
 	private Deque<Integer> directionHistory;
 	
+	/**
+	 * counts the directions from the history
+	 */
 	private int[] directionCount;
 	
+	/**
+	 * maximum history length
+	 */
 	public static final int HISTORYLENGTH = 4;
 	
+	/**
+	 * nodes of the field
+	 */
 	private NavigableSet<Node> nodes;
+	
+	/**
+	 * describes the mode of this AI
+	 */
+	private int mode;
 	
 	
 	
@@ -132,9 +163,14 @@ public class ManAI {
 		
 		if(path.isEmpty()) {
 			//System.out.println("path is empty");
-			searchTargetAttack();
-			calculatePathToTarget();
+			if(mode == ATK_MODE) {
+				searchTargetAttack();
+			} else if ( mode == FLEE_MODE) {
+				
+			}
 		}
+		
+		calculatePathToTarget();
 		
 		if(path.isEmpty()) {
 			return;
@@ -715,6 +751,7 @@ public class ManAI {
 	
 	private void focusEnemy() {
 		focusedEnemy = null;
+		directionHistory.clear();
 		int size = handler.getMen().size();
 		while(size > 0) {
 			int i = rand.nextInt(size);
