@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.NavigableSet;
 import java.util.PriorityQueue;
 import java.util.Random;
+import java.util.Set;
 import java.util.TreeSet;
 
 import bombgame.entities.Bomb;
@@ -31,6 +32,8 @@ public class ManAI {
 	 * difference between two refreshs
 	 */
 	public static final int REFRESH_RATE = 5;
+	
+	private static final int NUMBER_OF_DIRECTIONS = 5;
 	
 	/**
 	 * difference between two refocuses
@@ -60,7 +63,7 @@ public class ManAI {
 	/**
 	 * List of closed Cells
 	 */
-	private TreeSet<Cell> closedlist;
+	private Set<Cell> closedlist;
 	
 	/**
 	 * List of known cells
@@ -140,7 +143,7 @@ public class ManAI {
 		path = new LinkedList<Cell>();
 		rand = new Random();
 		directionHistory = new LinkedList<Integer>();
-		directionCount = new int[5];
+		directionCount = new int[NUMBER_OF_DIRECTIONS];
 		nodes = new TreeSet<Node>();
 		findAllNodes();
 	}
@@ -513,9 +516,8 @@ public class ManAI {
 	}
 	
 	private void chooseRandomTargetDirection(int x, int y) {
-		Random rand = new Random();
 		while(true) {
-			int i = rand.nextInt(5);
+			int i = rand.nextInt(NUMBER_OF_DIRECTIONS);
 			if(i != Man.NO_DIR) {
 				calculateTarget(x, y, i);
 				return;
@@ -904,18 +906,23 @@ public class ManAI {
 		private static final int LEFT = 2;
 		private static final int RIGHT = 3;
 		
+		private static final int NODE_DIRECTIONS = 4;
+		
 		public Node(int x, int y, int directions, boolean[] direction) {
 			this.x = x;
 			this.y = y;
 			this.directions = directions;
-			this.direction = direction;
+			this.direction = new boolean[NODE_DIRECTIONS];
+			for (int i = 0; i < direction.length; i++) {
+				this.direction[i] = direction[i];
+			}
 		}
 		
 		public Node(int x, int y, int directions, boolean up, boolean down, boolean left, boolean right) {
 			this.x = x;
 			this.y = y;
 			this.directions = directions;
-			this.direction = new boolean[4];
+			this.direction = new boolean[NODE_DIRECTIONS];
 			direction[UP] = up;
 			direction[DOWN] = down;
 			direction[LEFT] = left;

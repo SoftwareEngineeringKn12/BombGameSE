@@ -1,6 +1,8 @@
 package bombgame.controller;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import bombgame.controller.MazeGen.Cell;
 import bombgame.entities.Bomb;
 import bombgame.entities.Explosion;
@@ -25,14 +27,14 @@ public final class GameHandler {
 	/**
 	 * List holding all Man-objects in the game.
 	 */
-	private ArrayList<Man> men;
+	private List<Man> men;
 	
 	/**
 	 * List holding all Bomb-objects in the game.
 	 */
-	private ArrayList<Bomb> bombs;
+	private List<Bomb> bombs;
 	
-	private ArrayList<ArrayList<Explosion>> explosions; 
+	private List<List<Explosion>> explosions; 
 	/**
 	 * Field width and height
 	 */
@@ -48,7 +50,7 @@ public final class GameHandler {
 		initializeField(DEFWIDTH, DEFHEIGHT);
 		men = new ArrayList<Man>();
 		bombs = new ArrayList<Bomb>();
-		explosions = new ArrayList<ArrayList<Explosion>>();
+		explosions = new ArrayList<List<Explosion>>();
 	}
 	
 	
@@ -62,7 +64,7 @@ public final class GameHandler {
 		initializeField(width, height);
 		men = new ArrayList<Man>();
 		bombs = new ArrayList<Bomb>();
-		explosions = new ArrayList<ArrayList<Explosion>>();
+		explosions = new ArrayList<List<Explosion>>();
 	}
 	
 	
@@ -72,10 +74,15 @@ public final class GameHandler {
 	 * @param f - field
 	 */
 	public GameHandler(final GameObject f[][]) {
-		field = f;
+		field = new GameObject[f.length][f[0].length];
+		for( int i = 0; i < f.length; i++) {
+			for( int j = 0; j < f.length; j++) {
+				field[i][j] = f[i][j];
+			}
+		}
 		men = new ArrayList<Man>();
 		bombs = new ArrayList<Bomb>();
-		explosions = new ArrayList<ArrayList<Explosion>>();
+		explosions = new ArrayList<List<Explosion>>();
 	}
 	
 	
@@ -95,7 +102,7 @@ public final class GameHandler {
 		}
 		
 		if(obj instanceof Explosion) {
-			ArrayList<Explosion> exp = calculateExplosion((Explosion) obj);
+			List<Explosion> exp = calculateExplosion((Explosion) obj);
 			explosions.add(exp);
 			for(Explosion e : exp) {
 				field[e.getX()][e.getY()] = e;
@@ -122,7 +129,7 @@ public final class GameHandler {
 		}
 		if(obj instanceof Explosion) {
 			
-			ArrayList<Explosion> list = getExplosion((Explosion) obj);
+			List<Explosion> list = getExplosion((Explosion) obj);
 			removeExplosionList(list);
 			return;
 		}
@@ -137,7 +144,7 @@ public final class GameHandler {
 	 * Removes the specified List of Explosion-object from the field.
 	 * @param list - ArrayList of Explosion-objects.
 	 */
-	private void removeExplosionList(ArrayList<Explosion> list) {
+	private void removeExplosionList(List<Explosion> list) {
 		
 		for(Explosion e : list) {
 			field[e.getX()][e.getY()] = null;
@@ -194,7 +201,7 @@ public final class GameHandler {
 	 * Returns the List of Man-objects.
 	 * @return - List of Man-objects
 	 */
-	public ArrayList<Man> getMen() {
+	public List<Man> getMen() {
 		return men;
 	}
 	
@@ -203,7 +210,7 @@ public final class GameHandler {
 	 * Returns the List of Bomb-objects.
 	 * @return - List of Bomb-objects
 	 */
-	public ArrayList<Bomb> getBombs() {
+	public List<Bomb> getBombs() {
 		return bombs;
 	}
 	
@@ -212,7 +219,7 @@ public final class GameHandler {
 	 * Returns the List of Lists of Explosions.
 	 * @return - List of Lists of Explosions
 	 */
-	public ArrayList<ArrayList<Explosion>> getExplosionList() {
+	public List<List<Explosion>> getExplosionList() {
 		return explosions;
 	}
 	
@@ -223,8 +230,8 @@ public final class GameHandler {
 	 * @param exp - Explosion-object to be found
 	 * @return - ArrayList of Explosion-objects
 	 */
-	public ArrayList<Explosion> getExplosion(Explosion exp){
-		for(ArrayList<Explosion> el : explosions) {
+	public List<Explosion> getExplosion(Explosion exp){
+		for(List<Explosion> el : explosions) {
 			for(Explosion e : el) {
 				if(e==exp) {
 					return el;
@@ -328,9 +335,9 @@ public final class GameHandler {
 	 * @param explosion - source of explosion
 	 * @return - ArrayList of all Explosions included in the spread
 	 */
-	protected ArrayList<Explosion> calculateExplosion(final Explosion explosion) {
+	protected List<Explosion> calculateExplosion(final Explosion explosion) {
 		
-		ArrayList<Explosion> list = new ArrayList<Explosion>();
+		List<Explosion> list = new ArrayList<Explosion>();
 		list.add(explosion);
 		
 		boolean free[] = {true, true, true, true};
@@ -364,7 +371,7 @@ public final class GameHandler {
 	 * @param list - list to which explosion will be added
 	 * @return - returns true if Explosion-object was successfully created
 	 */
-	protected boolean nextExplosion(int x, int y, boolean free, ArrayList<Explosion> list) {
+	protected boolean nextExplosion(int x, int y, boolean free, List<Explosion> list) {
 		if( free && x < field.length && x >= 0 && y < field[0].length && y >= 0 && !(field[x][y] instanceof Wall)) {
 			
 			list.add(new Explosion(x, y));
@@ -384,7 +391,7 @@ public final class GameHandler {
 	 */
 	public void moveAll() {
 		//new ArrayList is needed to remove a man during iteration
-		ArrayList<Man> m = new ArrayList<Man>(men);
+		List<Man> m = new ArrayList<Man>(men);
 		for (Man man : m) {
 			if(checkHit(man)) {
 				removeObject(man);
@@ -413,7 +420,7 @@ public final class GameHandler {
 	 */
 	public void updateBombs() {
 		//new ArrayList is needed to remove a bomb during iteration
-		ArrayList<Bomb> bs = new ArrayList<Bomb>(bombs);
+		List<Bomb> bs = new ArrayList<Bomb>(bombs);
 		for (Bomb bomb : bs) {
 			Explosion expl = bomb.decrementTimer();
 			if (expl != null) {
@@ -428,8 +435,8 @@ public final class GameHandler {
 	 */
 	public void updateExplosion() {
 		//new ArrayList is needed to remove a Explosionlist during iteration
-		ArrayList<ArrayList<Explosion>> explist = new ArrayList<ArrayList<Explosion>>(explosions); 
-		for(ArrayList<Explosion> explosion : explist) {
+		List<List<Explosion>> explist = new ArrayList<List<Explosion>>(explosions); 
+		for(List<Explosion> explosion : explist) {
 			Explosion exp = explosion.get(0);
 			exp.decrementTimer();
 			
@@ -486,7 +493,7 @@ public final class GameHandler {
 	 */
 	public String explosionListToString() {
 		StringBuilder sb = new StringBuilder();
-		for(ArrayList<Explosion> list : explosions) {
+		for(List<Explosion> list : explosions) {
 			sb.append("->Explosion: { ");
 			int i = 0;
 			for(Explosion exp : list) {

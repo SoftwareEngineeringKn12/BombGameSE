@@ -11,7 +11,7 @@ public final class Bomb extends GameObject {
 	/**
 	 * Delay until bomb explodes.
 	 */
-	private int delay = 5;
+	private final int delay = 5;
 	
 	/**
 	 * Timer for the bomb.

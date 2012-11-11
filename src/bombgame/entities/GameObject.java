@@ -52,8 +52,6 @@ public abstract class GameObject {
 	 * @param y - y-coordinate
 	 */
 	public void setPos(int x, int y) {
-		//if (x < 0 || y < 0)
-			//throw new IndexOutOfBoundsException("No negative coordinates.");
 		
 		this.x = x;
 		this.y = y;
