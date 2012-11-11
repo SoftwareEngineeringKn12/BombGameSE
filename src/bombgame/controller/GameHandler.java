@@ -365,7 +365,7 @@ public final class GameHandler {
 	 * @return - returns true if Explosion-object was successfully created
 	 */
 	protected boolean nextExplosion(int x, int y, boolean free, ArrayList<Explosion> list) {
-		if( free && x < field[1].length && x >= 0 && y < field.length && y >= 0 && !(field[x][y] instanceof Wall)) {
+		if( free && x < field.length && x >= 0 && y < field[0].length && y >= 0 && !(field[x][y] instanceof Wall)) {
 			
 			list.add(new Explosion(x, y));
 			

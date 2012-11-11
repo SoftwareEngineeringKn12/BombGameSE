@@ -554,7 +554,7 @@ public class ManAI {
 			//simple and ineffective algorythm!!!
 			int dx = Math.abs(c.x - b.getX());
 			int dy = Math.abs(c.y - b.getY());
-			if(dx <= Explosion.RANGE || dy <= Explosion.RANGE) {
+			if(dx <= Explosion.RANGE && dy <= Explosion.RANGE) {
 				return true;
 			}
 		}

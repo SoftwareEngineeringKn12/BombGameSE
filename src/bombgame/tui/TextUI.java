@@ -26,14 +26,20 @@ public final class TextUI {
 	 */
 	public TextUI() {
 		Man manPlayer = new Man(0, 0); // Man for player
-		Man manAi = new Man(8,8);
+		Man manAi = new Man(29,19);
+		Man manAi2 = new Man(29,0);
+		Man manAi3 = new Man(0,19);
 		
 		handler = new GameHandler();
 		player = new PlayerTUI(manPlayer);
-		ais = new ManAI[1];
+		ais = new ManAI[3];
 		ais[0] =  new ManAI(manAi, handler);
+		ais[1] = new ManAI(manAi2, handler);
+		ais[2] = new ManAI(manAi3, handler);
 		handler.addObject(manPlayer);
 		handler.addObject(manAi);
+		handler.addObject(manAi2);
+		handler.addObject(manAi3);
 		printField();
 	}
 	
@@ -49,7 +55,9 @@ public final class TextUI {
 		//!! look at the order.
 		//scan input false;
 		//Scanner in = new Scanner(System.in);
-		
+		if(handler.getMen().size() <= 1) {
+			return false;
+		}
 		
 		for(ManAI ai : ais) {
 			ai.calcNextStep();
