@@ -18,6 +18,12 @@ import bombgame.entities.Wall;
  */
 public final class GameHandler {
 	
+	private static final int SPAWN_RANGE = 7;
+	
+	private static final int EXP_UP = 3;
+	private static final int EXP_DOWN = 2;
+	private static final int EXP_LEFT = 1;
+	private static final int EXP_RIGHT = 0;
 	/**
 	 * matrix holding all GameObjects in the game.
 	 * The array indices specify the position on the field.
@@ -166,7 +172,7 @@ public final class GameHandler {
 		}
 		
 		
-		for(int i = 1; i < 7; i++ ) {
+		for(int i = 1; i < SPAWN_RANGE; i++ ) {
 			if(m.getX() + i < field.length && !(field[m.getX() + i][m.getY()] instanceof Wall)) {
 				m.setPos(m.getX() + i, m.getY());
 				break;
@@ -344,16 +350,16 @@ public final class GameHandler {
 		for(int i = 1; i <= Explosion.RANGE; i++) {
 				
 			//right
-			free[0] = nextExplosion(explosion.getX() + i, explosion.getY(),free[0], list);
+			free[EXP_RIGHT] = nextExplosion(explosion.getX() + i, explosion.getY(),free[EXP_RIGHT], list);
 			
 			//left
-			free[1] = nextExplosion(explosion.getX() - i, explosion.getY(),free[1], list);
+			free[EXP_LEFT] = nextExplosion(explosion.getX() - i, explosion.getY(),free[EXP_LEFT], list);
 			
 			//down
-			free[2] = nextExplosion(explosion.getX(), explosion.getY() + i,free[2], list);
+			free[EXP_DOWN] = nextExplosion(explosion.getX(), explosion.getY() + i,free[EXP_DOWN], list);
 			
 			//up
-			free[3] = nextExplosion(explosion.getX(), explosion.getY() - i,free[3], list);
+			free[EXP_UP] = nextExplosion(explosion.getX(), explosion.getY() - i,free[EXP_UP], list);
 		}
 		
 		return list;
