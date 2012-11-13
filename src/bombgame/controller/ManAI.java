@@ -3,7 +3,6 @@ package bombgame.controller;
 import java.util.Arrays;
 import java.util.Deque;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.NavigableSet;
 import java.util.PriorityQueue;
 import java.util.Random;
