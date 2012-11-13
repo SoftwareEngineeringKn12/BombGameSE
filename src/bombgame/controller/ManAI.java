@@ -625,6 +625,10 @@ public class ManAI {
 		target = c;
 	}
 	
+	/**
+	 * Searches through the field given by handler and calls for each coordiante
+	 * createNode().
+	 */
 	private void findAllNodes() {
 		for(int i = 0; i < handler.getField().length; i++) {
 			for(int j = 0; j < handler.getField()[0].length; j++) {
@@ -633,6 +637,12 @@ public class ManAI {
 		}
 	}
 	
+	/**
+	 * Creates a new Node for the given coordinates considering the free directions
+	 * from (x/y) and adds it to nodes.
+	 * @param x - x-coordinate
+	 * @param y - y-coordinate
+	 */
 	private void createNode(int x, int y) {
 		GameObject field[][] = handler.getField();
 		if(field[x][y] instanceof Wall) {
@@ -663,9 +673,15 @@ public class ManAI {
 		
 	}
 	
-	private void addNode(final Node q) {
+	
+	/**
+	 *Adds the given node to nodes, if it has more than 1 free direction and if it has 2 directions, only they
+	 *are not opposing.
+	 */
+	 private void addNode(final Node q) {
+	 
 		
-		if(q.directions == 1) {
+		if(q.directions <= 1) {
 			return;
 		} else if(q.directions == 2) {
 			if( ( q.direction[Node.UP] && q.direction[Node.DOWN] ) || (q.direction[Node.RIGHT] && q.direction[Node.LEFT]) ) {
@@ -677,12 +693,23 @@ public class ManAI {
 		nodes.add(q);
 	}
 	
+	
+	/**
+	 * Calls addHistoryValue() with the current direction of the focused enemy.
+	 * If focused enemy is null the method does nothing.
+	 */
 	private void updateHistory() {
 		if(focusedEnemy != null) {
 			addHistoryValue(focusedEnemy.getDirection());
 		}
 	}
 	
+	
+	/**
+	 * Adds the given value to directionhistory. If the size of directionHistory
+	 * is bigger/equals than HISTORYLENGTH, the oldest entry is removed.
+	 * @param value
+	 */
 	private void addHistoryValue(int value) {
 		if(directionHistory.size() >= HISTORYLENGTH) {
 			directionHistory.poll();
@@ -692,7 +719,9 @@ public class ManAI {
 		
 	}
 	
-	
+	/**
+	 * Focuses a new enemy randomly from the men-list from handler.
+	 */
 	private void focusEnemy() {
 		focusedEnemy = null;
 		directionHistory.clear();
@@ -841,6 +870,11 @@ public class ManAI {
 		
 	}
 	
+	/**
+	 * This class is used for marking places in the field, which don't lead into a dead-end.
+	 * @author Fabian
+	 *
+	 */
 	class Node implements Comparable<Node> {
 		
 		private final int x;
@@ -857,6 +891,14 @@ public class ManAI {
 		
 		private static final int NODE_DIRECTIONS = 4;
 		
+		/**
+		 * Creates a new Node-object with the given coordinates, the given count of directions and
+		 * the given array of directions.
+		 * @param x - x-coordinate
+		 * @param y - y-coordiante
+		 * @param directions - amount of free directions
+		 * @param direction - holds boolean values wether the direction is free or not
+		 */
 		public Node(int x, int y, int directions, boolean[] direction) {
 			this.x = x;
 			this.y = y;
@@ -871,6 +913,17 @@ public class ManAI {
 			}
 		}
 		
+		/**
+		 * Creates a new Node-object with the given coordinates, the given count of directions and
+		 * the given up,down,left,right directions.
+		 * @param x - x-coordinate
+		 * @param y - y-coordinate
+		 * @param directions - amount of free directions
+		 * @param up - direction up is free or not
+		 * @param down - direction down is free or not
+		 * @param left - direction left is free or not
+		 * @param right - direction right is free or not
+		 */
 		public Node(int x, int y, int directions, boolean up, boolean down, boolean left, boolean right) {
 			this.x = x;
 			this.y = y;
@@ -882,6 +935,9 @@ public class ManAI {
 			direction[RIGHT] = right;
 		}
 		
+		/**
+		 * Compares this Node with the given for equality.
+		 */
 		@Override
 		public boolean equals(Object o) {
 			if( o instanceof Node) {
@@ -892,6 +948,9 @@ public class ManAI {
 			}
 		}
 
+		/**
+		 * Compares this Node with the given for more than, less than or equals.
+		 */
 		@Override
 		public int compareTo(Node q) {
 			if( this.equals(q)) {
