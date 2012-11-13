@@ -154,15 +154,13 @@ public class ManAI {
 	 * placing bombs.
 	 */
 	public void calcNextStep() {
+		incrementTurns();
+		
 		if(checkTargetReached()) {
 			return;
 		}
 		
-		incrementTurns();
-		
 		updateHistory();
-		
-		
 		
 		if(path.isEmpty()) {
 			//System.out.println("path is empty");
@@ -335,36 +333,9 @@ public class ManAI {
 	
 	
 	/**
-	 * Searches a new target for the AI by searching the nearest Man-object and target it.
+	 * This method searches the best cell as target to place a bomb to kill the focusedEnemy. It
+	 * uses the directionHistory of the focused Man-object to calculate which node it will cross next.
 	 */
-	private void searchTarget() {
-		List<Man> targets = handler.getMen();
-		Man kill = null;
-		int steps = 99999999 ;
-		for(Man m : targets) {
-			if(m == man) {
-				continue;
-			}
-			if(kill == null) {
-				kill = m;
-				continue;
-			}
-			
-			int tmp = Math.abs(man.getX() - m.getX()) + Math.abs(man.getY() - m.getY());
-			if(tmp < steps ) {
-				steps = tmp;
-				kill = m;
-			}
-		}
-		if(kill == null) {
-			target = null;
-			return;
-		}
-		target = new Cell(kill.getX(), kill.getY(), null);
-		//System.out.println("Set target: " + target);
-		placebomb = true;
-	}
-	
 	private void searchTargetAttack() {
 		
 		//initialize directionCount with 0
@@ -383,138 +354,96 @@ public class ManAI {
 		
 	}
 	
+	
+	/**
+	 * Calculates the target by looking for a suitable Node in the given direction from
+	 * the position (x/y)
+	 * @param x - start x-coordinate
+	 * @param y - start y-coordinate
+	 * @param direction - searching direction
+	 */
 	private void calculateTarget(int x, int y, int direction) {
-		if(focusedEnemy == null) {
-			return;
-		}
 		
 		target = null;
 
 		switch(direction) {
 		
 		case Man.UP:
-			findTargetUP(x,y);
+			findTarget(x, y, 0, -1);
 			break;
 			
 		case Man.DOWN:
-			findTargetDOWN(x,y);
+			findTarget(x, y, 0, 1);
 			break;
 			
 		case Man.RIGHT:
-			findTargetRIGHT(x, y);
+			findTarget(x, y, 1, 0);
 			break;
 			
 		case Man.LEFT:
-			findTargetLEFT(x, y);
+			findTarget(x, y, -1, 0);
 			break;
 		default:
 			if(sum(directionCount) <= 0) {
 				target = new Cell(x, y, null);
+				placebomb = true;
 				return;
 			}
 			chooseRandomTargetDirection(x,y);
 		}
 	}
 	
-	private void findTargetUP(int x, int y) {
+	
+	/**
+	 * Finds a target from the given Position (x/y) in the direction determined by xfac and yfac.
+	 * If no suitable target is found, this method calls calculateDirection() with another 
+	 * direction from the last unused coordinate.
+	 * @param x - start x-coordinate
+	 * @param y - start y-coordinate
+	 * @param xfac - factor for the y-direction
+	 * @param yfac - factor for the x-direction
+	 */
+	private void findTarget( int x, int y, int xfac, int yfac) {
 		GameObject[][] field = handler.getField();
 		
-		int i = 0;
-		while(y - i >= 0) {
-			if(field[x][y - i] instanceof Wall) {
+		int i = 1;
+		int x_tmp = x + xfac * i;
+		int y_tmp = y + yfac * i;
+		
+		while(y_tmp >= 0 &&  y_tmp < field[0].length &&
+				x_tmp < field.length && x_tmp >= 0) {
+			
+			if(field[x_tmp][y_tmp] instanceof Wall) {
 				//if way is blocked by Wall break the loop
 				break;
 			}
 			
 			//check if found node has same coordinates
-			Node q = nodes.ceiling(new Node(x, y - i,0,null));
-			if(q.x == x && q.y == y - i) {
-				target = new Cell(x, y - i, null);
+			Node q = nodes.ceiling(new Node(x_tmp, y_tmp, 0, null));
+			if(q != null && q.x == x_tmp && q.y == y_tmp) {
+				target = new Cell(x_tmp, y_tmp, null);
 				placebomb = true;
 				return;
 			}
 			i++;
+			x_tmp = x + xfac * i;
+			y_tmp = y + yfac * i;
+			
 		}
 		//no suitable node found (Wall blocked or out of field)
 		int direction = getMaxIndex(directionCount);
 		directionCount[direction] = 0;
-		calculateTarget(x, y - i + 1, direction);
+		calculateTarget(x_tmp - xfac, y_tmp - yfac, direction);
+		
 	}
 	
-	private void findTargetDOWN(int x, int y) {
-		GameObject[][] field = handler.getField();
-		
-		int i = 0;
-		while( y + i < field[0].length) {
-			//if way is blocked by Wall break the loop
-			if(field[x][y + i] instanceof Wall) {
-				break;
-			}
-			
-			//check if found node has same coordinates
-			Node q = nodes.ceiling(new Node(x, y + i,0,null));
-			if(q.x == x && q.y == y + i) {
-				target = new Cell(x, y + i, null);
-				placebomb = true;
-				return;
-			}
-			i++;
-		}
-		//no suitable node found (Wall blocked or out of field)
-		int direction = getMaxIndex(directionCount);
-		directionCount[direction] = 0;
-		calculateTarget(x, y + i - 1 , direction);
-	}
-
-	private void findTargetRIGHT(int x, int y) {
-		GameObject[][] field = handler.getField();
-		
-		int i = 0;
-		while( x + i < field.length) {
-			//if way is blocked by Wall break the loop
-			if(field[x + i][y] instanceof Wall) {
-				break;
-			}
-			
-			//check if found node has same coordinates
-			Node q = nodes.ceiling(new Node(x + i, y, 0, null));
-			if(q.x == x + i && q.y == y) {
-				target = new Cell(x + i, y, null);
-				placebomb = true;
-				return;
-			}
-			i++;
-		}
-		//no suitable node found (Wall blocked or out of field)
-		int direction = getMaxIndex(directionCount);
-		directionCount[direction] = 0;
-		calculateTarget(x + i - 1, y, direction);
-	}
-
-	private void findTargetLEFT(int x, int y) {
-		GameObject[][] field = handler.getField();
-		int i = 0;
-		while( x - i >= 0) {
-			//if way is blocked by Wall break the loop
-			if(field[x - i][y] instanceof Wall) {
-				break;
-			}
-			
-			//check if found node has same coordinates
-			Node q = nodes.ceiling(new Node(x - i, y,0,null));
-			if(q.x == x - i && q.y == y) {
-				target = new Cell(x - i, y, null);
-				placebomb = true;
-				return;
-			}
-			i++;
-		}
-		//no suitable node found (Wall blocked or out of field)
-		int direction = getMaxIndex(directionCount);
-		directionCount[direction] = 0;
-		calculateTarget(x - i + 1, y, direction);
-	}
 	
+	/**
+	 * This method calculates a random direction and calls calculateTraget() with the given
+	 * x- and y-coordinates and the calculated direction.
+	 * @param x - start x-coordinate
+	 * @param y - start y-coordiante
+	 */
 	private void chooseRandomTargetDirection(int x, int y) {
 		while(true) {
 			int i = rand.nextInt(NUMBER_OF_DIRECTIONS);
@@ -525,6 +454,13 @@ public class ManAI {
 		}
 	}
 	
+	
+	/**
+	 * This method calculates and returns the index with the highest value from the given
+	 * int array.
+	 * @param ia - examined int array 
+	 * @return - index of highest value in the array
+	 */
 	private int getMaxIndex(int[] ia) {
 		int maxval = 0;
 		int maxindex = 0;
@@ -537,6 +473,12 @@ public class ManAI {
 		return maxindex;
 	}
 	
+	
+	/**
+	 * Sums up the values of the given int array.
+	 * @param ia - examined int array
+	 * @return - sum of all values
+	 */
 	private int sum(int[] ia) {
 		int sum = 0;
 		for(int i: ia) {
@@ -780,6 +722,13 @@ public class ManAI {
 		} else {
 			sb.append("[").append(target.x).append("] [").append(target.y).append("]");
 		}
+		sb.append(" F: ");
+		if(focusedEnemy == null) {
+			sb.append("NULL");
+		} else {
+			sb.append("[").append(focusedEnemy.getX()).append("] [").append(focusedEnemy.getY()).append("]");
+		}
+		sb.append(" Turn: ").append(turns);
 		return sb.toString();
 	}
 	
@@ -912,9 +861,13 @@ public class ManAI {
 			this.x = x;
 			this.y = y;
 			this.directions = directions;
-			this.direction = new boolean[NODE_DIRECTIONS];
-			for (int i = 0; i < direction.length; i++) {
-				this.direction[i] = direction[i];
+			if(direction == null) {
+				this.direction = null;
+			} else {
+				this.direction = new boolean[NODE_DIRECTIONS];
+				for (int i = 0; i < direction.length; i++) {
+					this.direction[i] = direction[i];
+				}
 			}
 		}
 		
