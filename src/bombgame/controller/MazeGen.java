@@ -23,13 +23,20 @@ public final class MazeGen {
 	private LinkedList<Cell> backtrack = new LinkedList<Cell>();
 	private Random rand = new Random();
 
+	/**
+	 * Cell represent the objects in the maze.
+	 * It can be a wall or path.
+	 * 
+	 * @author jens
+	 *
+	 */
 	static class Cell {
-		public int x;
-		public int y;
+		int x;
+		int y;
 
 		// Cell is a wall at the beginning
-		public boolean wall = true;
-		public boolean visited = false;
+		boolean wall = true;
+		boolean visited = false;
 
 		public Cell(int x, int y) {
 			this.x = x;
@@ -37,6 +44,9 @@ public final class MazeGen {
 		}
 	}
 
+	/**
+	 * Create maze with standard with and height.
+	 */
 	public MazeGen() {
 		this(60, 15);
 	}

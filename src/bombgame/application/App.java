@@ -13,8 +13,15 @@ public final class App {
 	 */
 	public static void main(String[] args) {
 		TextUI tui = new TextUI();
+		
 		// LOOP
-		while(tui.update());
+		while(tui.update()) {
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 }
