@@ -25,7 +25,8 @@ public final class TextUI {
 	 * Creates a GameHandler with standard Constructor.
 	 */
 	public TextUI() {
-		Man manPlayer = new Man(0, 0); // Man for player
+		// Man for player
+		Man manPlayer = new Man(0, 0);
 		Man manAi = new Man(29,19);
 		Man manAi2 = new Man(29,0);
 		Man manAi3 = new Man(0,19);

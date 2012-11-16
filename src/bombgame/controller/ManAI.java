@@ -902,14 +902,8 @@ public class ManAI {
 			this.x = x;
 			this.y = y;
 			this.directions = directions;
-			if(direction == null) {
-				this.direction = null;
-			} else {
-				this.direction = new boolean[NODE_DIRECTIONS];
-				for (int i = 0; i < direction.length; i++) {
-					this.direction[i] = direction[i];
-				}
-			}
+			this.direction = new boolean[NODE_DIRECTIONS];
+			System.arraycopy(direction, 0, this.direction, 0, NODE_DIRECTIONS);
 		}
 		
 		/**

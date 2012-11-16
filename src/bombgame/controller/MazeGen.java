@@ -1,5 +1,6 @@
 package bombgame.controller;
 
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -20,7 +21,7 @@ public final class MazeGen {
 	private int yLength;
 	private int numberOfDeletionsPerLine;
 	private Cell maze[][];
-	private LinkedList<Cell> backtrack = new LinkedList<Cell>();
+	private Deque<Cell> backtrack = new LinkedList<Cell>();
 	private Random rand = new Random();
 
 	/**
@@ -31,12 +32,12 @@ public final class MazeGen {
 	 *
 	 */
 	static class Cell {
-		int x;
-		int y;
+		private int x;
+		private int y;
 
 		// Cell is a wall at the beginning
-		boolean wall = true;
-		boolean visited = false;
+		public boolean wall = true;
+		private boolean visited = false;
 
 		public Cell(int x, int y) {
 			this.x = x;
@@ -97,7 +98,8 @@ public final class MazeGen {
 				// neighborLookDirection);
 
 				switch (neighborLookDirection) {
-				case 0: // S
+				case 0:
+					// S
 					if ((temp.y + 2) < yLength
 							&& !maze[temp.x][temp.y + 2].visited) {
 						// System.out.println(neighborLookDirection +
@@ -113,7 +115,8 @@ public final class MazeGen {
 					}
 					checked[0] = true;
 					break;
-				case 1: // O
+				case 1:
+					// O
 					if ((temp.x + 2) < xLength
 							&& !maze[temp.x + 2][temp.y].visited) {
 						// System.out.println(neighborLookDirection +
@@ -129,7 +132,8 @@ public final class MazeGen {
 					}
 					checked[1] = true;
 					break;
-				case 2: // N
+				case 2:
+					// N
 					if ((temp.y - 2) >= 0 && !maze[temp.x][temp.y - 2].visited) {
 						// System.out.println(neighborLookDirection +
 						// "=> Not visited: " + temp.x + " " + (temp.y - 2));
@@ -144,7 +148,8 @@ public final class MazeGen {
 					}
 					checked[2] = true;
 					break;
-				case 3: // W
+				case 3:
+					// W
 					if ((temp.x - 2) >= 0 && !maze[temp.x - 2][temp.y].visited) {
 						// System.out.println(neighborLookDirection +
 						// "=> Not visited: " + (temp.x - 2) + " " + temp.y);
@@ -177,7 +182,7 @@ public final class MazeGen {
 			 * try { Thread.sleep(100); } catch (InterruptedException e1) {
 			 * e1.printStackTrace(); }
 			 */
-		} while (startCell != temp);
+		} while (!startCell.equals(temp));
 	}
 
 	private void initMaze() {
