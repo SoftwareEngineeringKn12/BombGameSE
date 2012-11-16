@@ -483,7 +483,7 @@ public final class GameHandler {
 		
 		for (int i = 0; i < yLength; i++) {
 			for (int j = 0; j < xLength; j++) {
-				if (cellArray[j][i].wall) {
+				if (cellArray[j][i].getWall()) {
 					field[j][i] = new Wall(j, i);
 				} else {
 					field[j][i] = null;

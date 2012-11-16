@@ -36,12 +36,21 @@ public final class MazeGen {
 		private int y;
 
 		// Cell is a wall at the beginning
-		public boolean wall = true;
+		private boolean wall = true;
 		private boolean visited = false;
 
 		public Cell(int x, int y) {
 			this.x = x;
 			this.y = y;
+		}
+		
+		/**
+		 * Returns value of wall.
+		 * (If the Cell is a wall or path).
+		 * @return
+		 */
+		public boolean getWall() {
+			return wall;
 		}
 	}
 
@@ -220,10 +229,11 @@ public final class MazeGen {
 		StringBuilder str = new StringBuilder();
 		for (int i = 0; i < yLength; i++) {
 			for (int j = 0; j < xLength; j++) {
-				if (maze[j][i].wall)
+				if (maze[j][i].wall) {
 					str.append("#");
-				else
+				} else {
 					str.append("o");
+				}
 			}
 			str.append("\n");
 		}

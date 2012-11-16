@@ -44,6 +44,8 @@ public class ManAI {
 	
 	public static final int FLEE_MODE = 1;
 	
+	private static final String FORMAT = "] [";
+	
 	/**
 	 * Man-object controlled by AI
 	 */
@@ -743,18 +745,18 @@ public class ManAI {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("-> AI: ");
-		sb.append("[").append(man.getX()).append("] [").append(man.getY()).append("]");
+		sb.append("[").append(man.getX()).append(FORMAT).append(man.getY()).append("]");
 		sb.append(" T: ");
 		if(target == null) {
 			sb.append("NULL");
 		} else {
-			sb.append("[").append(target.x).append("] [").append(target.y).append("]");
+			sb.append("[").append(target.x).append(FORMAT).append(target.y).append("]");
 		}
 		sb.append(" F: ");
 		if(focusedEnemy == null) {
 			sb.append("NULL");
 		} else {
-			sb.append("[").append(focusedEnemy.getX()).append("] [").append(focusedEnemy.getY()).append("]");
+			sb.append("[").append(focusedEnemy.getX()).append(FORMAT).append(focusedEnemy.getY()).append("]");
 		}
 		sb.append(" Turn: ").append(turns);
 		return sb.toString();
@@ -862,7 +864,7 @@ public class ManAI {
 		@Override
 		public String toString() {
 			StringBuilder sb = new StringBuilder("C: ");
-			sb.append("[").append(x).append("] [").append(y).append("] ");
+			sb.append("[").append(x).append(FORMAT).append(y).append("] ");
 			sb.append("Cost: ").append(cost);
 			return sb.toString();
 		}
@@ -902,8 +904,12 @@ public class ManAI {
 			this.x = x;
 			this.y = y;
 			this.directions = directions;
-			this.direction = new boolean[NODE_DIRECTIONS];
-			System.arraycopy(direction, 0, this.direction, 0, NODE_DIRECTIONS);
+			if(direction != null) {
+				this.direction = new boolean[NODE_DIRECTIONS];
+				System.arraycopy(direction, 0, this.direction, 0, NODE_DIRECTIONS);
+			} else {
+				this.direction = null;
+			}
 		}
 		
 		/**

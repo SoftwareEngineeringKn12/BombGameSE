@@ -104,6 +104,7 @@ public final class TextUITest extends TestCase {
 		System.setIn(myin);
 		assertTrue(tui1.update());
 		System.setIn(stdin);
+		assertFalse(tui2.update());
 	}
 	
 }
