@@ -1,17 +1,32 @@
 package bombgame.controller;
 
-import bombgame.entities.GameObject;
 import junit.framework.TestCase;
 
 public final class MazeGenTest extends TestCase {
 	
+	MazeGen maze1;
+	MazeGen maze2;
+	
 	public void setUp() {
+		maze1 = new MazeGen();
+		maze2 = new MazeGen(40, 10);
+	}
+	
+	public void testGenMaze() {
 		
 	}
 
-	/*public void testGenerateTestMap() {
-		//GameObject[][] field = MapGenerator.generateTestMap(10, 10);
-		// Check if length = ok?
-	}*/
+	public void testGenNonPerfectMaze() {
+		
+	}
 	
+	public void testGetMaze() {
+		maze1.genMaze();
+		
+		assertNotNull(maze1.getMaze());
+	}
+	
+	public void testToString() {
+		
+	}
 }
