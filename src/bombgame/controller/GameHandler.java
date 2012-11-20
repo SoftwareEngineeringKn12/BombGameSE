@@ -2,7 +2,6 @@ package bombgame.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import bombgame.controller.MazeGen.Cell;
 import bombgame.entities.Bomb;
 import bombgame.entities.Explosion;

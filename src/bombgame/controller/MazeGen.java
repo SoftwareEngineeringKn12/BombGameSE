@@ -52,18 +52,18 @@ public final class MazeGen {
 	/**
 	 * x-length of the maze when standard constructor is used.
 	 */
-	private static final int STANDARD_X_LENGTH = 60;
+	public static final int STANDARD_X_LENGTH = 60;
 
 	/**
 	 * y-length of the maze when standard constructor is used.
 	 */
-	private static final int STANDARD_Y_LENGTH = 15;
+	public static final int STANDARD_Y_LENGTH = 15;
 
 	/**
 	 * Multiplied with x-length to calculate number of deletions per line
 	 * relative to x-length of the maze.
 	 */
-	private static final double NUMBER_DEL_FACTOR = 0.4;
+	public static final double NUMBER_DEL_FACTOR = 0.4;
 
 	/**
 	 * Cell represent the objects in the maze. It can be a wall or path.
@@ -84,6 +84,7 @@ public final class MazeGen {
 		 * 
 		 * @param x
 		 *            x-coordinate
+		 * 
 		 * @param y
 		 *            y-coordinate
 		 */
@@ -123,12 +124,17 @@ public final class MazeGen {
 		numberOfDeletionsPerLine = (int) (xLength * NUMBER_DEL_FACTOR);
 	}
 
+	/**
+	 * Generates the maze. Loops through the cells until all cells are checked.
+	 * At each cell generate() chooses a random direction and try´s if there is
+	 * a free and non-visited cell.
+	 */
 	private void generate() {
 		// 0 = N, 1 = O, 2 = S, 3 = W
 		boolean foundWay = false;
 		boolean allChecked = false;
 		boolean checked[] = new boolean[4];
-		Cell startCell, temp; // wayToTemp = null;
+		Cell startCell, temp;
 
 		// Random start cell
 		temp = maze[rand.nextInt(xLength)][rand.nextInt(yLength)];
@@ -136,9 +142,6 @@ public final class MazeGen {
 		temp.wall = false;
 		backtrack.push(temp);
 		startCell = temp;
-
-		// System.out.println(toString());
-		// System.out.println("Start: " + temp.x + " " + temp.y);
 
 		do {
 			// Reset switches
@@ -150,56 +153,12 @@ public final class MazeGen {
 			checked[3] = false;
 
 			// Loop for one Cell
-			// System.out.println("---------------------------------");
 			while (!foundWay && !allChecked) {
 
-				if (!temp.equals(temp = walk(temp, checked))) {
+				// Check if theres a way
+				if (!temp.equals(temp = tryDirection(temp, checked))) {
 					foundWay = true;
 				}
-
-				// System.out.println("Temp Cell is at: " + temp.x + " " +
-				// temp.y);
-				// System.out.println("neighborLookDirection: " +
-				// neighborLookDirection);
-
-				/*
-				 * switch (neighborLookDirection) { case 0: // S if ((temp.y +
-				 * 2) < yLength && !maze[temp.x][temp.y + 2].visited) { //
-				 * System.out.println(neighborLookDirection + //
-				 * "=> Not visited: " + temp.x + " " + (temp.y + 2)); wayToTemp
-				 * = maze[temp.x][temp.y + 1]; temp = maze[temp.x][temp.y + 2];
-				 * 
-				 * foundWay = true; temp.wall = false; temp.visited = true;
-				 * wayToTemp.wall = false; backtrack.push(temp); } checked[0] =
-				 * true; break; case 1: // O if ((temp.x + 2) < xLength &&
-				 * !maze[temp.x + 2][temp.y].visited) { //
-				 * System.out.println(neighborLookDirection + //
-				 * "=> Not visited: " + (temp.x + 2) + " " + temp.y); wayToTemp
-				 * = maze[temp.x + 1][temp.y]; temp = maze[temp.x + 2][temp.y];
-				 * 
-				 * foundWay = true; temp.wall = false; temp.visited = true;
-				 * wayToTemp.wall = false; backtrack.push(temp); } checked[1] =
-				 * true; break; case 2: // N if ((temp.y - 2) >= 0 &&
-				 * !maze[temp.x][temp.y - 2].visited) { //
-				 * System.out.println(neighborLookDirection + //
-				 * "=> Not visited: " + temp.x + " " + (temp.y - 2)); wayToTemp
-				 * = maze[temp.x][temp.y - 1]; temp = maze[temp.x][temp.y - 2];
-				 * 
-				 * foundWay = true; temp.wall = false; temp.visited = true;
-				 * wayToTemp.wall = false; backtrack.push(temp); } checked[2] =
-				 * true; break; case 3: // W if ((temp.x - 2) >= 0 &&
-				 * !maze[temp.x - 2][temp.y].visited) { //
-				 * System.out.println(neighborLookDirection + //
-				 * "=> Not visited: " + (temp.x - 2) + " " + temp.y); wayToTemp
-				 * = maze[temp.x - 1][temp.y]; temp = maze[temp.x - 2][temp.y];
-				 * 
-				 * foundWay = true; temp.wall = false; temp.visited = true;
-				 * wayToTemp.wall = false; backtrack.push(temp); } checked[3] =
-				 * true; break; }
-				 */
-
-				// System.out.println(checked[0] + " " + checked[1] + " " +
-				// checked[2] + " " + checked[3]);
 
 				if (!foundWay) {
 					if (checked[0] && checked[1] && checked[2] && checked[3]) {
@@ -209,11 +168,6 @@ public final class MazeGen {
 					}
 				}
 			}
-			// System.out.println(toString());
-			/*
-			 * try { Thread.sleep(100); } catch (InterruptedException e1) {
-			 * e1.printStackTrace(); }
-			 */
 		} while (!startCell.equals(temp));
 	}
 
@@ -223,86 +177,77 @@ public final class MazeGen {
 	 * the wall) and remove the wall between it. Than push this cell to the
 	 * stack (for backtracking).
 	 * 
-	 * @param neighborLookDirection
-	 *            - Direction to look for path
 	 * @param temp
-	 *            - Actual and next cell (if found path)
+	 *            - Actual cell
 	 * @param checked
 	 *            - Indicates which direction is already checked
 	 * @return Next actual cell if found way, old cell if the path in this
 	 *         direction is blocked.
 	 */
-	private Cell walk(Cell temp, boolean[] checked) {
+	private Cell tryDirection(Cell temp, boolean[] checked) {
 		int neighborLookDirection;
 		Cell wayToTemp = null;
+		Cell tryDirection = null;
 
 		// Get random neighbor
 		neighborLookDirection = rand.nextInt(4);
 
+		// Could have used normal integers to store the coordinates,
+		// but its cooler and easier in that way.
 		switch (neighborLookDirection) {
 		case 0:
 			// S
-			if ((temp.y + 2) < yLength && !maze[temp.x][temp.y + 2].visited) {
-				// System.out.println(neighborLookDirection +
-				// "=> Not visited: " + temp.x + " " + (temp.y + 2));
-				wayToTemp = maze[temp.x][temp.y + 1];
-				temp = maze[temp.x][temp.y + 2];
-
-				temp.wall = false;
-				temp.visited = true;
-				wayToTemp.wall = false;
-				backtrack.push(temp);
-			}
+			tryDirection = new Cell(temp.x, temp.y + 2);
+			wayToTemp = new Cell(temp.x, temp.y + 1);
 			checked[0] = true;
 			break;
 		case 1:
 			// O
-			if ((temp.x + 2) < xLength && !maze[temp.x + 2][temp.y].visited) {
-				// System.out.println(neighborLookDirection +
-				// "=> Not visited: " + (temp.x + 2) + " " + temp.y);
-				wayToTemp = maze[temp.x + 1][temp.y];
-				temp = maze[temp.x + 2][temp.y];
-
-				temp.wall = false;
-				temp.visited = true;
-				wayToTemp.wall = false;
-				backtrack.push(temp);
-			}
+			tryDirection = new Cell(temp.x + 2, temp.y);
+			wayToTemp = new Cell(temp.x + 1, temp.y);
 			checked[1] = true;
 			break;
 		case 2:
 			// N
-			if ((temp.y - 2) >= 0 && !maze[temp.x][temp.y - 2].visited) {
-				// System.out.println(neighborLookDirection +
-				// "=> Not visited: " + temp.x + " " + (temp.y - 2));
-				wayToTemp = maze[temp.x][temp.y - 1];
-				temp = maze[temp.x][temp.y - 2];
-
-				temp.wall = false;
-				temp.visited = true;
-				wayToTemp.wall = false;
-				backtrack.push(temp);
-			}
+			tryDirection = new Cell(temp.x, temp.y - 2);
+			wayToTemp = new Cell(temp.x, temp.y - 1);
 			checked[2] = true;
 			break;
 		case 3:
 			// W
-			if ((temp.x - 2) >= 0 && !maze[temp.x - 2][temp.y].visited) {
-				// System.out.println(neighborLookDirection +
-				// "=> Not visited: " + (temp.x - 2) + " " + temp.y);
-				wayToTemp = maze[temp.x - 1][temp.y];
-				temp = maze[temp.x - 2][temp.y];
-
-				temp.wall = false;
-				temp.visited = true;
-				wayToTemp.wall = false;
-				backtrack.push(temp);
-			}
+			tryDirection = new Cell(temp.x - 2, temp.y);
+			wayToTemp = new Cell(temp.x - 1, temp.y);
 			checked[3] = true;
 			break;
 		}
 
+		if (isInMazeField(tryDirection)) {
+			// If not checked indexing would throw exception
+			if (!maze[tryDirection.x][tryDirection.y].visited) {
+				maze[wayToTemp.x][wayToTemp.y].wall = false;
+
+				temp = maze[tryDirection.x][tryDirection.y];
+				temp.wall = false;
+				temp.visited = true;
+
+				backtrack.push(temp);
+			}
+		}
+
 		return temp;
+	}
+
+	/**
+	 * Checks if the cell´s coordinates are in the maze field. Is used in
+	 * tryDirection() to
+	 * 
+	 * @param tryDirection
+	 * @return
+	 */
+	private boolean isInMazeField(Cell cell) {
+		if (cell.x < xLength && cell.x >= 0 && cell.y < yLength && cell.y >= 0)
+			return true;
+		return false;
 	}
 
 	/**
@@ -351,6 +296,15 @@ public final class MazeGen {
 	 */
 	public Cell[][] getMaze() {
 		return maze;
+	}
+
+	/**
+	 * For unit tests
+	 * 
+	 * @return numberOfDeletionsPerLine
+	 */
+	public int getNumberOfDeletionsPerLine() {
+		return numberOfDeletionsPerLine;
 	}
 
 	/**
