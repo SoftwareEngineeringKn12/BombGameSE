@@ -54,7 +54,7 @@ public final class HistoryTargetFinder implements TargetFinder {
 		//get direction with highest count
 		int direction = getMaxIndex(ai.getDirectionCount());
 		ai.setDirectionCount(direction, 0);
-				
+		
 		//find suitable Node as Target
 		Position enemy = new Position(ai.getFocusedEnemyX(), ai.getFocusedEnemyY());
 		calculateTarget(enemy, direction);
@@ -70,7 +70,7 @@ public final class HistoryTargetFinder implements TargetFinder {
 	 * @param y - start y-coordinate
 	 * @param direction - searching direction
 	 */
-	private void calculateTarget(Position enemy, int direction) {
+	private void calculateTarget(final Position enemy, int direction) {
 		
 
 		switch(direction) {
@@ -130,7 +130,7 @@ public final class HistoryTargetFinder implements TargetFinder {
 			//check if there is a node with the calculated coordinates
 			Node[] nodes = ai.getNodes();
 			int nidx = Arrays.binarySearch(nodes, new Node(xtmp, ytmp, 0, null));
-			if(nidx > 0) {
+			if(nidx >= 0) {
 				target = new Position(xtmp, ytmp);
 				return;
 			}

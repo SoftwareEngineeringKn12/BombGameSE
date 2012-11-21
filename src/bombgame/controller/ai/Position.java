@@ -1,20 +1,56 @@
 package bombgame.controller.ai;
 
-public final class Position {
+/**
+ * This Class holds a x- and a y-coordinate and defines a Position in a 2 dimensional
+ * area.
+ * @author Rookfighter
+ *
+ */
+ final class Position {
 	
+	 /**
+	  * x-coordinate
+	  */
 	private final int x;
+	
+	/**
+	 * y-coordinate
+	 */
 	private final int y;
 	
-	public Position( int x, int y) {
+	/**
+	 * Creates a Position with the specified coordinates
+	 * @param x - x-coordinate
+	 * @param y - y-coordinate
+	 */
+	 Position( int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
 	
-	public int getX() {
+	 /**
+	  * Returns the x-coordinate.
+	  * @return - x-coordinate
+	  */
+	 int getX() {
 		return x;
 	}
 	
-	public int getY() {
+	 /**
+	  * Returns the y-coordinate.
+	  * @return - y-coordinate
+	  */
+	 int getY() {
 		return y;
+	}
+	
+	 /**
+	  * Returns a String representation of a Position.
+	  */
+	@Override
+	 public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("[").append(x).append("][").append(y).append("]");
+		return sb.toString();
 	}
 }

@@ -53,6 +53,11 @@ public final class ManAI {
 	 */
 	public static final int HISTORYLENGTH = 4;
 	
+	/**
+	 * format String
+	 */
+	private static final String FORMAT = "] [";
+	
 //################################################################################
 //################################# NON STATIC ###################################
 //################################################################################
@@ -139,11 +144,13 @@ public final class ManAI {
 		this.man = man;
 		this.handler = handler;
 		this.rand = new Random();
-		directionHistory = new LinkedList<Integer>();
-		directionCount = new int[NUMBER_OF_DIRECTIONS];
-		nodes = NodeFinder.findAllNodes(handler);
-		pathfinder = new PathFinderAStar(handler, new BombCostCalculator(handler), new AISelector(handler));
-		targetfinder = new HistoryTargetFinder(this);
+		this.turns = 0;
+		this.path = new LinkedList<Position>();
+		this.directionHistory = new LinkedList<Integer>();
+		this.directionCount = new int[NUMBER_OF_DIRECTIONS];
+		this.nodes = NodeFinder.findAllNodes(handler);
+		this.pathfinder = new PathFinderAStar(handler, new BombCostCalculator(handler), new AISelector(handler));
+		this.targetfinder = new HistoryTargetFinder(this);
 		
 	}
 	
@@ -173,8 +180,8 @@ public final class ManAI {
 			}
 		}
 		
-		path = pathfinder.calculatePath(new Position(man.getX(), man.getY()), target);
-		
+		Position start = new Position(man.getX(), man.getY());
+		path = pathfinder.calculatePath(start, target);
 		//this only happens if the target is not reachable
 		if(path.isEmpty()) {
 			return;
@@ -334,7 +341,7 @@ public final class ManAI {
 	 * @return - x-coordinate of the focused Man
 	 */
 	public int getFocusedEnemyX() {
-		return focusedEnemy.getY();
+		return focusedEnemy.getX();
 	}
 	
 	
@@ -343,7 +350,7 @@ public final class ManAI {
 	 * @return - y-coordinate of the focused Man
 	 */
 	public int getFocusedEnemyY() {
-		return focusedEnemy.getX();
+		return focusedEnemy.getY();
 	}
 	
 	
@@ -375,6 +382,30 @@ public final class ManAI {
 	 */
 	public int[] getDirectionCount() {
 		return directionCount;
+	}
+	
+	/**
+	 * Returns the String-form of a ManAI-object.
+	 */
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("-> AI: ");
+		sb.append("[").append(man.getX()).append(FORMAT).append(man.getY()).append("]");
+		sb.append(" T: ");
+		if(target == null) {
+			sb.append("NULL");
+		} else {
+			sb.append("[").append(target.getX()).append(FORMAT).append(target.getY()).append("]");
+		}
+		sb.append(" F: ");
+		if(focusedEnemy == null) {
+			sb.append("NULL");
+		} else {
+			sb.append("[").append(focusedEnemy.getX()).append(FORMAT).append(focusedEnemy.getY()).append("]");
+		}
+		sb.append(" Turn: ").append(turns);
+		sb.append(" Direction: ").append(man.getDirection());
+		return sb.toString();
 	}
 
 }

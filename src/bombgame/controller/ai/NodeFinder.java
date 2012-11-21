@@ -6,26 +6,41 @@ import bombgame.controller.GameHandler;
 import bombgame.entities.GameObject;
 import bombgame.entities.Wall;
 
+
+/**
+ * 
+ * @author Rookfighter
+ *
+ */
 public class NodeFinder {
 
+	private static final int DEF_SIZE = 10;
 	
+	private static final int INC_FAC = 10;
 	
 	/**
 	 * Searches through the field given by handler and 
 	 * and returns an ordered (by natural order) Array of all found Nodes.
 	 */
 	public static Node[] findAllNodes(GameHandler handler) {
-		Node[] nodes = new Node[10];
+		
+		Node[] nodes = new Node[DEF_SIZE];
 		int[] count = {0};
 		
+		//go through the whole field and create a Node if the given place fulfills the conditions
 		for(int i = 0; i < handler.getField().length; i++) {
 			for(int j = 0; j < handler.getField()[0].length; j++) {
+				nodes = ensureCapacity(count, nodes);
 				createNode(i,j, handler, nodes, count);
 			}
 		}
+		
+		//copy the nodes to a new array with correct size (less overhead)
 		Node[] old = nodes;
+		
 		nodes = new Node[count[0]];
-		System.arraycopy(old, 0, nodes, 0, count[0]);
+		System.arraycopy(old, 0, nodes, 0, nodes.length);
+		//sort the array by natural order.
 		Arrays.sort(nodes);
 		return nodes;
 	}
@@ -37,7 +52,10 @@ public class NodeFinder {
 	 * @param y - y-coordinate
 	 */
 	private static void createNode(int x, int y, GameHandler handler, Node[] nodes, int[] count) {
+		
 		GameObject field[][] = handler.getField();
+		
+		//if it is a Wall it cannot be a Node
 		if(field[x][y] instanceof Wall) {
 			return;
 		}
@@ -45,27 +63,43 @@ public class NodeFinder {
 		boolean direction[] = { false, false, false, false };
 		int directions = 0;
 		
-		if(x + 1 < field.length && !(field[x + 1][y] instanceof Wall)) {
-			direction[Node.RIGHT] = true;
-			directions++;
-		}
-		if(x - 1 >= 0 && !(field[x - 1][y] instanceof Wall)) {
-			direction[Node.LEFT] = true;
-			directions++;
-		}
-		if(y + 1 < field[0].length && !(field[x][y + 1] instanceof Wall)) {
-			direction[Node.DOWN] = true;
-			directions++;
-		}
-		if(y - 1 >= field[0].length && !(field[x][y - 1] instanceof Wall)) {
-			direction[Node.UP] = true;
-			directions++;
-		}
+		//check the directions of the given Position
+		directions += checkDirections(x, y, 1, 0, direction, Node.RIGHT, field);
+		directions += checkDirections(x, y, -1, 0, direction, Node.LEFT, field);
+		directions += checkDirections(x, y, 0, -1, direction, Node.UP, field);
+		directions += checkDirections(x, y, 0, 1, direction, Node.DOWN, field);
+		
 		Node q = new Node(x, y, directions, direction);
 		addNode(q, nodes, count);
 		
 	}
 	
+	/**
+	 * 
+	 * @param x - x-coordinate
+	 * @param y - y-coordinate
+	 * @param xfac - x-direction
+	 * @param yfac - y-direction
+	 * @param direction - directionarray
+	 * @param dir - direction number
+	 * @param field - field in which the Position is
+	 * @return - value is 1 if the examined direction is not blocked else 0
+	 */
+	private static int checkDirections(int x, int y, int xfac, int yfac, final boolean[] direction, int dir, final GameObject field[][]) {
+		
+		int xtmp = x + xfac;
+		int ytmp = y + yfac;
+		
+		boolean xlegal = xtmp < field.length && xtmp >= 0;
+		boolean ylegal = ytmp < field[0].length && ytmp >= 0;
+		
+		if(xlegal && ylegal && !(field[xtmp][ytmp] instanceof Wall) ) {
+			direction[dir] = true;
+			return 1;
+		}
+		
+		return 0;
+	}
 	
 	/**
 	 *Adds the given node to nodes, if it has more than 1 free direction and if it has 2 directions, only they
@@ -76,16 +110,35 @@ public class NodeFinder {
 		
 		if(q.directions <= 1) {
 			return;
-		} else if(q.directions == 2) {
-			if( ( q.direction[Node.UP] && q.direction[Node.DOWN] ) || (q.direction[Node.RIGHT] && q.direction[Node.LEFT]) ) {
-				return;
-			}
-			
+		}
+		
+		boolean updown =  q.direction[Node.UP] && q.direction[Node.DOWN];
+		boolean leftright = q.direction[Node.RIGHT] && q.direction[Node.LEFT];
+		
+		if(q.directions == 2 && (updown || leftright)) {
+			return;
 		}
 		
 		nodes[count[0]] = q;
 		count[0]++;
 	}
+	 
+	 /**
+	  * Ensures the capacity for nodes.
+	  * @param count - count of Nodes hold in nodes
+	  * @param nodes - array of Nodes
+	  * @return - new array of nodes
+	  */
+	 private static Node[] ensureCapacity(int[] count, Node[] nodes) {
+		 
+		 if(count[0] >= nodes.length) {
+			 Node[] old = nodes;
+			 nodes = new Node[count[0] * INC_FAC];
+			 System.arraycopy(old, 0, nodes, 0, old.length);
+		 }
+		 
+		 return nodes;
+	 }
 	 
 	 
 	//############################################################################################
@@ -183,7 +236,7 @@ public class NodeFinder {
 				if( this.equals(q)) {
 					return 0;
 				}
-				if(this.x + this.y + this.directions > q.x + q.y + q.directions) {
+				if(this.x > q.x) {
 					return 1;
 				} else {
 					return -1;

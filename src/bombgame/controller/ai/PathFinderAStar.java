@@ -84,9 +84,9 @@ public final class PathFinderAStar implements PathFinder {
 			//get the first element in the queue (with lowest cost)
 			Cell c = openlist.poll();
 			addClosedList(c);
-			
 			//if this Cell was the target it is now in the closedlist
 			if(inclosed[target.getX()][target.getY()]) {
+				this.target = c;
 				break;
 			}
 			
@@ -117,6 +117,7 @@ public final class PathFinderAStar implements PathFinder {
 		//if selector returns true add to closed list
 		if(selector != null && selector.moveToClosedList(pos, c.pathcost)) {
 			addClosedList(c);
+			return;
 		}
 		
 		//increase cost calculated by ExtraCostCalculator
@@ -131,6 +132,7 @@ public final class PathFinderAStar implements PathFinder {
 				if(c.cost < tmp.cost) {
 					tmp.prev = c.prev;
 					tmp.calcCosts();
+					tmp.cost = c.cost;
 				}
 				return;
 			}
@@ -179,9 +181,10 @@ public final class PathFinderAStar implements PathFinder {
 	private void addNeighbour(final Cell c, int xfac, int yfac) {
 		int xtmp = c.x + xfac;
 		int ytmp = c.y + yfac;
-		boolean xpos = xtmp < inclosed.length && xtmp >= 0;
-		boolean ypos = ytmp < inclosed[0].length && ytmp >= 0;
-		if(xpos && ypos && !(inclosed[xtmp][ytmp])) {
+		boolean xlegal = xtmp < inclosed.length && xtmp >= 0;
+		boolean ylegal = ytmp < inclosed[0].length && ytmp >= 0;
+		
+		if(xlegal && ylegal && !(inclosed[xtmp][ytmp])) {
 			addOpenList(new Cell(xtmp, ytmp, c));
 		}
 	}
@@ -190,12 +193,13 @@ public final class PathFinderAStar implements PathFinder {
 	 * Pushes the path referenced by target.prev onto path.
 	 */
 	private void pushOnPath(final Deque<Position> path) {
-		path.clear();
 		
+		path.clear();
 		if(target.prev != null) {
 			//iterate way backwards from target to start
 			for(Cell q = target; q != null; q = q.prev) {
-				path.push(new Position(q.x, q.y));
+				Position pos = new Position(q.x, q.y);
+				path.push(pos);
 			}
 		}
 	}
@@ -209,7 +213,9 @@ public final class PathFinderAStar implements PathFinder {
 		closedlist.clear();
 		
 		//nothing is in the closedlist
-		Arrays.fill(inclosed, false);
+		for(int i = 0; i < inclosed.length; i++) {
+			Arrays.fill(inclosed[i], false);
+		}
 	}
 	
 	

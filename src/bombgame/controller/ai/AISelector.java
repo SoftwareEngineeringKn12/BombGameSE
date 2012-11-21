@@ -32,12 +32,12 @@ public final class AISelector implements ClosedListSelector{
 	 */
 	@Override
 	public boolean moveToClosedList(Position pos, int pathcost) {
-		//if is blocking the way immediately put to closed list
+		//if Wall is blocking the way immediately put to closed list
 		if(handler.getField()[pos.getX()][pos.getY()] instanceof Wall) {
 				return true;
 		}
 				
-		//if an explosion is in the way
+		//if an Explosion is in the way
 		if(handler.getField()[pos.getX()][pos.getY()] instanceof Explosion) {
 			Explosion exp = (Explosion) handler.getField()[pos.getX()][pos.getY()];
 			if(exp.getTimer() >= pathcost) {

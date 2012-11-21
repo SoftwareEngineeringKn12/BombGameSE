@@ -1,7 +1,7 @@
 package bombgame.tui;
 
 import bombgame.controller.GameHandler;
-import bombgame.controller.ManAI;
+import bombgame.controller.ai.ManAI;
 import bombgame.controller.PlayerTUI;
 import bombgame.entities.Bomb;
 import bombgame.entities.Explosion;
