@@ -1,26 +1,53 @@
 package bombgame.controller.ai;
 
+import java.util.Arrays;
 import java.util.Random;
 
 import bombgame.controller.ai.ManAI;
-import bombgame.controller.ai.ManAI.Node;
 import bombgame.entities.GameObject;
 import bombgame.entities.Man;
 import bombgame.entities.Wall;
+import bombgame.controller.ai.NodeFinder.Node;
 
+/**
+ * This Class searches a target for an AI. It considers the movement history of the AI's enemy
+ * and chooses the next Node in that direction.
+ * @author Rookfighter
+ *
+ */
 public final class HistoryTargetFinder implements TargetFinder {
 
+	/**
+	 * Random object to get random numbers
+	 */
+	private final Random rand;
 	
-	private Random rand;
-	
+	/**
+	 * target Position
+	 */
 	private Position target;
 	
-	public HistoryTargetFinder() {
+	/**
+	 * AI that uses this TargetFinder
+	 */
+	private final ManAI ai;
+	
+	/**
+	 * Creates a new TargetFinder with the given AI.
+	 * @param ai - AI that searches a target
+	 */
+	public HistoryTargetFinder(ManAI ai) {
 		rand = new Random();
+		this.ai = ai;
 	}
 	
+	/**
+	 * Searches a target considering the direction history of the AI and the position of the enemy focused by the AI.
+	 */
 	@Override
-	public Position searchTarget(ManAI ai) {
+	public Position searchTarget() {
+		
+		target = null;
 		
 		ai.countDirections();
 		
@@ -30,7 +57,7 @@ public final class HistoryTargetFinder implements TargetFinder {
 				
 		//find suitable Node as Target
 		Position enemy = new Position(ai.getFocusedEnemyX(), ai.getFocusedEnemyY());
-		calculateTarget(enemy, direction, ai);
+		calculateTarget(enemy, direction);
 		
 		return target;
 	}
@@ -43,31 +70,33 @@ public final class HistoryTargetFinder implements TargetFinder {
 	 * @param y - start y-coordinate
 	 * @param direction - searching direction
 	 */
-	private void calculateTarget(Position enemy, int direction, ManAI ai) {
+	private void calculateTarget(Position enemy, int direction) {
 		
 
 		switch(direction) {
 		
 		case Man.UP:
-			findTarget(enemy, 0, -1, ai);
+			findTarget(enemy, 0, -1);
 			break;
 			
 		case Man.DOWN:
-			findTarget(enemy, 0, 1, ai);
+			findTarget(enemy, 0, 1);
 			break;
 			
 		case Man.RIGHT:
-			findTarget(enemy, 1, 0, ai);
+			findTarget(enemy, 1, 0);
 			break;
 			
 		case Man.LEFT:
-			findTarget(enemy, -1, 0, ai);
+			findTarget(enemy, -1, 0);
 			break;
+			
 		default:
-			if(sum(ai.getDirectionCount()) <= 0) {
+			//if the sum is 0 there is no preference
+			if(sum(ai.getDirectionCount()) >= 0) {
 				target = enemy;
 			} else {
-				chooseRandomTargetDirection(enemy, ai);
+				chooseRandomTargetDirection(enemy);
 			}
 		}
 		
@@ -83,36 +112,39 @@ public final class HistoryTargetFinder implements TargetFinder {
 	 * @param xfac - factor for the y-direction
 	 * @param yfac - factor for the x-direction
 	 */
-	private void findTarget( Position start, int xfac, int yfac, ManAI ai) {
+	private void findTarget( Position start, int xfac, int yfac) {
 		GameObject[][] field = ai.getHandler().getField();
 		
 		int i = 1;
-		int x_tmp = start.getX() + xfac * i;
-		int y_tmp = start.getY() + yfac * i;
+		int xtmp = start.getX() + xfac * i;
+		int ytmp = start.getY() + yfac * i;
 		
-		while(y_tmp >= 0 &&  y_tmp < field[0].length &&
-				x_tmp < field.length && x_tmp >= 0) {
+		while(ytmp >= 0 &&  ytmp < field[0].length &&
+				xtmp < field.length && xtmp >= 0) {
 			
-			if(field[x_tmp][y_tmp] instanceof Wall) {
+			if(field[xtmp][ytmp] instanceof Wall) {
 				//if way is blocked by Wall break the loop
 				break;
 			}
 			
-			//check if found node has same coordinates
-			Node q = ai.getNodes().ceiling(ai.new Node(x_tmp, y_tmp, 0, null));
-			if(q != null && q.getX() == x_tmp && q.getY() == y_tmp) {
-				target = new Position(x_tmp, y_tmp);
+			//check if there is a node with the calculated coordinates
+			Node[] nodes = ai.getNodes();
+			int nidx = Arrays.binarySearch(nodes, new Node(xtmp, ytmp, 0, null));
+			if(nidx > 0) {
+				target = new Position(xtmp, ytmp);
 				return;
 			}
+			
+			//calculate next position
 			i++;
-			x_tmp = start.getX() + xfac * i;
-			y_tmp = start.getY() + yfac * i;
+			xtmp = start.getX() + xfac * i;
+			ytmp = start.getY() + yfac * i;
 			
 		}
 		//no suitable node found (Wall blocked or out of field)
 		int direction = getMaxIndex(ai.getDirectionCount());
 		ai.setDirectionCount(direction,0);
-		calculateTarget(new Position(x_tmp - xfac, y_tmp - yfac), direction, ai);
+		calculateTarget(new Position(xtmp - xfac, ytmp - yfac), direction);
 		
 	}
 	
@@ -122,11 +154,11 @@ public final class HistoryTargetFinder implements TargetFinder {
 	 * @param x - start x-coordinate
 	 * @param y - start y-coordiante
 	 */
-	private void chooseRandomTargetDirection(Position pos, ManAI ai) {
+	private void chooseRandomTargetDirection(Position pos) {
 		while(true) {
 			int i = rand.nextInt(ManAI.NUMBER_OF_DIRECTIONS);
 			if(i != Man.NO_DIR) {
-				calculateTarget(pos, i, ai);
+				calculateTarget(pos, i);
 				return;
 			}
 		}

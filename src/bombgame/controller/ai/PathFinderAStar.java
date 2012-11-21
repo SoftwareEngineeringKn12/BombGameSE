@@ -1,47 +1,74 @@
 package bombgame.controller.ai;
 
+import java.util.Arrays;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Set;
+import java.util.TreeSet;
 
 import bombgame.controller.GameHandler;
-import bombgame.entities.Bomb;
-import bombgame.entities.Explosion;
-import bombgame.entities.Wall;
 
+/**
+ * This class calculates the path between two Positions with the A*-Algorythm.
+ * See: calculatePath().
+ * @author Rookfighter
+ *
+ */
 public final class PathFinderAStar implements PathFinder {
-
-	/**
-	 * Extra-cost for cells threatened by a Bomb-object
-	 */
-	private static final int B_COST = 9;
 	
+	/**
+	 * ExtraCostCalculator which the Algorythm considers
+	 */
+	private final ExtraCostCalculator extraCostCalc;
+	
+	/**
+	 * ClosedListSelector which the Algorythm considers
+	 */
+	private final ClosedListSelector selector;
+	
+	/**
+	 * target cell
+	 */
 	private Cell target;
+	
 	/**
 	 * List of closed Cells
 	 */
-	private Set<Cell> closedlist;
+	private final Set<Cell> closedlist;
 	
 	/**
 	 * List of known cells
 	 */
-	private PriorityQueue<Cell> openlist;
+	private final PriorityQueue<Cell> openlist;
 	
 	/**
 	 * Maps isclosed statement to field positions
 	 */
-	private boolean inclosed[][];
+	private final boolean inclosed[][];
 	
-	private GameHandler handler;
 	
-	public PathFinderAStar(GameHandler handler) {
-		this.handler = handler;
+	/**
+	 * Creates a PathFinder searching in the given GameHandler considering the given ExtraCostCalculator and
+	 * the given ClosedListSelector.
+	 * @param handler - GameHandler in which is searched
+	 * @param extraCostCalc- ExtraCostCalculator which will be considered
+	 * @param selector - ClosedListSelector which will be considered 
+	 */
+	public PathFinderAStar(final GameHandler handler, final ExtraCostCalculator extraCostCalc, final ClosedListSelector selector) {
+		this.openlist = new PriorityQueue<Cell>();
+		this.closedlist = new TreeSet<Cell>();
+		this.extraCostCalc = extraCostCalc;
+		this.selector = selector;
+		this.inclosed = new boolean[handler.getField().length][handler.getField()[0].length];
 	}
 	
 	
+	/**
+	 * Calculates the Path from start to target with the A* Algorythm.
+	 */
 	@Override
-	public Deque<Position> calculatePath(Position start, Position target) {
+	public Deque<Position> calculatePath(final Position start, final Position target) {
 		
 		Deque<Position> path = new LinkedList<Position>();
 		
@@ -54,70 +81,53 @@ public final class PathFinderAStar implements PathFinder {
 		//search path
 		while(!openlist.isEmpty()) {
 			
+			//get the first element in the queue (with lowest cost)
 			Cell c = openlist.poll();
-			//System.out.println("-> Popped: " + c);
 			addClosedList(c);
 			
+			//if this Cell was the target it is now in the closedlist
 			if(inclosed[target.getX()][target.getY()]) {
-				//System.out.println("=> found Target " + c);
 				break;
 			}
 			
+			//now examine neighbours (up, down, left, right)
 			addNeighbours(c);
 			
 		}
 		
-		//put path in path deque
+		//put found path into the pathdeque
 		pushOnPath(path);
 		return path;
 	}
 	
 	/**
-	 * Adds the specified Cell-Object to the openlist.
-	 * If the given Cell points to a Wall-object, the Cell will be immediately moved to the closedlist.
-	 * If the given Cell points to an Explosion and the pathcost up to this Cell is lower than the timer
-	 * of the Explosion-object, the given Cell will be immediately moved to the closedlist.
-	 * If the given Cell is in the Range of a Bomb, its overall cost will be increased by B_COST.
-	 * If the given Cell is equals to one in the openlist and has lower overall cost than the one already
-	 * in the list, the cost and its predecessor will be overwritten.
+	 * Adds the specified Cell-Object to the openlist considering the extraCostCalculator and
+	 * the ClosedListSelector.
 	 * @param c - Cell-object that will be added to the openlist.
 	 */
-	private void addOpenList(Cell c) {
+	private void addOpenList(final Cell c) {
 		if( c == null ){
 			return;
 		}
-		
-		
+
 		c.calcCosts();
 		
-		//if is blocking the way immediately put to closed list
-		if(handler.getField()[c.x][c.y] instanceof Wall) {
-			//System.out.println(c + " is blocking");
+		Position pos = new Position (c.x, c.y);
+		
+		//if selector returns true add to closed list
+		if(selector != null && selector.moveToClosedList(pos, c.pathcost)) {
 			addClosedList(c);
-			return;
 		}
 		
-		//if an explosion is in the way
-		if(handler.getField()[c.x][c.y] instanceof Explosion) {
-			Explosion exp = (Explosion) handler.getField()[c.x][c.y];
-			if(exp.getTimer() >= c.pathcost) {
-				//System.out.println(c + " is Explosion in way");
-				addClosedList(c);
-				return;
-			}
-			
-		}
-		
-		//if is in danger of bomb increase cost
-		if(isInBombRange(c)) {
-			c.cost += B_COST;
+		//increase cost calculated by ExtraCostCalculator
+		if(extraCostCalc != null) {
+			c.cost += extraCostCalc.calcExtraCost(pos);
 		}
 		
 		
-		
+		// check if cell is already in openlist, if so update prev and costs
 		for(Cell tmp : openlist) {
 			if(tmp.equals(c)) {
-				//System.out.println(c + " already in openlist");
 				if(c.cost < tmp.cost) {
 					tmp.prev = c.prev;
 					tmp.calcCosts();
@@ -127,7 +137,6 @@ public final class PathFinderAStar implements PathFinder {
 		}
 		
 		//not found
-		//System.out.println(c + " added to openlist");
 		openlist.add(c);
 		
 	}
@@ -136,7 +145,7 @@ public final class PathFinderAStar implements PathFinder {
 	 * Adds the specified Cell-object to the closedlist.
 	 * @param c - Cell-object that will bei added to the closedlist
 	 */
-	private void addClosedList(Cell c) {
+	private void addClosedList(final Cell c) {
 
 		inclosed[c.x][c.y] = true;
 		closedlist.add(c);
@@ -147,62 +156,45 @@ public final class PathFinderAStar implements PathFinder {
 	 * Adds all neighbours of the specified Cell-object to the openlist.
 	 * @param c - Cell-object whose neighbours are examined 
 	 */
-	private void addNeighbours(Cell c) {
+	private void addNeighbours(final Cell c) {
 		
-		if(c.x + 1 < inclosed.length && !(inclosed[c.x+1][c.y])) {
-			
-			addOpenList(new Cell(c.x+1, c.y, c));
-			
-		}
+		//right
+		addNeighbour(c, 1, 0);
+		//left
+		addNeighbour(c, -1, 0);
+		//up
+		addNeighbour(c, 0, -1);
+		//down
+		addNeighbour(c, 0, 1);
 		
-		if(c.x - 1 >= 0 && !(inclosed[c.x-1][c.y])) {
-			
-			addOpenList(new Cell(c.x-1, c.y, c));
-			
-		}
-		
-		if(c.y + 1 < inclosed[0].length && !(inclosed[c.x][c.y+1])) {
-			
-			addOpenList(new Cell(c.x, c.y+1,c));
-			
-		}
-		
-		if(c.y - 1 >= 0 && !(inclosed[c.x][c.y-1]) ) {
-			
-			addOpenList(new Cell(c.x, c.y-1, c));
-			
-		}
 	}
 	
 	/**
-	 * Returns true if the given Cell is probably in danger of being hit by an
-	 * Explosion.
-	 * @param c - Cell that is to be proofed to be out of danger
-	 * @return - 
+	 * Adds a new Cell to the openlist if it is not in the closedlist and has a legal
+	 * Position
+	 * @param c - Cell that wants a neighbour
+	 * @param xfac - x-direction
+	 * @param yfac - y-direction
 	 */
-	private boolean isInBombRange(Cell c) {
-		for(Bomb b : handler.getBombs()) {
-			//simple and ineffective algorythm!!!
-			int dx = Math.abs(c.x - b.getX());
-			int dy = Math.abs(c.y - b.getY());
-			if(dx <= Explosion.RANGE && dy <= Explosion.RANGE) {
-				return true;
-			}
+	private void addNeighbour(final Cell c, int xfac, int yfac) {
+		int xtmp = c.x + xfac;
+		int ytmp = c.y + yfac;
+		boolean xpos = xtmp < inclosed.length && xtmp >= 0;
+		boolean ypos = ytmp < inclosed[0].length && ytmp >= 0;
+		if(xpos && ypos && !(inclosed[xtmp][ytmp])) {
+			addOpenList(new Cell(xtmp, ytmp, c));
 		}
-		return false;
 	}
-	
 	
 	/**
 	 * Pushes the path referenced by target.prev onto path.
 	 */
-	private void pushOnPath(Deque<Position> path) {
+	private void pushOnPath(final Deque<Position> path) {
 		path.clear();
 		
 		if(target.prev != null) {
-			//System.out.println("-----------------------");
+			//iterate way backwards from target to start
 			for(Cell q = target; q != null; q = q.prev) {
-				//System.out.println("Pushing " + q);
 				path.push(new Position(q.x, q.y));
 			}
 		}
@@ -215,11 +207,9 @@ public final class PathFinderAStar implements PathFinder {
 	private void clearLists() {
 		openlist.clear();
 		closedlist.clear();
-		for( int i = 0; i < inclosed.length; i++) {
-			for( int j = 0; j < inclosed[0].length; j++) {
-				inclosed[i][j] = false;
-			}
-		}
+		
+		//nothing is in the closedlist
+		Arrays.fill(inclosed, false);
 	}
 	
 	
@@ -233,8 +223,16 @@ public final class PathFinderAStar implements PathFinder {
 	 *
 	 */
 	class Cell implements Comparable<Cell> {
-		private int x;
-		private int y;
+		
+		/**
+		 * x-coordinate of the Cell
+		 */
+		private final int x;
+		
+		/**
+		 * y-coordinate of the Cell
+		 */
+		private final int y;
 		
 		/**
 		 * Reference to previous Cell
@@ -264,7 +262,7 @@ public final class PathFinderAStar implements PathFinder {
 		 * @param y - y-coordinate
 		 * @param prev - previous Cell-object
 		 */
-		public Cell(int x, int y, Cell prev) {
+		public Cell(int x, int y, final Cell prev) {
 			this.x = x;
 			this.y = y;
 			this.prev = prev;
@@ -292,7 +290,7 @@ public final class PathFinderAStar implements PathFinder {
 		 * Two Cells are equal if they have the same x- and y-coordinates.
 		 */
 		@Override
-		public boolean equals(Object o) {
+		public boolean equals(final Object o) {
 			if(o instanceof Cell) {
 				Cell c = (Cell) o;
 				return c.x == this.x && c.y == this.y;
@@ -306,7 +304,7 @@ public final class PathFinderAStar implements PathFinder {
 		 * costs of the other one.
 		 */
 		@Override
-		public int compareTo(Cell c) {
+		public int compareTo(final Cell c) {
 			if(this.equals(c)) {
 				return 0;
 			}
