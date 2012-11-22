@@ -20,32 +20,32 @@ public final class PathFinderAStar implements PathFinder {
 	/**
 	 * ExtraCostCalculator which the Algorythm considers
 	 */
-	private final ExtraCostCalculator extraCostCalc;
+	protected final ExtraCostCalculator extraCostCalc;
 	
 	/**
 	 * ClosedListSelector which the Algorythm considers
 	 */
-	private final ClosedListSelector selector;
+	protected final ClosedListSelector selector;
 	
 	/**
 	 * target cell
 	 */
-	private Cell target;
+	protected Cell target;
 	
 	/**
 	 * List of closed Cells
 	 */
-	private final Set<Cell> closedlist;
+	protected final Set<Cell> closedlist;
 	
 	/**
 	 * List of known cells
 	 */
-	private final PriorityQueue<Cell> openlist;
+	protected final PriorityQueue<Cell> openlist;
 	
 	/**
 	 * Maps isclosed statement to field positions
 	 */
-	private final boolean inclosed[][];
+	protected final boolean inclosed[][];
 	
 	
 	/**
@@ -105,7 +105,7 @@ public final class PathFinderAStar implements PathFinder {
 	 * the ClosedListSelector.
 	 * @param c - Cell-object that will be added to the openlist.
 	 */
-	private void addOpenList(final Cell c) {
+	protected void addOpenList(final Cell c) {
 		if( c == null ){
 			return;
 		}
@@ -147,7 +147,7 @@ public final class PathFinderAStar implements PathFinder {
 	 * Adds the specified Cell-object to the closedlist.
 	 * @param c - Cell-object that will bei added to the closedlist
 	 */
-	private void addClosedList(final Cell c) {
+	protected void addClosedList(final Cell c) {
 
 		inclosed[c.x][c.y] = true;
 		closedlist.add(c);
@@ -158,7 +158,7 @@ public final class PathFinderAStar implements PathFinder {
 	 * Adds all neighbours of the specified Cell-object to the openlist.
 	 * @param c - Cell-object whose neighbours are examined 
 	 */
-	private void addNeighbours(final Cell c) {
+	protected void addNeighbours(final Cell c) {
 		
 		//right
 		addNeighbour(c, 1, 0);
@@ -178,7 +178,7 @@ public final class PathFinderAStar implements PathFinder {
 	 * @param xfac - x-direction
 	 * @param yfac - y-direction
 	 */
-	private void addNeighbour(final Cell c, int xfac, int yfac) {
+	protected void addNeighbour(final Cell c, int xfac, int yfac) {
 		int xtmp = c.x + xfac;
 		int ytmp = c.y + yfac;
 		boolean xlegal = xtmp < inclosed.length && xtmp >= 0;
@@ -192,7 +192,7 @@ public final class PathFinderAStar implements PathFinder {
 	/**
 	 * Pushes the path referenced by target.prev onto path.
 	 */
-	private void pushOnPath(final Deque<Position> path) {
+	protected void pushOnPath(final Deque<Position> path) {
 		
 		path.clear();
 		if(target.prev != null) {
@@ -208,7 +208,7 @@ public final class PathFinderAStar implements PathFinder {
 	/**
 	 * Clears the lists openlist, closedlist and inclosed.
 	 */
-	private void clearLists() {
+	protected void clearLists() {
 		openlist.clear();
 		closedlist.clear();
 		
@@ -233,32 +233,32 @@ public final class PathFinderAStar implements PathFinder {
 		/**
 		 * x-coordinate of the Cell
 		 */
-		private final int x;
+		protected final int x;
 		
 		/**
 		 * y-coordinate of the Cell
 		 */
-		private final int y;
+		protected final int y;
 		
 		/**
 		 * Reference to previous Cell
 		 */
-		private Cell prev;
+		protected Cell prev;
 		
 		/**
 		 * Costs of the path to get up to this Cell
 		 */
-		private int pathcost;
+		protected int pathcost;
 		
 		/**
 		 * Costs of the path to get from this Cell to the target
 		 */
-		private int heucost;
+		protected int heucost;
 		
 		/**
 		 * allover costs
 		 */
-		private int cost;
+		protected int cost;
 		
 		
 		/**
@@ -280,7 +280,7 @@ public final class PathFinderAStar implements PathFinder {
 		 * as the logically needed steps to get to the target.
 		 * The allover costs are the sum of pathcost and heucost.
 		 */
-		private void calcCosts() {
+		protected void calcCosts() {
 			if(prev != null) {
 				pathcost = prev.pathcost + 1;
 			} else {
