@@ -242,6 +242,10 @@ public class NodeFinder {
 				}
 				if(this.x > q.x) {
 					return 1;
+				} else if(this.x < q.x){
+					return -1;
+				} else if( this.y > q.y) {
+					return 1;
 				} else {
 					return -1;
 				}

@@ -32,7 +32,7 @@ package bombgame.controller.ai;
 	  * Returns the x-coordinate.
 	  * @return - x-coordinate
 	  */
-	 int getX() {
+	 public int getX() {
 		return x;
 	}
 	
@@ -40,7 +40,7 @@ package bombgame.controller.ai;
 	  * Returns the y-coordinate.
 	  * @return - y-coordinate
 	  */
-	 int getY() {
+	 public int getY() {
 		return y;
 	}
 	
@@ -63,6 +63,6 @@ package bombgame.controller.ai;
 			return false;
 		}
 		Position pos = (Position) obj;
-		return this.getX() == pos.getX() && this.getY() == pos.getX();
+		return this.getX() == pos.getX() && this.getY() == pos.getY();
 	}
 }

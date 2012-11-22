@@ -77,5 +77,9 @@ public class NodeFinderTest extends TestCase{
 		Node q1 = new Node(0,1,0,null);
 		Node q2 = new Node(0,1,2,new boolean[4]);
 		assertEquals(0, q1.compareTo(q2));
+		q2 = new Node(1,0,0,null);
+		assertEquals(-1, q1.compareTo(q2));
+		q2 = new Node(0,2,0,null);
+		assertEquals(-1, q1.compareTo(q2));
 	}
 }

@@ -92,12 +92,8 @@ public final class HistoryTargetFinder implements TargetFinder {
 			break;
 			
 		default:
-			//if the sum is 0 there is no preference
-			if(sum(ai.getDirectionCount()) >= 0) {
-				target = enemy;
-			} else {
-				chooseRandomTargetDirection(enemy);
-			}
+			//no direction
+			target = enemy;
 		}
 		
 	}
@@ -146,24 +142,7 @@ public final class HistoryTargetFinder implements TargetFinder {
 		ai.setDirectionCount(direction,0);
 		calculateTarget(new Position(xtmp - xfac, ytmp - yfac), direction);
 		
-	}
-	
-	/**
-	 * This method calculates a random direction and calls calculateTraget() with the given
-	 * x- and y-coordinates and the calculated direction.
-	 * @param x - start x-coordinate
-	 * @param y - start y-coordiante
-	 */
-	protected void chooseRandomTargetDirection(Position pos) {
-		while(true) {
-			int i = rand.nextInt(ManAI.NUMBER_OF_DIRECTIONS);
-			if(i != Man.NO_DIR) {
-				calculateTarget(pos, i);
-				return;
-			}
-		}
-	}
-	
+	}	
 	
 	
 	/**
