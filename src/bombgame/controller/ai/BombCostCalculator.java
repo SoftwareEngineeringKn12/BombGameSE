@@ -19,7 +19,7 @@ public final class BombCostCalculator implements ExtraCostCalculator{
 	/**
 	 * additional cost if a Bomb blocks the way
 	 */
-	private static final int BOMB_COST = 9;
+	protected static final int BOMB_COST = 9;
 	
 	/**
 	 * Creates a new BombCostCalculator observing the given GameHandler.

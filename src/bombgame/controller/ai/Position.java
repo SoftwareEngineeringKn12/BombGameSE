@@ -53,4 +53,16 @@ package bombgame.controller.ai;
 		sb.append("[").append(x).append("][").append(y).append("]");
 		return sb.toString();
 	}
+	
+	/**
+	 * Returns true if the Positions have the same coordinates.
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if(!(obj instanceof Position)) {
+			return false;
+		}
+		Position pos = (Position) obj;
+		return this.getX() == pos.getX() && this.getY() == pos.getX();
+	}
 }

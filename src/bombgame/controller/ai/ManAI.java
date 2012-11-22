@@ -216,7 +216,7 @@ public final class ManAI {
 	 * is bigger/equals than HISTORYLENGTH, the oldest entry is removed.
 	 * @param value
 	 */
-	private void addHistoryValue(int value) {
+	protected void addHistoryValue(int value) {
 		if(directionHistory.size() >= HISTORYLENGTH) {
 			directionHistory.poll();
 		}
@@ -370,11 +370,13 @@ public final class ManAI {
 	public void countDirections() {
 		//initialize directionCount with 0
 		Arrays.fill(directionCount,  0);
-				
+		
+		
 		for( Integer i : directionHistory) {
 			directionCount[i]++;
 		}
 	}
+	
 	
 	/**
 	 * Returns the array of the Direction count. The index equates the direction.
@@ -382,6 +384,15 @@ public final class ManAI {
 	 */
 	public int[] getDirectionCount() {
 		return directionCount;
+	}
+	
+	
+	/**
+	 * Sets the focused Enemy of this AI to the given Man.
+	 * @param man - focused enemy
+	 */
+	public void setFocusedEnemy(final Man man) {
+		focusedEnemy = man;
 	}
 	
 	/**

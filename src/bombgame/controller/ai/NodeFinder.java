@@ -14,9 +14,13 @@ import bombgame.entities.Wall;
  */
 public class NodeFinder {
 
-	private static final int DEF_SIZE = 10;
+	protected static final int DEF_SIZE = 10;
 	
-	private static final int INC_FAC = 10;
+	protected static final int INC_FAC = 10;
+	
+	protected NodeFinder() {
+		
+	}
 	
 	/**
 	 * Searches through the field given by handler and 
@@ -51,7 +55,7 @@ public class NodeFinder {
 	 * @param x - x-coordinate
 	 * @param y - y-coordinate
 	 */
-	private static void createNode(int x, int y, GameHandler handler, Node[] nodes, int[] count) {
+	protected static void createNode(int x, int y, GameHandler handler, Node[] nodes, int[] count) {
 		
 		GameObject field[][] = handler.getField();
 		
@@ -85,7 +89,7 @@ public class NodeFinder {
 	 * @param field - field in which the Position is
 	 * @return - value is 1 if the examined direction is not blocked else 0
 	 */
-	private static int checkDirections(int x, int y, int xfac, int yfac, final boolean[] direction, int dir, final GameObject field[][]) {
+	protected static int checkDirections(int x, int y, int xfac, int yfac, final boolean[] direction, int dir, final GameObject field[][]) {
 		
 		int xtmp = x + xfac;
 		int ytmp = y + yfac;
@@ -105,7 +109,7 @@ public class NodeFinder {
 	 *Adds the given node to nodes, if it has more than 1 free direction and if it has 2 directions, only they
 	 *are not opposing.
 	 */
-	 private static void addNode(final Node q, Node[] nodes,int[] count) {
+	 protected static void addNode(final Node q, Node[] nodes,int[] count) {
 	 
 		
 		if(q.directions <= 1) {
@@ -129,7 +133,7 @@ public class NodeFinder {
 	  * @param nodes - array of Nodes
 	  * @return - new array of nodes
 	  */
-	 private static Node[] ensureCapacity(int[] count, Node[] nodes) {
+	 protected static Node[] ensureCapacity(int[] count, Node[] nodes) {
 		 
 		 if(count[0] >= nodes.length) {
 			 Node[] old = nodes;
@@ -151,19 +155,19 @@ public class NodeFinder {
 		 */
 		static class Node implements Comparable<Node> {
 			
-			private final int x;
-			private final int y;
+			protected final int x;
+			protected final int y;
 			
-			private final int directions;
+			protected final int directions;
 			
-			private final boolean[] direction;
+			protected final boolean[] direction;
 			
-			private static final int UP = 0;
-			private static final int DOWN = 1;
-			private static final int LEFT = 2;
-			private static final int RIGHT = 3;
+			protected static final int UP = 0;
+			protected static final int DOWN = 1;
+			protected static final int LEFT = 2;
+			protected static final int RIGHT = 3;
 			
-			private static final int NODE_DIRECTIONS = 4;
+			protected static final int NODE_DIRECTIONS = 4;
 			
 			/**
 			 * Creates a new Node-object with the given coordinates, the given count of directions and

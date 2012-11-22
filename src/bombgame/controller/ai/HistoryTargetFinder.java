@@ -20,17 +20,17 @@ public final class HistoryTargetFinder implements TargetFinder {
 	/**
 	 * Random object to get random numbers
 	 */
-	private final Random rand;
+	protected final Random rand;
 	
 	/**
 	 * target Position
 	 */
-	private Position target;
+	protected Position target;
 	
 	/**
 	 * AI that uses this TargetFinder
 	 */
-	private final ManAI ai;
+	protected final ManAI ai;
 	
 	/**
 	 * Creates a new TargetFinder with the given AI.
@@ -70,7 +70,7 @@ public final class HistoryTargetFinder implements TargetFinder {
 	 * @param y - start y-coordinate
 	 * @param direction - searching direction
 	 */
-	private void calculateTarget(final Position enemy, int direction) {
+	protected void calculateTarget(final Position enemy, int direction) {
 		
 
 		switch(direction) {
@@ -112,7 +112,7 @@ public final class HistoryTargetFinder implements TargetFinder {
 	 * @param xfac - factor for the y-direction
 	 * @param yfac - factor for the x-direction
 	 */
-	private void findTarget( Position start, int xfac, int yfac) {
+	protected void findTarget( Position start, int xfac, int yfac) {
 		GameObject[][] field = ai.getHandler().getField();
 		
 		int i = 1;
@@ -154,7 +154,7 @@ public final class HistoryTargetFinder implements TargetFinder {
 	 * @param x - start x-coordinate
 	 * @param y - start y-coordiante
 	 */
-	private void chooseRandomTargetDirection(Position pos) {
+	protected void chooseRandomTargetDirection(Position pos) {
 		while(true) {
 			int i = rand.nextInt(ManAI.NUMBER_OF_DIRECTIONS);
 			if(i != Man.NO_DIR) {
@@ -172,7 +172,7 @@ public final class HistoryTargetFinder implements TargetFinder {
 	 * @param ia - examined int array 
 	 * @return - index of highest value in the array
 	 */
-	private int getMaxIndex(int[] ia) {
+	protected int getMaxIndex(int[] ia) {
 		int maxval = 0;
 		int maxindex = 0;
 		for(int i = 0; i < ia.length; i++) {
@@ -190,7 +190,7 @@ public final class HistoryTargetFinder implements TargetFinder {
 	 * @param ia - examined int array
 	 * @return - sum of all values
 	 */
-	private int sum(int[] ia) {
+	protected int sum(int[] ia) {
 		int sum = 0;
 		for(int i: ia) {
 			sum+=i;
