@@ -1,7 +1,6 @@
 package bombgame.controller;
 
 import java.util.ArrayList;
-
 import bombgame.entities.Bomb;
 import bombgame.entities.Explosion;
 import bombgame.entities.GameObject;
