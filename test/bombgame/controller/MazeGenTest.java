@@ -8,7 +8,6 @@ public final class MazeGenTest extends TestCase {
 	MazeGen maze1; // Standard constructor
 	MazeGen maze2;
 	MazeGen maze3;
-	MazeGen maze4; //!!
 
 	public void setUp() {
 		maze1 = new MazeGen(); // Standard constructor
@@ -24,39 +23,110 @@ public final class MazeGenTest extends TestCase {
 		assertEquals(maze1.getMaze().length, MazeGen.STANDARD_X_LENGTH);
 		assertEquals(maze1.getMaze()[0].length, MazeGen.STANDARD_Y_LENGTH);
 		assertEquals(maze1.getNumberOfDeletionsPerLine(),
-				(int) MazeGen.STANDARD_X_LENGTH * MazeGen.NUMBER_DEL_FACTOR);
+			(int) (MazeGen.STANDARD_X_LENGTH * MazeGen.NUMBER_DEL_FACTOR));
 	}
 
 	public void testGenMaze() {
-		maze1.genMaze();
-		Cell[][] maze = maze1.getMaze();
+		maze2.genMaze();
+		Cell[][] maze = maze2.getMaze();
 		
-		//boolean startAtCorner = false;
-		//boolean startAtMiddle = false;
-		//boolean startAtSide = false;
-
+		int wallCounter = 0;
+		
+		boolean startAtCorner = true;
+		boolean startAtMiddle = true;
+		boolean startAtSideA = true;
+		boolean startAtSideB = true;
+		
+		boolean allChecked = false;
+		boolean tmp1 = false, tmp2 = false;
+		
+		// 2x2 field
 		for (int i = 0; i < maze[0].length; i++) {
 			for (int j = 0; j < maze.length; j++) {
-				assertTrue(maze[j][i].getWall());
+				if (!maze[j][i].getWall()) {
+					wallCounter++;
+				}
 			}
 		}
 		
-		maze2.genMaze();
-		maze = maze2.getMaze();
-		/*
+		assertEquals(wallCounter, 1);
+		
+		maze3.genMaze();
+		maze = maze3.getMaze();
+		
+		System.out.println(maze3);
+		
+		// 3x3 field
 		for (int i = 0; i < maze[0].length; i++) {
 			for (int j = 0; j < maze.length; j++) {
 				if (j == 1 && i == 1) {
-					assertFalse(maze[j][i].getWall());
-				} else {
-					assertTrue(maze[j][i].getWall());
+					if (maze[j][i].getWall()) {
+						startAtMiddle = false;
+					}
+				} else if (!maze[j][i].getWall()) {
+					startAtMiddle = false;
 				}
 			}
-		}*/
+		}
+		
+		for (int i = 0; i < maze[0].length; i++) {
+			for (int j = 0; j < maze.length; j++) {
+				if ((j == 1 && i == 0) || (j == 1 && i == 1) || (j == 1 && i == 2)) {
+					if (maze[j][i].getWall()) {
+						startAtSideA = false;
+					}
+				} else if (!maze[j][i].getWall()) {
+					startAtSideA = false;
+				}
+			}
+		}
+		
+		for (int i = 0; i < maze[0].length; i++) {
+			for (int j = 0; j < maze.length; j++) {
+				if ((j == 0 && i == 1) || (j == 1 && i == 1) || (j == 2 && i == 1)) {
+					if (maze[j][i].getWall()) {
+						startAtSideB = false;
+					}
+				} else if (!maze[j][i].getWall()) {
+					startAtSideB = false;
+				}
+			}
+		}
+
+		for (int i = 0; i < maze[0].length; i++) {
+			for (int j = 0; j < maze.length; j++) {
+				if ((j == 0 && i == 0) || (j == 2 && i == 0)) {
+					tmp1 = true;
+				}
+				
+				if ((j == 0 && i == 2) || (j == 2 && i == 2)) {
+					tmp2 = true;
+				}
+				
+				if (tmp1 && tmp2) {
+					if (maze[j][i].getWall()) {
+						startAtCorner = false;
+					}
+				} else if (!maze[j][i].getWall()) {
+					startAtCorner = false;
+				}
+			}
+		}
+		
+		System.out.println(startAtCorner);
+		System.out.println(startAtMiddle);
+		System.out.println(startAtSideA);
+		System.out.println(startAtSideB);
+		
+		if (startAtCorner ^ startAtMiddle ^ startAtSideA ^ startAtSideB) {
+			allChecked = true;
+		}
+		
+		assertTrue(allChecked);
 	}
 
 	public void testGenNonPerfectMaze() {
-		maze1.genNonPerfectMaze();
+		maze2.genNonPerfectMaze();
 		//!! TODO
 	}
 
@@ -67,6 +137,22 @@ public final class MazeGenTest extends TestCase {
 	}
 
 	public void testToString() {
-
+		maze2.genMaze();
+		Cell[][] maze = maze2.getMaze();
+		StringBuilder str = new StringBuilder();
+		
+		for (int i = 0; i < maze[0].length; i++) {
+			for (int j = 0; j < maze.length; j++) {
+				if (maze[j][i].getWall()) {
+					str.append(MazeGen.WALL);
+				} else {
+					str.append(MazeGen.PATH);
+				}
+			}
+			str.append("\n");
+		}
+		
+		assertEquals(str.toString(), maze2.toString());
 	}
+	
 }

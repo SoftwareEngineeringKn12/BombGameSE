@@ -64,6 +64,16 @@ public final class MazeGen {
 	 * relative to x-length of the maze.
 	 */
 	public static final double NUMBER_DEL_FACTOR = 0.4;
+	
+	/**
+	 * Output String for wall.
+	 */
+	public static final String WALL = "#";
+	
+	/**
+	 * Output String for path.
+	 */
+	public static final String PATH = "o";
 
 	/**
 	 * Cell represent the objects in the maze. It can be a wall or path.
@@ -88,7 +98,7 @@ public final class MazeGen {
 		 * @param y
 		 *            y-coordinate
 		 */
-		public Cell(int x, int y) {
+		public Cell(final int x, final int y) {
 			this.x = x;
 			this.y = y;
 		}
@@ -118,7 +128,7 @@ public final class MazeGen {
 	 * @param yLength
 	 *            height of the maze
 	 */
-	public MazeGen(int xLength, int yLength) {
+	public MazeGen(final int xLength, final int yLength) {
 		this.xLength = xLength;
 		this.yLength = yLength;
 		numberOfDeletionsPerLine = (int) (xLength * NUMBER_DEL_FACTOR);
@@ -213,7 +223,7 @@ public final class MazeGen {
 			wayToTemp = new Cell(temp.x, temp.y - 1);
 			checked[2] = true;
 			break;
-		case 3:
+		default: //case 3:
 			// W
 			tryDirection = new Cell(temp.x - 2, temp.y);
 			wayToTemp = new Cell(temp.x - 1, temp.y);
@@ -244,7 +254,7 @@ public final class MazeGen {
 	 * @param tryDirection
 	 * @return
 	 */
-	private boolean isInMazeField(Cell cell) {
+	private boolean isInMazeField(final Cell cell) {
 		if (cell.x < xLength && cell.x >= 0 && cell.y < yLength && cell.y >= 0)
 			return true;
 		return false;
@@ -316,9 +326,9 @@ public final class MazeGen {
 		for (int i = 0; i < yLength; i++) {
 			for (int j = 0; j < xLength; j++) {
 				if (maze[j][i].wall) {
-					str.append("#");
+					str.append(WALL);
 				} else {
-					str.append("o");
+					str.append(PATH);
 				}
 			}
 			str.append("\n");
