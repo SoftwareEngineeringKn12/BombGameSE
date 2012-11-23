@@ -128,6 +128,7 @@ public final class MazeGenTest extends TestCase {
 	public void testGenNonPerfectMaze() {
 		maze2.genNonPerfectMaze();
 		//!! TODO
+		assertTrue(true);
 	}
 
 	public void testGetMaze() {
