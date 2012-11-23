@@ -56,7 +56,7 @@ public final class ManAI {
 	/**
 	 * format String
 	 */
-	private static final String FORMAT = "] [";
+	protected static final String FORMAT = "] [";
 	
 //################################################################################
 //################################# NON STATIC ###################################
@@ -65,74 +65,74 @@ public final class ManAI {
 	/**
 	 * Man-object controlled by AI
 	 */
-	private final Man man;
+	protected final Man man;
 	
 	/**
 	 * Man-object that is focused by this AI
 	 */
-	private Man focusedEnemy;
+	protected Man focusedEnemy;
 	
 	/**
 	 * Handler wich handles this ManAI-object
 	 */
-	private final GameHandler handler;
+	protected final GameHandler handler;
 	
 	
 	/**
 	 * target Position of the AI
 	 */
-	private Position target;
+	protected Position target;
 	
 	/**
 	 * Path which was calculated by A*
 	 */
-	private Deque<Position> path;
+	protected Deque<Position> path;
 	
 	/**
 	 * determines if Man-object should place a bomb at the target
 	 */
-	private boolean placebomb;
+	protected boolean placebomb;
 	
 	/**
 	 * turns until next refresh of path
 	 */
-	private int turns;
+	protected int turns;
 	
 	/**
 	 * history of the focused enemy is stored in this queue
 	 */
-	private final Queue<Integer> directionHistory;
+	protected final Queue<Integer> directionHistory;
 	
 	/**
 	 * counts the directions from the history
 	 */
-	private final int[] directionCount;
+	protected final int[] directionCount;
 	
 	
 	/**
 	 * nodes of the field
 	 */
-	private final Node[] nodes;
+	protected final Node[] nodes;
 	
 	/**
 	 * describes the mode of this AI
 	 */
-	private int mode;
+	protected int mode;
 	
 	/**
 	 * random generator
 	 */
-	private final Random rand;
+	protected final Random rand;
 	
 	/**
 	 * determines Algorithm to find the path
 	 */
-	private PathFinder pathfinder;
+	protected PathFinder pathfinder;
 	
 	/**
 	 * determines Algorithm to find the target
 	 */
-	private TargetFinder targetfinder;
+	protected TargetFinder targetfinder;
 	
 	
 	/**
@@ -173,10 +173,15 @@ public final class ManAI {
 		
 		if(path.isEmpty()) {
 			if(mode == ATK_MODE) {
+				if(focusedEnemy == null) {
+					return;
+				}
 				target = targetfinder.searchTarget();
 				placebomb = true;
 			} else if ( mode == FLEE_MODE) {
-				
+				return;
+			} else {
+				return;
 			}
 		}
 		
@@ -204,7 +209,7 @@ public final class ManAI {
 	 * Calls addHistoryValue() with the current direction of the focused enemy.
 	 * If focused enemy is null the method does nothing.
 	 */
-	private void updateHistory() {
+	protected void updateHistory() {
 		if(focusedEnemy != null) {
 			addHistoryValue(focusedEnemy.getDirection());
 		}
@@ -228,11 +233,11 @@ public final class ManAI {
 	/**
 	 * Focuses a new enemy randomly from the men-list from handler.
 	 */
-	private void focusEnemy() {
+	protected void focusEnemy() {
 		focusedEnemy = null;
 		directionHistory.clear();
 		int size = handler.getMen().size();
-		while(size > 0) {
+		while(size > 1) {
 			int i = rand.nextInt(size);
 			Man m = handler.getMen().get(i);
 			if( m != this.man) {
@@ -247,7 +252,7 @@ public final class ManAI {
 	 * Increments turns. If turns is a multiple of REFRESH_RATE path is cleared.
 	 * If turn is a multiple of FOCUS_RATE, a new enemy is focused.
 	 */
-	private void incrementTurns() {
+	protected void incrementTurns() {
 		if(turns % REFRESH_RATE == 0) {
 			path.clear();
 		}
@@ -264,7 +269,7 @@ public final class ManAI {
 	 * If so, target is set to null and placebomb of the Man-object is set to the AI's placebomb value.
 	 * @return - returns true if target was reached
 	 */
-	private boolean checkTargetReached() {
+	protected boolean checkTargetReached() {
 		
 		if(target != null && man.getX() == target.getX() && man.getY() == target.getY()) {
 			target = null;
@@ -283,7 +288,7 @@ public final class ManAI {
 	 * using the next cell from path and the current location of the Man-object. If path is empty, this
 	 * method does nothing.
 	 */
-	private void calcManDirection() {
+	protected void calcManDirection() {
 		
 		//get Position on top of stack but do not remove
 		Position pos = path.peek();

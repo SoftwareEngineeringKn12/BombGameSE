@@ -32,7 +32,7 @@ package bombgame.controller.ai;
 	  * Returns the x-coordinate.
 	  * @return - x-coordinate
 	  */
-	 public int getX() {
+	 int getX() {
 		return x;
 	}
 	
@@ -40,7 +40,7 @@ package bombgame.controller.ai;
 	  * Returns the y-coordinate.
 	  * @return - y-coordinate
 	  */
-	 public int getY() {
+	 int getY() {
 		return y;
 	}
 	
