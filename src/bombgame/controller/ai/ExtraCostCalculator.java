@@ -12,6 +12,6 @@ public interface ExtraCostCalculator {
 	 * @param pos - examined Position
 	 * @return - extra cost
 	 */
-	public int calcExtraCost(Position pos);
+	int calcExtraCost(Position pos);
 	
 }

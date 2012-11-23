@@ -1,4 +1,4 @@
-package bombgame.tui;
+package bombgame.ui;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -10,6 +10,7 @@ import bombgame.entities.Explosion;
 import bombgame.entities.GameObject;
 import bombgame.entities.Man;
 import bombgame.entities.Wall;
+import bombgame.ui.TextUI;
 import junit.framework.TestCase;
 
 public final class TextUITest extends TestCase {

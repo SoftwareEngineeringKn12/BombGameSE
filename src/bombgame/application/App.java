@@ -1,6 +1,7 @@
 package bombgame.application;
 
-import bombgame.tui.TextUI;
+import bombgame.ui.TextUI;
+import bombgame.ui.UserInterface;
 
 public final class App {
 	
@@ -12,15 +13,11 @@ public final class App {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		TextUI tui = new TextUI();
-		
+		UserInterface ui = new TextUI();
+		boolean cont = true;
 		// LOOP
-		while(tui.update()) {
-			try {
-				Thread.sleep(1);
-			} catch (InterruptedException e) {
-				return;
-			}
+		while(cont) {
+			cont = ui.update();
 		}
 	}
 

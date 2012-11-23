@@ -17,11 +17,29 @@ import bombgame.entities.Wall;
  */
 public final class GameHandler {
 	
+	/**
+	 * Range in which player is spawned
+	 */
 	private static final int SPAWN_RANGE = 7;
 	
+	/**
+	 * explosion direction up
+	 */
 	private static final int EXP_UP = 3;
+	
+	/**
+	 * explosion direction down
+	 */
 	private static final int EXP_DOWN = 2;
+	
+	/**
+	 * explosion direction left
+	 */
 	private static final int EXP_LEFT = 1;
+	
+	/**
+	 * explosion direction right
+	 */
 	private static final int EXP_RIGHT = 0;
 	/**
 	 * matrix holding all GameObjects in the game.
@@ -39,11 +57,18 @@ public final class GameHandler {
 	 */
 	private List<Bomb> bombs;
 	
+	/**
+	 * list of explosions
+	 */
 	private List<List<Explosion>> explosions; 
 	/**
-	 * Field width and height
+	 * default field width
 	 */
 	private static final int DEFWIDTH = 30;
+	
+	/**
+	 * default field height
+	 */
 	private static final int DEFHEIGHT = 20;
 	
 	

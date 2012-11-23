@@ -11,6 +11,6 @@ public interface TargetFinder {
 	 * Searches and returns a target.
 	 * @return - target Position
 	 */
-	public Position searchTarget();
+	Position searchTarget();
 	
 }

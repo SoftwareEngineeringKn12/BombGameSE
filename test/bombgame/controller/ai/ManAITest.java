@@ -14,7 +14,7 @@ public class ManAITest extends TestCase {
 	
 	public void setUp() {
 		gh = new GameHandler(new GameObject[10][10]);
-		man = new Man(0,0);
+		man = new Man(1,1);
 		gh.addObject(man);
 		ai = new ManAI(man,gh);
 		
@@ -59,12 +59,76 @@ public class ManAITest extends TestCase {
 		ai = new ManAI(man, gh);
 		gh.addObject(new Wall(man.getX() + 1, man.getY()));
 		gh.addObject(new Wall(man.getX() , man.getY() + 1));
+		gh.addObject(new Wall(man.getX() -1 , man.getY()));
+		gh.addObject(new Wall(man.getX() , man.getY() - 1));
 		ai.calcNextStep();
 		assertTrue(ai.path.isEmpty());
 		assertNotNull(ai.target);
 		
 		ai.path.push(new Position(man.getX() + 4, man.getY()));
 		ai.calcNextStep();
+	}
+	
+	public void testCheckTargetReached() {
+		ai.target = new Position(man.getX(),man.getY() + 1);
+		assertFalse(ai.checkTargetReached());
+	}
+	
+	public void testCalcManDirection() {
+		ai.path.clear();
+		ai.path.push(new Position(man.getX() - 1, man.getY()));
+		ai.calcManDirection();
+		assertEquals(man.getDirection(),Man.LEFT);
+		
+		ai.path.clear();
+		ai.path.push(new Position(man.getX() , man.getY() + 1));
+		ai.calcManDirection();
+		assertEquals(man.getDirection(),Man.DOWN);
+		
+		ai.path.clear();
+		ai.path.push(new Position(man.getX(), man.getY() - 1));
+		ai.calcManDirection();
+		assertEquals(man.getDirection(),Man.UP);
+		
+		ai.path.clear();
+		ai.path.push(new Position(man.getX(), man.getY()));
+		ai.calcManDirection();
+		assertEquals(man.getDirection(),Man.NO_DIR);
+		
+		
+		
+	}
+	
+	public void testFocusEnemy() {
+		gh.addObject(new Man(9,9));
+		for(int i = 0; i < 20; i++) {
+			ai.focusEnemy();
+		}
+		assertNotNull(ai.focusedEnemy);
+		
+	}
+	
+	public void testGetNodes() {
+		assertNotNull(ai.getNodes());
+	}
+	
+	public void testGetHandler() {
+		assertNotNull(ai.getHandler());
+	}
+	
+	public void testSetFocusedEnemy() {
+		Man m = new Man (3,3);
+		ai.setFocusedEnemy(m);
+		assertEquals(m , ai.focusedEnemy);
+	}
+	
+	public void testToString() {
+		String s = "-> AI: [1] [1] T: NULL F: NULL Turn: 0 Direction: 0";
+		assertEquals(ai.toString(), s);
+		ai.target = new Position(2,2);
+		ai.focusedEnemy = new Man(3,3);
+		s = "-> AI: [1] [1] T: [2] [2] F: [3] [3] Turn: 0 Direction: 0";
+		assertEquals(ai.toString(), s);
 	}
 
 }

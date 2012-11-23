@@ -1,4 +1,4 @@
-package bombgame.tui;
+package bombgame.ui;
 
 import bombgame.controller.GameHandler;
 import bombgame.controller.ai.ManAI;
@@ -14,7 +14,7 @@ import bombgame.entities.Wall;
  * @author JeGa, Rookfighter
  *
  */
-public final class TextUI {
+public final class TextUI implements UserInterface {
 	
 	private GameHandler handler;
 	private PlayerTUI player;
