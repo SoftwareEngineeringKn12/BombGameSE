@@ -14,14 +14,10 @@ public final class App {
 	 */
 	public static void main(String[] args) {
 		UserInterface ui = new TextUI();
-		
+		boolean cont = true;
 		// LOOP
-		while(ui.update()) {
-			try {
-				Thread.sleep(1);
-			} catch (InterruptedException e) {
-				return;
-			}
+		while(cont) {
+			cont = ui.update();
 		}
 	}
 
