@@ -135,13 +135,15 @@ public class NodeFinder {
 	  */
 	 protected static Node[] ensureCapacity(int[] count, Node[] nodes) {
 		 
+		 Node[] newn = nodes;
+		 
 		 if(count[0] >= nodes.length) {
 			 Node[] old = nodes;
-			 nodes = new Node[count[0] * INC_FAC];
-			 System.arraycopy(old, 0, nodes, 0, old.length);
+			 newn = new Node[count[0] * INC_FAC];
+			 System.arraycopy(old, 0, newn, 0, old.length);
 		 }
 		 
-		 return nodes;
+		 return newn;
 	 }
 	 
 	 
