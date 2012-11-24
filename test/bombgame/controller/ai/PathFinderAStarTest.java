@@ -28,17 +28,17 @@ public class PathFinderAStarTest extends TestCase {
 	
 	public void testAddOpenList() {
 		pfas.addOpenList(null);
-		assertEquals(pfas.openlist.size(), 0);
+		assertEquals(pfas.getOpenlist().size(), 0);
 		
 		PathFinderAStar pfastmp = new PathFinderAStar(gh, null, new AISelector(gh));
-		pfastmp.target = pfastmp.new Cell(9,9,null);
+		pfastmp.setTarget( pfastmp.new Cell(9,9,null));
 		pfastmp.addOpenList(pfastmp.new Cell(2,2,null));
-		assertEquals(pfastmp.openlist.size(), 1);
+		assertEquals(pfastmp.getOpenlist().size(), 1);
 		
 		pfastmp = new PathFinderAStar(gh, new BombCostCalculator(gh), null);
-		pfastmp.target = pfastmp.new Cell(9,9,null);
+		pfastmp.setTarget(pfastmp.new Cell(9,9,null));
 		pfastmp.addOpenList(pfastmp.new Cell(0,1,null));
-		assertEquals(pfastmp.openlist.size(), 1);
+		assertEquals(pfastmp.getOpenlist().size(), 1);
 		
 	}
 	

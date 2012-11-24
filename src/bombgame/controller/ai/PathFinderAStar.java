@@ -20,32 +20,32 @@ public final class PathFinderAStar implements PathFinder {
 	/**
 	 * ExtraCostCalculator which the Algorythm considers
 	 */
-	protected final ExtraCostCalculator extraCostCalc;
+	private final ExtraCostCalculator extraCostCalc;
 	
 	/**
 	 * ClosedListSelector which the Algorythm considers
 	 */
-	protected final ClosedListSelector selector;
+	private final ClosedListSelector selector;
 	
 	/**
 	 * target cell
 	 */
-	protected Cell target;
+	private Cell target;
 	
 	/**
 	 * List of closed Cells
 	 */
-	protected final Set<Cell> closedlist;
+	private final Set<Cell> closedlist;
 	
 	/**
 	 * List of known cells
 	 */
-	protected final PriorityQueue<Cell> openlist;
+	private final PriorityQueue<Cell> openlist;
 	
 	/**
 	 * Maps isclosed statement to field positions
 	 */
-	protected final boolean inclosed[][];
+	private final boolean inclosed[][];
 	
 	
 	/**
@@ -216,6 +216,22 @@ public final class PathFinderAStar implements PathFinder {
 		for(int i = 0; i < inclosed.length; i++) {
 			Arrays.fill(inclosed[i], false);
 		}
+	}
+	
+	/**
+	 * Returns the openlist.
+	 * @return - openlist
+	 */
+	protected PriorityQueue<Cell> getOpenlist() {
+		return openlist;
+	}
+	
+	/**
+	 * Sets the target to the given Cell.
+	 * @param target - new target
+	 */
+	protected void setTarget(final Cell target) {
+		this.target = target;
 	}
 	
 	

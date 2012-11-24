@@ -14,9 +14,9 @@ import bombgame.entities.Wall;
  */
 public class NodeFinder {
 
-	protected static final int DEF_SIZE = 10;
+	private static final int DEF_SIZE = 10;
 	
-	protected static final int INC_FAC = 10;
+	private static final int INC_FAC = 10;
 	
 	protected NodeFinder() {
 		
