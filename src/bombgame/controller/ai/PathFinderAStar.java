@@ -249,32 +249,32 @@ public final class PathFinderAStar implements PathFinder {
 		/**
 		 * x-coordinate of the Cell
 		 */
-		protected final int x;
+		private final int x;
 		
 		/**
 		 * y-coordinate of the Cell
 		 */
-		protected final int y;
+		private final int y;
 		
 		/**
 		 * Reference to previous Cell
 		 */
-		protected Cell prev;
+		private Cell prev;
 		
 		/**
 		 * Costs of the path to get up to this Cell
 		 */
-		protected int pathcost;
+		private int pathcost;
 		
 		/**
 		 * Costs of the path to get from this Cell to the target
 		 */
-		protected int heucost;
+		private int heucost;
 		
 		/**
 		 * allover costs
 		 */
-		protected int cost;
+		private int cost;
 		
 		
 		/**

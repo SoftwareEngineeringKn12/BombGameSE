@@ -155,19 +155,50 @@ public class NodeFinder {
 		 */
 		static class Node implements Comparable<Node> {
 			
-			protected final int x;
-			protected final int y;
+			/**
+			 * x-coordinate
+			 */
+			private final int x;
 			
-			protected final int directions;
+			/**
+			 * y-coordinate
+			 */
+			private final int y;
 			
-			protected final boolean[] direction;
+			/**
+			 * amount of directions
+			 */
+			private final int directions;
 			
-			protected static final int UP = 0;
-			protected static final int DOWN = 1;
-			protected static final int LEFT = 2;
-			protected static final int RIGHT = 3;
+			/**
+			 * directions that are free
+			 */
+			private final boolean[] direction;
 			
-			protected static final int NODE_DIRECTIONS = 4;
+			/**
+			 * direction up
+			 */
+			private static final int UP = 0;
+			
+			/**
+			 * direction down
+			 */
+			private static final int DOWN = 1;
+			
+			/**
+			 * direction left
+			 */
+			private static final int LEFT = 2;
+			
+			/**
+			 * direction right
+			 */
+			private static final int RIGHT = 3;
+			
+			/**
+			 * length of directions
+			 */
+			private static final int NODE_DIRECTIONS = 4;
 			
 			/**
 			 * Creates a new Node-object with the given coordinates, the given count of directions and
