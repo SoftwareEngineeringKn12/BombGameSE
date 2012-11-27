@@ -8,6 +8,12 @@ package bombgame.controller.ai;
  */
  final class Position {
 	
+	 
+	 /**
+	 * value for calculating hashCode
+	 */
+	private static final int HASHVAL = 31;
+		
 	 /**
 	  * x-coordinate
 	  */
@@ -61,8 +67,8 @@ package bombgame.controller.ai;
 	@Override
 	public int hashCode() {
 		int hash = 0;
-		hash = 31 * this.x;
-		hash = (hash + this.y ) * 31; 
+		hash = HASHVAL * this.x;
+		hash = (hash + this.y ) * HASHVAL; 
 		return hash;
 	}
 	

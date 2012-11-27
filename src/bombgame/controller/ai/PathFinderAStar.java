@@ -247,6 +247,11 @@ public final class PathFinderAStar implements PathFinder {
 	class Cell implements Comparable<Cell> {
 		
 		/**
+		 * value for calculating hashCode
+		 */
+		private static final int HASHVAL = 31;
+		
+		/**
 		 * x-coordinate of the Cell
 		 */
 		private final int x;
@@ -314,8 +319,8 @@ public final class PathFinderAStar implements PathFinder {
 		@Override
 		public int hashCode() {
 			int hash = 0;
-			hash = 31 * this.x;
-			hash = (hash + this.y ) * 31; 
+			hash = HASHVAL * this.x;
+			hash = (hash + this.y ) * HASHVAL; 
 			return hash;
 		}
 		

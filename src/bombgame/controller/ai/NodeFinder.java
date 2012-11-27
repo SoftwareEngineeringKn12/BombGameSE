@@ -157,6 +157,12 @@ public class NodeFinder {
 		 */
 		static class Node implements Comparable<Node> {
 			
+			
+			/**
+			 * value for calculating hashCode
+			 */
+			private static final int HASHVAL = 31;
+			
 			/**
 			 * x-coordinate
 			 */
@@ -259,8 +265,8 @@ public class NodeFinder {
 			@Override
 			public int hashCode() {
 				int hash = 0;
-				hash = 31 * this.x;
-				hash = (hash + this.y ) * 31; 
+				hash = HASHVAL * this.x;
+				hash = (hash + this.y ) * HASHVAL; 
 				return hash;
 			}
 			
