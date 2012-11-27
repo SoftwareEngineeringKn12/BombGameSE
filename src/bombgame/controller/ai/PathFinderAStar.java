@@ -309,6 +309,18 @@ public final class PathFinderAStar implements PathFinder {
 		
 		
 		/**
+		 * Returns the hashcode of the Cell.
+		 */
+		@Override
+		public int hashCode() {
+			int hash = 0;
+			hash = 31 * this.x;
+			hash = (hash + this.y ) * 31; 
+			return hash;
+		}
+		
+		
+		/**
 		 * Two Cells are equal if they have the same x- and y-coordinates.
 		 */
 		@Override

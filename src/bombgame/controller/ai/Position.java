@@ -54,6 +54,19 @@ package bombgame.controller.ai;
 		return sb.toString();
 	}
 	
+	
+	/**
+	 * Returns the hashcode of the Position.
+	 */
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash = 31 * this.x;
+		hash = (hash + this.y ) * 31; 
+		return hash;
+	}
+	
+	
 	/**
 	 * Returns true if the Positions have the same coordinates.
 	 */
