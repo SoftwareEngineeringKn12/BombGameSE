@@ -1,5 +1,7 @@
 package bombgame.controller;
 
+import java.util.LinkedList;
+import java.util.List;
 import bombgame.controller.MazeGen.Cell;
 import junit.framework.TestCase;
 
@@ -38,7 +40,6 @@ public final class MazeGenTest extends TestCase {
 		boolean startAtSideB = true;
 		
 		boolean allChecked = false;
-		boolean tmp1 = false, tmp2 = false;
 		
 		// 2x2 field
 		for (int i = 0; i < maze[0].length; i++) {
@@ -54,8 +55,8 @@ public final class MazeGenTest extends TestCase {
 		maze3.genMaze();
 		maze = maze3.getMaze();
 		
-		// System.out.println(maze3);
-		/*
+		//System.out.println(maze3);
+		
 		// 3x3 field
 		for (int i = 0; i < maze[0].length; i++) {
 			for (int j = 0; j < maze.length; j++) {
@@ -93,42 +94,78 @@ public final class MazeGenTest extends TestCase {
 			}
 		}
 
-		for (int i = 0; i < maze[0].length; i++) {
-			for (int j = 0; j < maze.length; j++) {
-				if ((j == 0 && i == 0) || (j == 2 && i == 0)) {
-					tmp1 = true;
-				}
-				
-				if ((j == 0 && i == 2) || (j == 2 && i == 2)) {
-					tmp2 = true;
-				}
-				
-				if (tmp1 && tmp2) {
-					if (maze[j][i].getWall()) {
-						startAtCorner = false;
-					}
-				} else if (!maze[j][i].getWall()) {
-					startAtCorner = false;
-				}
-			}
-		}*/
+		startAtCorner = cornerTest(maze);
 		
 		//System.out.println(startAtCorner);
 		//System.out.println(startAtMiddle);
 		//System.out.println(startAtSideA);
 		//System.out.println(startAtSideB);
 		
-		/*if (startAtCorner ^ startAtMiddle ^ startAtSideA ^ startAtSideB) {
+		if (startAtCorner ^ startAtMiddle ^ startAtSideA ^ startAtSideB) {
 			allChecked = true;
-		}*/
-		assertTrue(true);
-		//assertTrue(allChecked);
+		}
+
+		assertTrue(allChecked);
+	}
+	
+	private boolean cornerTest(Cell[][] maze) {
+		List<Cell> list = new LinkedList<Cell>();
+		
+		for (int i = 0; i < maze[0].length; i++) {
+			for (int j = 0; j < maze.length; j++) {
+				list.add(maze[j][i]);
+			}
+		}
+		
+		if (!maze[1][1].getWall()) {
+			return false;
+		}
+		
+		list.remove(maze[1][1]);
+		
+		if (maze[0][1].getWall()) {
+			list.remove(maze[0][1]);
+		} else if (maze[1][0].getWall()) {
+			list.remove(maze[1][0]);
+		} else if (maze[2][1].getWall()) {
+			list.remove(maze[2][1]);
+		} else if (maze[1][2].getWall()) {
+			list.remove(maze[1][2]);
+		} else {
+			return false;
+		}
+		
+		for (Cell c : list) {
+			if (c.getWall()) {
+				return false;
+			}
+		}
+		
+		return true;
 	}
 
 	public void testGenNonPerfectMaze() {
-		maze2.genNonPerfectMaze();
-		//!! TODO
-		assertTrue(true);
+		int amountOfWallsPerLine = 0;
+		boolean checked = true;
+		maze3.genNonPerfectMaze();
+		Cell[][] maze = maze3.getMaze();
+		
+		// Per x line -1 random wall
+		for (int i = 0; i < maze[0].length; i++) {
+			for (int j = 0; j < maze.length; j++) {
+				if (maze[j][i].getWall()) {
+					amountOfWallsPerLine++;
+				}
+			}
+			
+			if (amountOfWallsPerLine == 3) {
+				checked = false;
+			}
+			
+			amountOfWallsPerLine = 0;
+		}
+		
+		assertTrue(checked);
 	}
 
 	public void testGetMaze() {
