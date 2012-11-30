@@ -1,7 +1,6 @@
 package bombgame.controller.ai;
 
 import java.util.Arrays;
-import java.util.Random;
 
 import bombgame.controller.ai.ManAI;
 import bombgame.entities.GameObject;
@@ -16,28 +15,22 @@ import bombgame.controller.ai.NodeFinder.Node;
  *
  */
 public final class HistoryTargetFinder implements TargetFinder {
-
-	/**
-	 * Random object to get random numbers
-	 */
-	protected final Random rand;
 	
 	/**
 	 * target Position
 	 */
-	protected Position target;
+	private Position target;
 	
 	/**
 	 * AI that uses this TargetFinder
 	 */
-	protected final ManAI ai;
+	private final ManAI ai;
 	
 	/**
 	 * Creates a new TargetFinder with the given AI.
 	 * @param ai - AI that searches a target
 	 */
 	public HistoryTargetFinder(ManAI ai) {
-		rand = new Random();
 		this.ai = ai;
 	}
 	
@@ -175,6 +168,10 @@ public final class HistoryTargetFinder implements TargetFinder {
 			sum+=i;
 		}
 		return sum;
+	}
+	
+	public Position getTarget() {
+		return target;
 	}
 
 }

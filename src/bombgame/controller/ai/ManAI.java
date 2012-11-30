@@ -65,74 +65,74 @@ public final class ManAI {
 	/**
 	 * Man-object controlled by AI
 	 */
-	protected final Man man;
+	private final Man man;
 	
 	/**
 	 * Man-object that is focused by this AI
 	 */
-	protected Man focusedEnemy;
+	private Man focusedEnemy;
 	
 	/**
 	 * Handler wich handles this ManAI-object
 	 */
-	protected final GameHandler handler;
+	private final GameHandler handler;
 	
 	
 	/**
 	 * target Position of the AI
 	 */
-	protected Position target;
+	private Position target;
 	
 	/**
 	 * Path which was calculated by A*
 	 */
-	protected Deque<Position> path;
+	private Deque<Position> path;
 	
 	/**
 	 * determines if Man-object should place a bomb at the target
 	 */
-	protected boolean placebomb;
+	private boolean placebomb;
 	
 	/**
 	 * turns until next refresh of path
 	 */
-	protected int turns;
+	private int turns;
 	
 	/**
 	 * history of the focused enemy is stored in this queue
 	 */
-	protected final Queue<Integer> directionHistory;
+	private final Queue<Integer> directionHistory;
 	
 	/**
 	 * counts the directions from the history
 	 */
-	protected final int[] directionCount;
+	private final int[] directionCount;
 	
 	
 	/**
 	 * nodes of the field
 	 */
-	protected final Node[] nodes;
+	private final Node[] nodes;
 	
 	/**
 	 * describes the mode of this AI
 	 */
-	protected int mode;
+	private int mode;
 	
 	/**
 	 * random generator
 	 */
-	protected final Random rand;
+	private final Random rand;
 	
 	/**
 	 * determines Algorithm to find the path
 	 */
-	protected PathFinder pathfinder;
+	private PathFinder pathfinder;
 	
 	/**
 	 * determines Algorithm to find the target
 	 */
-	protected TargetFinder targetfinder;
+	private TargetFinder targetfinder;
 	
 	
 	/**
@@ -398,6 +398,62 @@ public final class ManAI {
 	 */
 	public void setFocusedEnemy(final Man man) {
 		focusedEnemy = man;
+	}
+	
+	/**
+	 * Returns the currently focused Man.
+	 * @return - focused enemy
+	 */
+	public Man getFocusedEnemy() {
+		return focusedEnemy;
+	}
+	
+	/**
+	 * Returns the current target Position.
+	 * @return - target Position
+	 */
+	public Position getTarget() {
+		return target;
+	}
+	
+	/**
+	 * Sets the amount of turns to the given value.
+	 * @param turns - new amount of turns
+	 */
+	protected void setTurns(int turns) {
+		this.turns = turns;
+	}
+	
+	/**
+	 * Sets the target Position to the given Position.
+	 * @param target - new target Position
+	 */
+	protected void setTarget( final Position target) {
+		this.target = target;
+	}
+	
+	/**
+	 * Returns true if the ai wants to place a bomb at the target.
+	 * @return - wants to place a bomb
+	 */
+	public boolean getPlaceBomb() {
+		return placebomb;
+	}
+	
+	/**
+	 * Returns a Deque of the current path.
+	 * @return - current path
+	 */
+	protected Deque<Position> getPath() {
+		return path;
+	}
+	
+	/**
+	 * Sets the mode of this AI to the given value.
+	 * @param mode - new mode
+	 */
+	protected void setMode(int mode) {
+		this.mode = mode;
 	}
 	
 	/**

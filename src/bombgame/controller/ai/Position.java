@@ -8,6 +8,12 @@ package bombgame.controller.ai;
  */
  final class Position {
 	
+	 
+	 /**
+	 * value for calculating hashCode
+	 */
+	private static final int HASHVAL = 31;
+		
 	 /**
 	  * x-coordinate
 	  */
@@ -53,6 +59,19 @@ package bombgame.controller.ai;
 		sb.append("[").append(x).append("][").append(y).append("]");
 		return sb.toString();
 	}
+	
+	
+	/**
+	 * Returns the hashcode of the Position.
+	 */
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash = HASHVAL * this.x;
+		hash = (hash + this.y ) * HASHVAL; 
+		return hash;
+	}
+	
 	
 	/**
 	 * Returns true if the Positions have the same coordinates.

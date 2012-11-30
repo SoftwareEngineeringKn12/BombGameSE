@@ -20,32 +20,32 @@ public final class PathFinderAStar implements PathFinder {
 	/**
 	 * ExtraCostCalculator which the Algorythm considers
 	 */
-	protected final ExtraCostCalculator extraCostCalc;
+	private final ExtraCostCalculator extraCostCalc;
 	
 	/**
 	 * ClosedListSelector which the Algorythm considers
 	 */
-	protected final ClosedListSelector selector;
+	private final ClosedListSelector selector;
 	
 	/**
 	 * target cell
 	 */
-	protected Cell target;
+	private Cell target;
 	
 	/**
 	 * List of closed Cells
 	 */
-	protected final Set<Cell> closedlist;
+	private final Set<Cell> closedlist;
 	
 	/**
 	 * List of known cells
 	 */
-	protected final PriorityQueue<Cell> openlist;
+	private final PriorityQueue<Cell> openlist;
 	
 	/**
 	 * Maps isclosed statement to field positions
 	 */
-	protected final boolean inclosed[][];
+	private final boolean inclosed[][];
 	
 	
 	/**
@@ -218,6 +218,22 @@ public final class PathFinderAStar implements PathFinder {
 		}
 	}
 	
+	/**
+	 * Returns the openlist.
+	 * @return - openlist
+	 */
+	protected PriorityQueue<Cell> getOpenlist() {
+		return openlist;
+	}
+	
+	/**
+	 * Sets the target to the given Cell.
+	 * @param target - new target
+	 */
+	protected void setTarget(final Cell target) {
+		this.target = target;
+	}
+	
 	
 //############################################################################################
 //############################################################################################
@@ -231,34 +247,39 @@ public final class PathFinderAStar implements PathFinder {
 	class Cell implements Comparable<Cell> {
 		
 		/**
+		 * value for calculating hashCode
+		 */
+		private static final int HASHVAL = 31;
+		
+		/**
 		 * x-coordinate of the Cell
 		 */
-		protected final int x;
+		private final int x;
 		
 		/**
 		 * y-coordinate of the Cell
 		 */
-		protected final int y;
+		private final int y;
 		
 		/**
 		 * Reference to previous Cell
 		 */
-		protected Cell prev;
+		private Cell prev;
 		
 		/**
 		 * Costs of the path to get up to this Cell
 		 */
-		protected int pathcost;
+		private int pathcost;
 		
 		/**
 		 * Costs of the path to get from this Cell to the target
 		 */
-		protected int heucost;
+		private int heucost;
 		
 		/**
 		 * allover costs
 		 */
-		protected int cost;
+		private int cost;
 		
 		
 		/**
@@ -289,6 +310,18 @@ public final class PathFinderAStar implements PathFinder {
 			heucost = Math.abs(this.x - target.x) + Math.abs(this.y - target.y);
 			cost = heucost + pathcost;
 			
+		}
+		
+		
+		/**
+		 * Returns the hashcode of the Cell.
+		 */
+		@Override
+		public int hashCode() {
+			int hash = 0;
+			hash = HASHVAL * this.x;
+			hash = (hash + this.y ) * HASHVAL; 
+			return hash;
 		}
 		
 		

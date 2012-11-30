@@ -27,44 +27,44 @@ public class HistoryTargetFinderTest extends TestCase{
 	public void testCalculateTarget() {
 		
 		htf.calculateTarget(new Position(1,1), Man.RIGHT);
-		assertEquals(htf.target, new Position(2,1));
+		assertEquals(htf.getTarget(), new Position(2,1));
 		
 		htf.calculateTarget(new Position(1,1), Man.LEFT);
-		assertEquals(htf.target, new Position(0,1));
+		assertEquals(htf.getTarget(), new Position(0,1));
 		
 		htf.calculateTarget(new Position(1,1), Man.UP);
-		assertEquals(htf.target, new Position(1,0));
+		assertEquals(htf.getTarget(), new Position(1,0));
 		
 		htf.calculateTarget(new Position(1,1), Man.DOWN);
-		assertEquals(htf.target, new Position(1,2));
+		assertEquals(htf.getTarget(), new Position(1,2));
 		
 	}
 	
 	public void testFindTarget() {
 		
 		htf.findTarget(new Position(0,0), -1, 0);
-		assertEquals(htf.target, new Position(0,0));
+		assertEquals(htf.getTarget(), new Position(0,0));
 		
 		htf.findTarget(new Position(0,0), 0, -1);
-		assertEquals(htf.target, new Position(0,0));
+		assertEquals(htf.getTarget(), new Position(0,0));
 		
 		htf.findTarget(new Position(9,9), 1, 0);
-		assertEquals(htf.target, new Position(9,9));
+		assertEquals(htf.getTarget(), new Position(9,9));
 		
 		htf.findTarget(new Position(9,9), 0, 1);
-		assertEquals(htf.target, new Position(9,9));
+		assertEquals(htf.getTarget(), new Position(9,9));
 		
 		
 		gh.addObject(new Wall(1,0));
 		htf.findTarget(new Position(0,0), 1, 0);
-		assertEquals(htf.target, new Position(0,0));
+		assertEquals(htf.getTarget(), new Position(0,0));
 		
 		gh.addObject(new Wall(1,2));
 		ai = new ManAI(new Man(0,1), gh);
 		htf = new HistoryTargetFinder(ai);
 		
 		htf.findTarget(new Position(0,1),1,0);
-		assertEquals(htf.target, new Position(2,1));
+		assertEquals(htf.getTarget(), new Position(2,1));
 	}
 	
 	public void testGetMaxIndex() {

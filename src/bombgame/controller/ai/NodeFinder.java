@@ -14,9 +14,9 @@ import bombgame.entities.Wall;
  */
 public class NodeFinder {
 
-	protected static final int DEF_SIZE = 10;
+	private static final int DEF_SIZE = 10;
 	
-	protected static final int INC_FAC = 10;
+	private static final int INC_FAC = 10;
 	
 	protected NodeFinder() {
 		
@@ -135,13 +135,15 @@ public class NodeFinder {
 	  */
 	 protected static Node[] ensureCapacity(int[] count, Node[] nodes) {
 		 
+		 Node[] newn = nodes;
+		 
 		 if(count[0] >= nodes.length) {
 			 Node[] old = nodes;
-			 nodes = new Node[count[0] * INC_FAC];
-			 System.arraycopy(old, 0, nodes, 0, old.length);
+			 newn = new Node[count[0] * INC_FAC];
+			 System.arraycopy(old, 0, newn, 0, old.length);
 		 }
 		 
-		 return nodes;
+		 return newn;
 	 }
 	 
 	 
@@ -155,19 +157,56 @@ public class NodeFinder {
 		 */
 		static class Node implements Comparable<Node> {
 			
-			protected final int x;
-			protected final int y;
 			
-			protected final int directions;
+			/**
+			 * value for calculating hashCode
+			 */
+			private static final int HASHVAL = 31;
 			
-			protected final boolean[] direction;
+			/**
+			 * x-coordinate
+			 */
+			private final int x;
 			
-			protected static final int UP = 0;
-			protected static final int DOWN = 1;
-			protected static final int LEFT = 2;
-			protected static final int RIGHT = 3;
+			/**
+			 * y-coordinate
+			 */
+			private final int y;
 			
-			protected static final int NODE_DIRECTIONS = 4;
+			/**
+			 * amount of directions
+			 */
+			private final int directions;
+			
+			/**
+			 * directions that are free
+			 */
+			private final boolean[] direction;
+			
+			/**
+			 * direction up
+			 */
+			private static final int UP = 0;
+			
+			/**
+			 * direction down
+			 */
+			private static final int DOWN = 1;
+			
+			/**
+			 * direction left
+			 */
+			private static final int LEFT = 2;
+			
+			/**
+			 * direction right
+			 */
+			private static final int RIGHT = 3;
+			
+			/**
+			 * length of directions
+			 */
+			private static final int NODE_DIRECTIONS = 4;
 			
 			/**
 			 * Creates a new Node-object with the given coordinates, the given count of directions and
@@ -218,6 +257,19 @@ public class NodeFinder {
 			public int getY() {
 				return y;
 			}
+			
+			
+			/**
+			 * Returns the hashcode of the Node.
+			 */
+			@Override
+			public int hashCode() {
+				int hash = 0;
+				hash = HASHVAL * this.x;
+				hash = (hash + this.y ) * HASHVAL; 
+				return hash;
+			}
+			
 			
 			/**
 			 * Compares this Node with the given for equality.
