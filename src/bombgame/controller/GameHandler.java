@@ -41,6 +41,7 @@ public final class GameHandler {
 	 * explosion direction right
 	 */
 	private static final int EXP_RIGHT = 0;
+	
 	/**
 	 * matrix holding all GameObjects in the game.
 	 * The array indices specify the position on the field.
@@ -60,7 +61,8 @@ public final class GameHandler {
 	/**
 	 * list of explosions
 	 */
-	private List<List<Explosion>> explosions; 
+	private List<List<Explosion>> explosions;
+	
 	/**
 	 * default field width
 	 */
@@ -77,10 +79,7 @@ public final class GameHandler {
 	 * generated environment.
 	 */
 	public GameHandler() {
-		initializeField(DEFWIDTH, DEFHEIGHT);
-		men = new ArrayList<Man>();
-		bombs = new ArrayList<Bomb>();
-		explosions = new ArrayList<List<Explosion>>();
+		this(DEFWIDTH, DEFHEIGHT);
 	}
 	
 	
@@ -132,11 +131,13 @@ public final class GameHandler {
 		}
 		
 		if(obj instanceof Explosion) {
+			
 			List<Explosion> exp = calculateExplosion((Explosion) obj);
-			explosions.add(exp);
+			addExplosionList(exp);
+			/*explosions.add(exp);
 			for(Explosion e : exp) {
 				field[e.getX()][e.getY()] = e;
-			}
+			}*/
 			return;
 		}
 		
@@ -169,6 +170,18 @@ public final class GameHandler {
 		}
 	}
 	
+	/**
+	 * Adds the specified List of Explosion-objects to the field.
+	 * @param list - ArrayList of Explosion-objects.
+	 */
+	private void addExplosionList(List<Explosion> list) {
+		
+		explosions.add(list);
+		
+		for(Explosion e : list) {
+			field[e.getX()][e.getY()] = e;
+		}
+	}
 	
 	/**
 	 * Removes the specified List of Explosion-object from the field.
@@ -182,7 +195,6 @@ public final class GameHandler {
 		
 		explosions.remove(list);
 	}
-	
 	
 	/**
 	 * Calculates a new next by position for the specified Man-object if the current position
