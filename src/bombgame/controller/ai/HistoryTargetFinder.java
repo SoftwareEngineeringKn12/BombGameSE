@@ -86,7 +86,7 @@ public final class HistoryTargetFinder implements TargetFinder {
 			
 		default:
 			//no direction
-			target = enemy;
+			target = new Position(enemy.getX(), enemy.getY());
 		}
 		
 	}

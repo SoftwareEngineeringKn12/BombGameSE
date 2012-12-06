@@ -192,11 +192,7 @@ public final class ManAI {
 			return;
 		}
 		
-		Position pos = path.pop();
-		//popped Position to which man last turn moved
-		if(pos.getX() != man.getX() || pos.getY() != man.getY()) {
-			throw new IndexOutOfBoundsException("ManAI was not able to move!");
-		}
+		path.pop();
 		
 		calcManDirection();
 		
@@ -290,8 +286,8 @@ public final class ManAI {
 	 */
 	protected void calcManDirection() {
 		
-		//get Position on top of stack but do not remove
-		Position pos = path.peek();
+		//get Position on top of stack
+		Position pos = path.pop();
 		
 		int dx = pos.getX() - man.getX();
 		int dy = pos.getY() - man.getY();
