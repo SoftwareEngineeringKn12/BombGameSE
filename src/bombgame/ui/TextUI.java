@@ -2,7 +2,6 @@ package bombgame.ui;
 
 import bombgame.controller.GameHandler;
 import bombgame.controller.ai.ManAI;
-import bombgame.controller.PlayerTUI;
 import bombgame.entities.Bomb;
 import bombgame.entities.Explosion;
 import bombgame.entities.GameObject;
@@ -17,30 +16,13 @@ import bombgame.entities.Wall;
 public final class TextUI implements UserInterface {
 	
 	private GameHandler handler;
-	private PlayerTUI player;
-	private ManAI[] ais;
-	// KI - Maybe List to store ki
 	
 	/**
 	 * Creates a GameHandler with standard Constructor.
 	 */
 	public TextUI() {
-		// Man for player
-		Man manPlayer = new Man(0, 0);
-		Man manAi = new Man(29,19);
-		Man manAi2 = new Man(29,0);
-		Man manAi3 = new Man(0,19);
 		
 		handler = new GameHandler();
-		player = new PlayerTUI(manPlayer);
-		ais = new ManAI[3];
-		ais[0] =  new ManAI(manAi, handler);
-		ais[1] = new ManAI(manAi2, handler);
-		ais[2] = new ManAI(manAi3, handler);
-		handler.addObject(manPlayer);
-		handler.addObject(manAi);
-		handler.addObject(manAi2);
-		handler.addObject(manAi3);
 		printField();
 	}
 	
@@ -56,6 +38,8 @@ public final class TextUI implements UserInterface {
 		//!! look at the order.
 		//scan input false;
 		//Scanner in = new Scanner(System.in);
+		
+		/*
 		if(handler.getMen().size() <= 1) {
 			return false;
 		}
@@ -68,7 +52,9 @@ public final class TextUI implements UserInterface {
 		handler.moveAll();
 		handler.updateBombs();
 		handler.placeBombs();
-		handler.updateExplosion();
+		handler.updateExplosion();*/
+		
+		handler.updateAll();
 		
 		printAllPlayers();
 		printAI();
@@ -137,7 +123,7 @@ public final class TextUI implements UserInterface {
 	 */
 	public void printAllPlayers() {
 		System.out.println("Players:");
-		System.out.println(player);
+		System.out.println(handler.getPlayer());
 		// syso(ki) if more ki -> loop from list
 	}
 	
@@ -167,7 +153,7 @@ public final class TextUI implements UserInterface {
 	 */
 	public void printAI() {
 		System.out.println("AI:");
-		for(ManAI ai : ais) {
+		for(ManAI ai : handler.getAis()) {
 			System.out.println(ai);
 		}
 	}
@@ -179,24 +165,6 @@ public final class TextUI implements UserInterface {
 	 */
 	public GameHandler getGameHandler() {
 		return handler;
-	}
-	
-	
-	/**
-	 * Creates a new Player controlling the specified Man-object.
-	 * @param man - Man-object controlled by the new Player
-	 */
-	public void setPlayer(final Man man) {
-		player = new PlayerTUI(man);
-	}
-	
-	
-	/**
-	 * Returns the currently use Player.
-	 * @return - Player-object currently in use
-	 */
-	public PlayerTUI getPlayer() {
-		return player;
 	}
 	
 }

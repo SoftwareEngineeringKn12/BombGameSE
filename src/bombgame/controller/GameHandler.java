@@ -3,6 +3,7 @@ package bombgame.controller;
 import java.util.ArrayList;
 import java.util.List;
 import bombgame.controller.MazeGen.Cell;
+import bombgame.controller.ai.ManAI;
 import bombgame.entities.Bomb;
 import bombgame.entities.Explosion;
 import bombgame.entities.GameObject;
@@ -64,6 +65,16 @@ public final class GameHandler {
 	private List<List<Explosion>> explosions;
 	
 	/**
+	 * Human player.
+	 */
+	private PlayerTUI player;
+	
+	/**
+	 * All ais
+	 */
+	private ManAI[] ais;
+	
+	/**
 	 * default field width
 	 */
 	private static final int DEFWIDTH = 30;
@@ -94,6 +105,12 @@ public final class GameHandler {
 		men = new ArrayList<Man>();
 		bombs = new ArrayList<Bomb>();
 		explosions = new ArrayList<List<Explosion>>();
+		ais = new ManAI[0];
+		
+		Man man = new Man(0,0);
+		addObject(man);
+		player = new PlayerTUI(man);
+		
 	}
 	
 	
@@ -549,5 +566,31 @@ public final class GameHandler {
 		}
 		
 		return sb.toString();
+	}
+	
+	public PlayerTUI getPlayer() {
+		return player;
+	}
+	
+	public ManAI[] getAis() {
+		return ais;
+	}
+	
+	public void updateAll() {
+		//!! look at the order.
+		//scan input false;
+		//Scanner in = new Scanner(System.in);
+		
+		// TODO endgame
+		
+		for(ManAI ai : ais) {
+			ai.calcNextStep();
+		}
+		player.move();
+		
+		moveAll();
+		updateBombs();
+		placeBombs();
+		updateExplosion();
 	}
 }
