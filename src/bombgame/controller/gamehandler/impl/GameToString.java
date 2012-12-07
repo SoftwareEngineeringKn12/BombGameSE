@@ -1,5 +1,8 @@
 package bombgame.controller.gamehandler.impl;
 
+import bombgame.controller.ai.ManAI;
+import bombgame.entities.Bomb;
+
 public final class GameToString {
 
 	private GameHandler handler;
@@ -18,15 +21,25 @@ public final class GameToString {
 	}
 
 	protected String playerToString() {
-		return "";
+		StringBuilder sb = new StringBuilder("Players:\n");
+		sb.append(handler.getPlayer());
+		return sb.toString();
 	}
 	
 	protected String aiToString() {
-		return "";
+		StringBuilder sb = new StringBuilder("AI:\n");
+		for( ManAI ai : handler.getAIs()) {
+			sb.append(ai);
+		}
+		return sb.toString();
 	}
 	
 	protected String bombsToString() {
-		return "";
+		StringBuilder sb = new StringBuilder("Bombs:\n");
+		for(Bomb b : handler.getBombs()) {
+			sb.append(b);
+		}
+		return sb.toString();
 	}
 	
 	protected String explosionToString() {
