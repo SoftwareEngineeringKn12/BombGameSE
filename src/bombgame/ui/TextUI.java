@@ -1,5 +1,8 @@
 package bombgame.ui;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import bombgame.controller.gamehandler.impl.GameHandler;
 import bombgame.controller.gamehandler.IGameHandler;
 import bombgame.entities.GameObject;
@@ -9,15 +12,16 @@ import bombgame.entities.GameObject;
  * @author JeGa, Rookfighter
  *
  */
-public final class TextUI implements UserInterface {
+public final class TextUI implements UserInterface, Observer {
 	
 	private IGameHandler handler;
 	
 	/**
 	 * Creates a GameHandler with standard Constructor.
 	 */
-	public TextUI() {
-		handler = new GameHandler();
+	public TextUI(GameHandler handler) {
+		this.handler = handler;
+		handler.addObserver(this);
 	}
 	
 	public TextUI(final GameObject[][] field) {
@@ -32,17 +36,18 @@ public final class TextUI implements UserInterface {
 		//scan input false;
 		
 		handler.updateAll();
-		System.out.println(handler);
 		
 		return true;
 	}
-	
-	/**
-	 * Returns the GameHandler-object currently used by the TextUI.
-	 * @return - GameHandler-object used by TextUI
-	 */
-	public IGameHandler getGameHandler() {
-		return handler;
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		if(!(arg1 instanceof String)) {
+			return;
+		}
+		String s = (String) arg1;
+		System.out.println(s);
+		
 	}
 	
 }

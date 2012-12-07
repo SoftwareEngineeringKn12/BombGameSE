@@ -2,6 +2,8 @@ package bombgame.controller.gamehandler.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+
 import bombgame.controller.PlayerTUI;
 import bombgame.controller.ai.ManAI;
 import bombgame.controller.gamehandler.IGameHandler;
@@ -17,7 +19,7 @@ import bombgame.entities.Wall;
  * @author jeganslo
  *
  */
-public final class GameHandler implements IGameHandler {
+public final class GameHandler extends Observable implements IGameHandler {
 
 	/**
 	 * Range in which player is spawned
@@ -345,6 +347,8 @@ public final class GameHandler implements IGameHandler {
 		updater.updateBombs();
 		updater.placeBombs();
 		updater.updateExplosion();
+		setChanged();
+		notifyObservers(toString());
 	}
 	
 	/**
