@@ -81,7 +81,7 @@ public final class MazeGen {
 	 * @author jens
 	 * 
 	 */
-	static class Cell {
+	static public class Cell {
 		private int x;
 		private int y;
 

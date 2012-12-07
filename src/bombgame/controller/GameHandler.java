@@ -151,10 +151,6 @@ public final class GameHandler {
 			
 			List<Explosion> exp = calculateExplosion((Explosion) obj);
 			addExplosionList(exp);
-			/*explosions.add(exp);
-			for(Explosion e : exp) {
-				field[e.getX()][e.getY()] = e;
-			}*/
 			return;
 		}
 		
@@ -303,6 +299,7 @@ public final class GameHandler {
 	}
 	
 	
+	//!! DONE
 	/**
 	 * This method tries to move the specified Man-object to the direction given by man.getDirection(). This is
 	 * only possible if the aimed coordinate is not already used by a Wall-object or is out of the range of the field.
@@ -389,6 +386,7 @@ public final class GameHandler {
 	}
 	
 	
+	//!! DONE
 	/**
 	 * Calculates the spread of the specified Explosion-object.
 	 * @param explosion - source of explosion
@@ -420,6 +418,7 @@ public final class GameHandler {
 	}
 	
 	
+	//!! DONE
 	/**
 	 * Creates a new Explosion-object with the specified coordinates, adds that object to the specified ArrayList
 	 * and returns true, if the coordinate is not blocked by a Wall-object and free is true.
@@ -515,6 +514,7 @@ public final class GameHandler {
 		return field[man.getX()][man.getY()] instanceof Explosion;
 	}
 	
+	//!! DONE
 	/**
 	 * Creates with MazeGen a random generated, non-perfect maze.
 	 * This maze is stored in field as the playing field.
