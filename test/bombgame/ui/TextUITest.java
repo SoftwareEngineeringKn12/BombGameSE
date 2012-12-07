@@ -20,7 +20,6 @@ public final class TextUITest extends TestCase {
 	
 	
 	public void setUp() {
-		tui1 = new TextUI();
 		tui2 = new TextUI(new GameObject[10][10]);
 	}
 	

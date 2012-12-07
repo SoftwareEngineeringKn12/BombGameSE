@@ -24,7 +24,7 @@ public final class TextUI implements UserInterface, Observer {
 		handler.addObserver(this);
 	}
 	
-	public TextUI(final GameObject[][] field) {
+	protected TextUI(final GameObject[][] field) {
 		handler = new GameHandler(field);
 	}
 
