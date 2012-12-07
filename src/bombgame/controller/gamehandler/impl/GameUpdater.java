@@ -75,7 +75,7 @@ public final class GameUpdater {
 			if(checkHit(man)) {
 				handler.removeObject(man);
 			} else {
-				handler.getGameCalculator().moveMan(man);
+				handler.getCalculator().moveMan(man);
 			}
 		}
 	}
