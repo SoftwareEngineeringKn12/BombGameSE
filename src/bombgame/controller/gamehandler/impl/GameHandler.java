@@ -186,7 +186,7 @@ public final class GameHandler implements IGameHandler {
 	 * Adds the specified List of Explosion-objects to the field.
 	 * @param list - ArrayList of Explosion-objects.
 	 */
-	private void addExplosionList(List<Explosion> list) {
+	protected void addExplosionList(List<Explosion> list) {
 		
 		explosions.add(list);
 		
@@ -213,7 +213,7 @@ public final class GameHandler implements IGameHandler {
 	 * is already used.
 	 * @param m - spawning Man-object
 	 */
-	private void spawnMan(Man m) {
+	protected void spawnMan(Man m) {
 		if(field[m.getX()][m.getY()] == null) {
 			men.add(m);
 			return;
@@ -257,7 +257,7 @@ public final class GameHandler implements IGameHandler {
 	 * Returns the matrix of the field.
 	 * @return - matrix of the field
 	 */
-	public GameObject[][] getField() {
+	protected GameObject[][] getField() {
 		return field;
 	}
 		
@@ -265,7 +265,7 @@ public final class GameHandler implements IGameHandler {
 	 * Returns the List of Man-objects.
 	 * @return - List of Man-objects
 	 */
-	public List<Man> getMen() {
+	protected List<Man> getMen() {
 		return men;
 	}
 		
@@ -273,7 +273,7 @@ public final class GameHandler implements IGameHandler {
 	 * Returns the List of Bomb-objects.
 	 * @return - List of Bomb-objects
 	 */
-	public List<Bomb> getBombs() {
+	protected List<Bomb> getBombs() {
 		return bombs;
 	}
 	
@@ -281,7 +281,7 @@ public final class GameHandler implements IGameHandler {
 	 * Returns the List of Lists of Explosions.
 	 * @return - List of Lists of Explosions
 	 */
-	public List<List<Explosion>> getExplosionList() {
+	protected List<List<Explosion>> getExplosionList() {
 		return explosions;
 	}
 	
@@ -289,7 +289,7 @@ public final class GameHandler implements IGameHandler {
 	 * Returns the human player object.
 	 * @return - Human player object
 	 */
-	public PlayerTUI getPlayer() {
+	protected PlayerTUI getPlayer() {
 		return player;
 	}
 	
@@ -297,7 +297,7 @@ public final class GameHandler implements IGameHandler {
 	 * Returns the List of AIs.
 	 * @return - List of AIs
 	 */
-	public ManAI[] getAIs() {
+	protected ManAI[] getAIs() {
 		return ais;
 	}
 	
@@ -333,6 +333,18 @@ public final class GameHandler implements IGameHandler {
 		}
 		
 		return null;
+	}
+
+	/**
+	 * Updates the whole game.
+	 */
+	public void updateAll() {
+		updater.updateAIs();
+		player.move();
+		updater.updateMen();
+		updater.updateBombs();
+		updater.placeBombs();
+		updater.updateExplosion();
 	}
 	
 	/**

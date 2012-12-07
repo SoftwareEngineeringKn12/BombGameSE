@@ -1,12 +1,8 @@
 package bombgame.ui;
 
-import bombgame.controller.GameHandler;
-import bombgame.controller.ai.ManAI;
-import bombgame.entities.Bomb;
-import bombgame.entities.Explosion;
+import bombgame.controller.gamehandler.impl.GameHandler;
+import bombgame.controller.gamehandler.IGameHandler;
 import bombgame.entities.GameObject;
-import bombgame.entities.Man;
-import bombgame.entities.Wall;
 
 /**
  * TextUI brings all components together.
@@ -15,15 +11,13 @@ import bombgame.entities.Wall;
  */
 public final class TextUI implements UserInterface {
 	
-	private GameHandler handler;
+	private IGameHandler handler;
 	
 	/**
 	 * Creates a GameHandler with standard Constructor.
 	 */
 	public TextUI() {
-		
 		handler = new GameHandler();
-		printField();
 	}
 	
 	public TextUI(final GameObject[][] field) {
@@ -35,32 +29,11 @@ public final class TextUI implements UserInterface {
 	 * and the calculation of Explosions (in this order).
 	 */
 	public boolean update() {
-		//!! look at the order.
 		//scan input false;
-		//Scanner in = new Scanner(System.in);
-		
-		/*
-		if(handler.getMen().size() <= 1) {
-			return false;
-		}
-		
-		for(ManAI ai : ais) {
-			ai.calcNextStep();
-		}
-		player.move();
-		
-		handler.moveAll();
-		handler.updateBombs();
-		handler.placeBombs();
-		handler.updateExplosion();*/
 		
 		handler.updateAll();
+		System.out.println(handler);
 		
-		printAllPlayers();
-		printAI();
-		printBombs();
-		printExplosions();
-		printField();
 		return true;
 	}
 	
@@ -68,10 +41,8 @@ public final class TextUI implements UserInterface {
 	 * Returns the GameHandler-object currently used by the TextUI.
 	 * @return - GameHandler-object used by TextUI
 	 */
-	public GameHandler getGameHandler() {
+	public IGameHandler getGameHandler() {
 		return handler;
 	}
 	
 }
-
-
