@@ -1,12 +1,12 @@
 package bombgame.controller.gamehandler.impl;
 
 import java.util.List;
-
 import bombgame.entities.Bomb;
 import bombgame.entities.Explosion;
 import bombgame.entities.GameObject;
 import bombgame.entities.Man;
 import bombgame.entities.Wall;
+import bombgame.controller.ai.ManAI;
 
 public final class GameToString {
 
@@ -41,15 +41,25 @@ public final class GameToString {
 	}
 
 	protected String playerToString() {
-		return "";
+		StringBuilder sb = new StringBuilder("Players:\n");
+		sb.append(handler.getPlayer());
+		return sb.toString();
 	}
 
 	protected String aiToString() {
-		return "";
+		StringBuilder sb = new StringBuilder("AI:\n");
+		for( ManAI ai : handler.getAIs()) {
+			sb.append(ai);
+		}
+		return sb.toString();
 	}
 
 	protected String bombsToString() {
-		return "";
+		StringBuilder sb = new StringBuilder("Bombs:\n");
+		for(Bomb b : handler.getBombs()) {
+			sb.append(b);
+		}
+		return sb.toString();
 	}
 
 	/**
