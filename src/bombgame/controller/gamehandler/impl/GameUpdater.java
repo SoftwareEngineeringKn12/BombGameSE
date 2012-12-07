@@ -10,13 +10,23 @@ import bombgame.entities.Man;
 
 public final class GameUpdater {
 
-	
+	/**
+	 * GameHandler wich is updated
+	 */
 	private GameHandler handler; 
 	
+	/**
+	 * Creates a new Updater with the given GameHandler.
+	 * @param handler - GameHandler
+	 */
 	protected GameUpdater(GameHandler handler) {
 		this.handler = handler;
 	}
 	
+	/**
+	 * Returns the GameHandler use by this GameUpdater.
+	 * @return - GameHandler
+	 */
 	protected GameHandler getHandler() {
 		return handler;
 	}
@@ -90,7 +100,9 @@ public final class GameUpdater {
 		return handler.getField()[man.getX()][man.getY()] instanceof Explosion;
 	}
 	
-	
+	/**
+	 * Updates all AIs on the Field.
+	 */
 	protected void updateAIs() {
 		for(ManAI ai : handler.getAIs()) {
 			ai.calcNextStep();
