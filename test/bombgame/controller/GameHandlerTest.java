@@ -1,11 +1,11 @@
 package bombgame.controller;
 
 import java.util.ArrayList;
-import bombgame.entities.Bomb;
-import bombgame.entities.Explosion;
 import bombgame.entities.GameObject;
-import bombgame.entities.Man;
-import bombgame.entities.Wall;
+import bombgame.entities.impl.Bomb;
+import bombgame.entities.impl.Explosion;
+import bombgame.entities.impl.Man;
+import bombgame.entities.impl.Wall;
 import junit.framework.TestCase;
 
 public final class GameHandlerTest extends TestCase {

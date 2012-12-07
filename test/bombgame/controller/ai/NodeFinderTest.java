@@ -3,7 +3,7 @@ package bombgame.controller.ai;
 import bombgame.controller.GameHandler;
 import bombgame.controller.ai.NodeFinder.Node;
 import bombgame.entities.GameObject;
-import bombgame.entities.Wall;
+import bombgame.entities.impl.Wall;
 import junit.framework.TestCase;
 
 public class NodeFinderTest extends TestCase{

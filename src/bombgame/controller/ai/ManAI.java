@@ -8,7 +8,7 @@ import java.util.Random;
 
 import bombgame.controller.GameHandler;
 import bombgame.controller.ai.NodeFinder.Node;
-import bombgame.entities.Man;
+import bombgame.entities.impl.Man;
 
 /**
  * This class manages the behavior of a Man-object. It watches the movement of its enemies. It calculates

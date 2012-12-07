@@ -3,7 +3,7 @@ package bombgame.controller;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import bombgame.entities.Man;
+import bombgame.entities.impl.Man;
 import junit.framework.TestCase;
 
 public final class PlayerTUITest extends TestCase {

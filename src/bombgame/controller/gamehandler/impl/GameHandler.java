@@ -7,11 +7,11 @@ import java.util.Observable;
 import bombgame.controller.PlayerTUI;
 import bombgame.controller.ai.ManAI;
 import bombgame.controller.gamehandler.IGameHandler;
-import bombgame.entities.Bomb;
-import bombgame.entities.Explosion;
 import bombgame.entities.GameObject;
-import bombgame.entities.Man;
-import bombgame.entities.Wall;
+import bombgame.entities.impl.Bomb;
+import bombgame.entities.impl.Explosion;
+import bombgame.entities.impl.Man;
+import bombgame.entities.impl.Wall;
 
 /**
  * Port class!

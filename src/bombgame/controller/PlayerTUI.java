@@ -1,7 +1,8 @@
 package bombgame.controller;
 
 import java.util.Scanner;
-import bombgame.entities.Man;
+
+import bombgame.entities.impl.Man;
 
 /**
  * This class represents the human player. It has one Man variable which is the
@@ -25,11 +26,11 @@ public final class PlayerTUI {
 	/**
 	 * Moves the man Object according to the user-input.
 	 */
-	public void move() {
+	public void move() { // String str
 		Scanner in = new Scanner(System.in);
 		
 		String str = in.next();
-
+		
 		if (str.equals("w")) {
 			man.setDirection(Man.UP);
 		} else if (str.equals("s")) {

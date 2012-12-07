@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import bombgame.controller.MazeGen.Cell;
 import bombgame.controller.ai.ManAI;
-import bombgame.entities.Bomb;
-import bombgame.entities.Explosion;
 import bombgame.entities.GameObject;
-import bombgame.entities.Man;
-import bombgame.entities.Wall;
+import bombgame.entities.impl.Bomb;
+import bombgame.entities.impl.Explosion;
+import bombgame.entities.impl.Man;
+import bombgame.entities.impl.Wall;
 
 
 /**

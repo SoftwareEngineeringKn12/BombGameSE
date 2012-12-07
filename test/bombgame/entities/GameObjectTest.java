@@ -1,7 +1,7 @@
 package bombgame.entities;
 
 import bombgame.entities.GameObject;
-import bombgame.entities.Wall;
+import bombgame.entities.impl.Wall;
 import junit.framework.TestCase;
 
 public class GameObjectTest extends TestCase {

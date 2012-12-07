@@ -2,8 +2,8 @@ package bombgame.controller.ai;
 
 import junit.framework.TestCase;
 import bombgame.controller.GameHandler;
-import bombgame.entities.Bomb;
 import bombgame.entities.GameObject;
+import bombgame.entities.impl.Bomb;
 
 public class BombCostCalculatorTest extends TestCase {
 	

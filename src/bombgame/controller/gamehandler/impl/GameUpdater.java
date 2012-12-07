@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bombgame.controller.ai.ManAI;
-import bombgame.entities.Bomb;
-import bombgame.entities.Explosion;
-import bombgame.entities.Man;
+import bombgame.entities.impl.Bomb;
+import bombgame.entities.impl.Explosion;
+import bombgame.entities.impl.Man;
 
 public final class GameUpdater {
 

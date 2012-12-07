@@ -1,4 +1,6 @@
-package bombgame.entities;
+package bombgame.entities.impl;
+
+import bombgame.entities.GameObject;
 
 /**
  * This class represents a Wall-element. Its only purpose is to be a solid barrier.

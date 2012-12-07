@@ -1,9 +1,9 @@
 package bombgame.controller.ai;
 
 import bombgame.controller.GameHandler;
-import bombgame.entities.Explosion;
 import bombgame.entities.GameObject;
-import bombgame.entities.Wall;
+import bombgame.entities.impl.Explosion;
+import bombgame.entities.impl.Wall;
 import junit.framework.TestCase;
 
 public class AISelectorTest extends TestCase{

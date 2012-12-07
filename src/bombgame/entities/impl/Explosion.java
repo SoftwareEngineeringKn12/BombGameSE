@@ -1,4 +1,6 @@
-package bombgame.entities;
+package bombgame.entities.impl;
+
+import bombgame.entities.GameObject;
 
 /**
  * This class determines the range of Explosions. These are placed by Man-objects.

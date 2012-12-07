@@ -1,4 +1,6 @@
-package bombgame.entities;
+package bombgame.entities.impl;
+
+import bombgame.entities.GameObject;
 
 
 /**

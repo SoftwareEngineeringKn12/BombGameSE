@@ -1,8 +1,8 @@
 package bombgame.controller.ai;
 
 import bombgame.controller.GameHandler;
-import bombgame.entities.Explosion;
-import bombgame.entities.Wall;
+import bombgame.entities.impl.Explosion;
+import bombgame.entities.impl.Wall;
 
 /**
  * This class decides if a given Position should be moved to the closedlist or not.

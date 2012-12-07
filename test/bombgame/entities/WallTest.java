@@ -1,5 +1,6 @@
 package bombgame.entities;
 
+import bombgame.entities.impl.Wall;
 import junit.framework.TestCase;
 
 public final class WallTest extends TestCase {

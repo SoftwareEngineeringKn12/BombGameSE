@@ -2,8 +2,8 @@ package bombgame.controller.ai;
 
 import bombgame.controller.GameHandler;
 import bombgame.entities.GameObject;
-import bombgame.entities.Man;
-import bombgame.entities.Wall;
+import bombgame.entities.impl.Man;
+import bombgame.entities.impl.Wall;
 import junit.framework.TestCase;
 
 public class HistoryTargetFinderTest extends TestCase{

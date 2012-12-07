@@ -1,6 +1,6 @@
 package bombgame.entities;
 
-import bombgame.entities.Explosion;
+import bombgame.entities.impl.Explosion;
 import junit.framework.TestCase;
 
 public final class ExplosionTest extends TestCase {

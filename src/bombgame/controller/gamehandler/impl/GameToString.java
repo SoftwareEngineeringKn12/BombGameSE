@@ -1,11 +1,11 @@
 package bombgame.controller.gamehandler.impl;
 
 import java.util.List;
-import bombgame.entities.Bomb;
-import bombgame.entities.Explosion;
 import bombgame.entities.GameObject;
-import bombgame.entities.Man;
-import bombgame.entities.Wall;
+import bombgame.entities.impl.Bomb;
+import bombgame.entities.impl.Explosion;
+import bombgame.entities.impl.Man;
+import bombgame.entities.impl.Wall;
 import bombgame.controller.ai.ManAI;
 
 public final class GameToString {

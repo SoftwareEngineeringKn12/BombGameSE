@@ -1,8 +1,8 @@
 package bombgame.controller.ai;
 
 import bombgame.controller.GameHandler;
-import bombgame.entities.Bomb;
-import bombgame.entities.Explosion;
+import bombgame.entities.impl.Bomb;
+import bombgame.entities.impl.Explosion;
 
 /**
  * This class calculates the additional cost if a given Position is threatened by a Bomb.

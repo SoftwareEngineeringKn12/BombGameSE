@@ -1,7 +1,7 @@
 package bombgame.entities;
 
-import bombgame.entities.Bomb;
-import bombgame.entities.Man;
+import bombgame.entities.impl.Bomb;
+import bombgame.entities.impl.Man;
 import junit.framework.TestCase;
 
 public final class ManTest extends TestCase {
