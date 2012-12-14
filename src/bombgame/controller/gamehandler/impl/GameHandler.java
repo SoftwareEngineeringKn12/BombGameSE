@@ -58,7 +58,7 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 	/**
 	 * All ais
 	 */
-	private ManAI[] ais;
+	private List<ManAI> ais;
 	
 	/**
 	 * GameUpdater which updates all GameObjects -> Man, Bombs, ...
@@ -108,7 +108,7 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 		men = new ArrayList<IMan>();
 		bombs = new ArrayList<IBomb>();
 		explosions = new ArrayList<List<IExplosion>>();
-		ais = new ManAI[0];
+		ais = new ArrayList<ManAI>();
 		
 		IMan man = new Man(0,0);
 		addObject(man);
@@ -130,7 +130,7 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 		men = new ArrayList<IMan>();
 		bombs = new ArrayList<IBomb>();
 		explosions = new ArrayList<List<IExplosion>>();
-		ais = new ManAI[0];
+		ais = new ArrayList<ManAI>();
 		
 		this.updater = new GameUpdater(this);
 		this.calc = new GameCalculator(this);
@@ -259,6 +259,20 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 	}
 	
 	/**
+	 * 
+	 */
+	protected void setPlayer(final PlayerTUI player) {
+		this.player = player;
+	}
+	
+	/**
+	 * 
+	 */
+	protected void addAI(ManAI ai) {
+		ais.add(ai);
+	}
+	
+	/**
 	 * Returns the matrix of the field.
 	 * @return - matrix of the field
 	 */
@@ -302,7 +316,7 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 	 * Returns the List of AIs.
 	 * @return - List of AIs
 	 */
-	protected ManAI[] getAIs() {
+	protected List<ManAI> getAIs() {
 		return ais;
 	}
 	
