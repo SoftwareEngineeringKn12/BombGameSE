@@ -76,7 +76,7 @@ public final class GameUpdaterTest extends TestCase {
 	}
 	
 	public void testUpdateAIs() {
-		
+
 	}
 	
 }
