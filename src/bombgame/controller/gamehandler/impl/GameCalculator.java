@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import bombgame.controller.MazeGen;
 import bombgame.controller.MazeGen.Cell;
+import bombgame.entities.IBomb;
 import bombgame.entities.IExplosion;
 import bombgame.entities.IGameObject;
 import bombgame.entities.IMan;
@@ -170,6 +171,18 @@ public final class GameCalculator {
 		if( free && x < handler.getField().length && x >= 0 && y < handler.getField()[0].length && y >= 0 && !(handler.getField()[x][y] instanceof IWall)) {
 			
 			list.add(new Explosion(x, y));
+			
+			
+			if(handler.getField()[x][y] instanceof IBomb) {
+				IExplosion exp = null;
+				IBomb bomb = (IBomb) handler.getField()[x][y];
+				while(exp == null) {
+					exp = bomb.decrementTimer();
+				}
+				System.out.println("chain");
+				handler.removeObject(bomb);
+				handler.addObject(exp);
+			}
 			
 			return true;
 			

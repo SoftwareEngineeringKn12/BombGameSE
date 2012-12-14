@@ -60,12 +60,11 @@ public final class Bomb extends GameObject implements IBomb {
 	 * when the value is 0.
 	 */
 	public Explosion decrementTimer() {
-		if (timer > 0) {
-			timer--;
-			return null;
-		} else {
+		timer--;
+		if (timer == 0) {
 			return explode();
 		}
+		return null;
 	}
 	
 	/**
