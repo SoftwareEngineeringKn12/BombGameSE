@@ -2,7 +2,6 @@ package bombgame.ui;
 
 import java.util.Observable;
 import java.util.Observer;
-
 import bombgame.controller.gamehandler.impl.GameHandler;
 import bombgame.controller.gamehandler.IGameHandler;
 import bombgame.entities.impl.GameObject;
