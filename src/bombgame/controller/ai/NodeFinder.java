@@ -2,9 +2,10 @@ package bombgame.controller.ai;
 
 import java.util.Arrays;
 
-import bombgame.controller.GameHandler;
-import bombgame.entities.impl.GameObject;
-import bombgame.entities.impl.Wall;
+import bombgame.controller.gamehandler.IGameHandler2D;
+import bombgame.entities.IGameObject;
+import bombgame.entities.IWall;
+
 
 
 /**
@@ -26,7 +27,7 @@ public class NodeFinder {
 	 * Searches through the field given by handler and 
 	 * and returns an ordered (by natural order) Array of all found Nodes.
 	 */
-	public static Node[] findAllNodes(GameHandler handler) {
+	public static Node[] findAllNodes(IGameHandler2D handler) {
 		
 		Node[] nodes = new Node[DEF_SIZE];
 		int[] count = {0};
@@ -55,12 +56,12 @@ public class NodeFinder {
 	 * @param x - x-coordinate
 	 * @param y - y-coordinate
 	 */
-	protected static void createNode(int x, int y, GameHandler handler, Node[] nodes, int[] count) {
+	protected static void createNode(int x, int y, IGameHandler2D handler, Node[] nodes, int[] count) {
 		
-		GameObject field[][] = handler.getField();
+		IGameObject field[][] = handler.getField();
 		
 		//if it is a Wall it cannot be a Node
-		if(field[x][y] instanceof Wall) {
+		if(field[x][y] instanceof IWall) {
 			return;
 		}
 		
@@ -89,7 +90,7 @@ public class NodeFinder {
 	 * @param field - field in which the Position is
 	 * @return - value is 1 if the examined direction is not blocked else 0
 	 */
-	protected static int checkDirections(int x, int y, int xfac, int yfac, final boolean[] direction, int dir, final GameObject field[][]) {
+	protected static int checkDirections(int x, int y, int xfac, int yfac, final boolean[] direction, int dir, final IGameObject field[][]) {
 		
 		int xtmp = x + xfac;
 		int ytmp = y + yfac;
@@ -97,7 +98,7 @@ public class NodeFinder {
 		boolean xlegal = xtmp < field.length && xtmp >= 0;
 		boolean ylegal = ytmp < field[0].length && ytmp >= 0;
 		
-		if(xlegal && ylegal && !(field[xtmp][ytmp] instanceof Wall) ) {
+		if(xlegal && ylegal && !(field[xtmp][ytmp] instanceof IWall) ) {
 			direction[dir] = true;
 			return 1;
 		}

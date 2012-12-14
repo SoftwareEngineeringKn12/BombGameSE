@@ -2,16 +2,15 @@ package bombgame.controller.gamehandler.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import bombgame.controller.ai.ManAI;
-import bombgame.entities.impl.Bomb;
-import bombgame.entities.impl.Explosion;
-import bombgame.entities.impl.Man;
+import bombgame.entities.IBomb;
+import bombgame.entities.IExplosion;
+import bombgame.entities.IMan;
 
 public final class GameUpdater {
 
 	/**
-	 * GameHandler wich is updated
+	 * GameHandler which is updated
 	 */
 	private GameHandler handler; 
 	
@@ -36,7 +35,7 @@ public final class GameUpdater {
 	 * Checks if any Man-object from men wants to place a bomb. If so a Bomb-object is added.
 	 */
 	protected void placeBombs() {
-		for (Man man : handler.getMen()) {
+		for (IMan man : handler.getMen()) {
 			if (man.getPlaceBomb()) {
 				handler.addObject(man.placeBomb());
 			}
@@ -49,9 +48,9 @@ public final class GameUpdater {
 	 */
 	protected void updateBombs() {
 		//new ArrayList is needed to remove a bomb during iteration
-		List<Bomb> bs = new ArrayList<Bomb>(handler.getBombs());
-		for (Bomb bomb : bs) {
-			Explosion expl = bomb.decrementTimer();
+		List<IBomb> bs = new ArrayList<IBomb>(handler.getBombs());
+		for (IBomb bomb : bs) {
+			IExplosion expl = bomb.decrementTimer();
 			if (expl != null) {
 				handler.removeObject(bomb);
 				handler.addObject(expl);
@@ -64,9 +63,9 @@ public final class GameUpdater {
 	 */
 	protected void updateExplosion() {
 		//new ArrayList is needed to remove a Explosionlist during iteration
-		List<List<Explosion>> explist = new ArrayList<List<Explosion>>(handler.getExplosionList()); 
-		for(List<Explosion> explosion : explist) {
-			Explosion exp = explosion.get(0);
+		List<List<IExplosion>> explist = new ArrayList<List<IExplosion>>(handler.getExplosionList()); 
+		for(List<IExplosion> explosion : explist) {
+			IExplosion exp = explosion.get(0);
 			exp.decrementTimer();
 			
 			if(exp.getTimer() <= 0) {
@@ -80,8 +79,8 @@ public final class GameUpdater {
 	 */
 	protected void updateMen() {
 		//new ArrayList is needed to remove a man during iteration
-		List<Man> m = new ArrayList<Man>(handler.getMen());
-		for (Man man : m) {
+		List<IMan> m = new ArrayList<IMan>(handler.getMen());
+		for (IMan man : m) {
 			if(checkHit(man)) {
 				handler.removeObject(man);
 			} else {
@@ -96,8 +95,8 @@ public final class GameUpdater {
 	 * @param man - Man-object to check
 	 * @return - returns true if man is hit
 	 */
-	private boolean checkHit(Man man) {
-		return handler.getField()[man.getX()][man.getY()] instanceof Explosion;
+	private boolean checkHit(IMan man) {
+		return handler.getField()[man.getX()][man.getY()] instanceof IExplosion;
 	}
 	
 	/**

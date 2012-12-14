@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import bombgame.controller.MazeGen;
 import bombgame.controller.MazeGen.Cell;
+import bombgame.entities.IExplosion;
+import bombgame.entities.IGameObject;
+import bombgame.entities.IMan;
+import bombgame.entities.IWall;
 import bombgame.entities.impl.Explosion;
 import bombgame.entities.impl.GameObject;
 import bombgame.entities.impl.Man;
@@ -45,7 +49,7 @@ public final class GameCalculator {
 	 * only possible if the aimed coordinate is not already used by a Wall-object or is out of the range of the field.
 	 * @param man - Man-object that should move
 	 */
-	protected void moveMan( final Man man) {
+	protected void moveMan( final IMan man) {
 		
 		switch(man.getDirection()) {
 		
@@ -53,7 +57,7 @@ public final class GameCalculator {
 			break;
 			
 		case Man.UP:
-			if( man.getY() != 0 && !(handler.getField()[man.getX()][man.getY() - 1] instanceof Wall) ) {
+			if( man.getY() != 0 && !(handler.getField()[man.getX()][man.getY() - 1] instanceof IWall) ) {
 				
 				if(handler.getField()[man.getX()][man.getY()] == man) {
 					//only replace with null if man is the user of the field
@@ -70,7 +74,7 @@ public final class GameCalculator {
 			break;
 			
 		case Man.DOWN:
-			if( man.getY() != (handler.getField()[0].length - 1) && !(handler.getField()[man.getX()][man.getY() + 1] instanceof Wall) ) {
+			if( man.getY() != (handler.getField()[0].length - 1) && !(handler.getField()[man.getX()][man.getY() + 1] instanceof IWall) ) {
 				
 				if(handler.getField()[man.getX()][man.getY()] == man) {
 					//only replace with null if man is the user of the field
@@ -87,7 +91,7 @@ public final class GameCalculator {
 			break;
 			
 		case Man.LEFT:
-			if( man.getX() != 0 && !(handler.getField()[man.getX() - 1][man.getY()] instanceof Wall) ) {
+			if( man.getX() != 0 && !(handler.getField()[man.getX() - 1][man.getY()] instanceof IWall) ) {
 				
 				if(handler.getField()[man.getX()][man.getY()] == man) {
 					//only replace with null if man is the user of the field
@@ -104,7 +108,7 @@ public final class GameCalculator {
 			break;
 			
 		case Man.RIGHT:
-			if( man.getX() != (handler.getField().length - 1) && !(handler.getField()[man.getX() + 1][man.getY()] instanceof Wall) ) {
+			if( man.getX() != (handler.getField().length - 1) && !(handler.getField()[man.getX() + 1][man.getY()] instanceof IWall) ) {
 				
 				if(handler.getField()[man.getX()][man.getY()] == man) {
 					//only replace with null if man is the user of the field
@@ -127,9 +131,9 @@ public final class GameCalculator {
 	 * @param explosion - source of explosion
 	 * @return - ArrayList of all Explosions included in the spread
 	 */
-	protected List<Explosion> calculateExplosion(final Explosion explosion) {
+	protected List<IExplosion> calculateExplosion(final IExplosion explosion) {
 		
-		List<Explosion> list = new ArrayList<Explosion>();
+		List<IExplosion> list = new ArrayList<IExplosion>();
 		list.add(explosion);
 		
 		boolean free[] = {true, true, true, true};
@@ -162,8 +166,8 @@ public final class GameCalculator {
 	 * @param list - list to which explosion will be added
 	 * @return - returns true if Explosion-object was successfully created
 	 */
-	protected boolean nextExplosion(int x, int y, boolean free, List<Explosion> list) {
-		if( free && x < handler.getField().length && x >= 0 && y < handler.getField()[0].length && y >= 0 && !(handler.getField()[x][y] instanceof Wall)) {
+	protected boolean nextExplosion(int x, int y, boolean free, List<IExplosion> list) {
+		if( free && x < handler.getField().length && x >= 0 && y < handler.getField()[0].length && y >= 0 && !(handler.getField()[x][y] instanceof IWall)) {
 			
 			list.add(new Explosion(x, y));
 			
@@ -186,7 +190,7 @@ public final class GameCalculator {
 	 */
 	protected void initializeField(final int width, final int height) {
 		MazeGen generator = new MazeGen(width, height);
-		GameObject[][] field = new GameObject[width][height];
+		IGameObject[][] field = new GameObject[width][height];
 
 		generator.genNonPerfectMaze();
 		Cell[][] cellArray = generator.getMaze();

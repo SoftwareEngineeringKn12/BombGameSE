@@ -6,9 +6,11 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
 
-import bombgame.controller.GameHandler;
 import bombgame.controller.ai.NodeFinder.Node;
+import bombgame.controller.gamehandler.IGameHandler2D;
+import bombgame.entities.IMan;
 import bombgame.entities.impl.Man;
+
 
 /**
  * This class manages the behavior of a Man-object. It watches the movement of its enemies. It calculates
@@ -65,17 +67,17 @@ public final class ManAI {
 	/**
 	 * Man-object controlled by AI
 	 */
-	private final Man man;
+	private final IMan man;
 	
 	/**
 	 * Man-object that is focused by this AI
 	 */
-	private Man focusedEnemy;
+	private IMan focusedEnemy;
 	
 	/**
 	 * Handler wich handles this ManAI-object
 	 */
-	private final GameHandler handler;
+	private final IGameHandler2D handler;
 	
 	
 	/**
@@ -140,7 +142,7 @@ public final class ManAI {
 	 * @param man - Man-object controlled by AI
 	 * @param handler - GameHandler in which AI acts
 	 */
-	public ManAI (final Man man, final GameHandler handler) {
+	public ManAI (final IMan man, final IGameHandler2D handler) {
 		this.man = man;
 		this.handler = handler;
 		this.rand = new Random();
@@ -235,7 +237,7 @@ public final class ManAI {
 		int size = handler.getMen().size();
 		while(size > 1) {
 			int i = rand.nextInt(size);
-			Man m = handler.getMen().get(i);
+			IMan m = handler.getMen().get(i);
 			if( m != this.man) {
 				focusedEnemy = m;
 				return;
@@ -332,7 +334,7 @@ public final class ManAI {
 	 * Returns the GameHandler in which this AI plays.
 	 * @return
 	 */
-	public GameHandler getHandler() {
+	public IGameHandler2D getHandler() {
 		return handler;
 	}
 	
@@ -392,7 +394,7 @@ public final class ManAI {
 	 * Sets the focused Enemy of this AI to the given Man.
 	 * @param man - focused enemy
 	 */
-	public void setFocusedEnemy(final Man man) {
+	public void setFocusedEnemy(final IMan man) {
 		focusedEnemy = man;
 	}
 	
@@ -400,7 +402,7 @@ public final class ManAI {
 	 * Returns the currently focused Man.
 	 * @return - focused enemy
 	 */
-	public Man getFocusedEnemy() {
+	public IMan getFocusedEnemy() {
 		return focusedEnemy;
 	}
 	

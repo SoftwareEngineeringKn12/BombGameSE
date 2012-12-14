@@ -1,6 +1,7 @@
 package bombgame.controller.ai;
 
-import bombgame.controller.GameHandler;
+
+import bombgame.controller.gamehandler.IGameHandler2D;
 import bombgame.entities.impl.Explosion;
 import bombgame.entities.impl.Wall;
 
@@ -16,13 +17,13 @@ public final class AISelector implements ClosedListSelector{
 	/**
 	 * Observed GameHandler
 	 */
-	private final GameHandler handler;
+	private final IGameHandler2D handler;
 	
 	/**
 	 * Creates a Selector observing the given GameHandler.
 	 * @param handler - GameHandler observed by this Selector
 	 */
-	public AISelector(final GameHandler handler) {
+	public AISelector(final IGameHandler2D handler) {
 		this.handler = handler;
 	}
 	

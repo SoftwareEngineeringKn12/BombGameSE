@@ -2,7 +2,9 @@ package bombgame.controller;
 
 import java.util.Scanner;
 
+import bombgame.entities.IMan;
 import bombgame.entities.impl.Man;
+
 
 /**
  * This class represents the human player. It has one Man variable which is the
@@ -13,13 +15,13 @@ import bombgame.entities.impl.Man;
  */
 public final class PlayerTUI {
 
-	private Man man;
+	private IMan man;
 
 	/**
 	 * Creates new player with given man.
 	 * @param man
 	 */
-	public PlayerTUI(Man man) {
+	public PlayerTUI(IMan man) {
 		this.man = man;
 	}
 
@@ -53,7 +55,7 @@ public final class PlayerTUI {
 	 * Returns the man object of the player
 	 * @return
 	 */
-	public Man getMan() {
+	public IMan getMan() {
 		return man;
 	}
 	

@@ -1,12 +1,12 @@
 package bombgame.controller.gamehandler.impl;
 
 import java.util.List;
-import bombgame.entities.impl.Bomb;
-import bombgame.entities.impl.Explosion;
-import bombgame.entities.impl.GameObject;
-import bombgame.entities.impl.Man;
-import bombgame.entities.impl.Wall;
 import bombgame.controller.ai.ManAI;
+import bombgame.entities.IBomb;
+import bombgame.entities.IExplosion;
+import bombgame.entities.IGameObject;
+import bombgame.entities.IMan;
+import bombgame.entities.IWall;
 
 public final class GameToString {
 
@@ -56,7 +56,7 @@ public final class GameToString {
 
 	protected String bombsToString() {
 		StringBuilder sb = new StringBuilder("Bombs:\n");
-		for(Bomb b : handler.getBombs()) {
+		for(IBomb b : handler.getBombs()) {
 			sb.append(b);
 		}
 		return sb.toString();
@@ -71,10 +71,10 @@ public final class GameToString {
 		
 		sb.append("Explosions:\n");
 		
-		for(List<Explosion> list : handler.getExplosionList()) {
+		for(List<IExplosion> list : handler.getExplosionList()) {
 			sb.append("->Explosion: { ");
 			int i = 0;
-			for(Explosion exp : list) {
+			for(IExplosion exp : list) {
 				if(i < list.size() - 1) {
 					sb.append("[").append(exp.getX()).append("] [").append(exp.getY()).append("], ");
 				} else {
@@ -93,25 +93,25 @@ public final class GameToString {
 	 */
 	protected String fieldToString() {
 		StringBuilder sb = new StringBuilder();
-		GameObject[][] field = handler.getField();
+		IGameObject[][] field = handler.getField();
 
 		for (int i = 0; i < field[0].length; i++) {
 
 			for (int j = 0; j < field.length; j++) {
 
-				if (field[j][i] instanceof Wall) {
+				if (field[j][i] instanceof IWall) {
 
 					sb.append(" # ");
 
-				} else if (field[j][i] instanceof Man) {
+				} else if (field[j][i] instanceof IMan) {
 
 					sb.append(" M ");
 
-				} else if (field[j][i] instanceof Bomb) {
+				} else if (field[j][i] instanceof IBomb) {
 
 					sb.append(" O ");
 
-				} else if (field[j][i] instanceof Explosion) {
+				} else if (field[j][i] instanceof IExplosion) {
 
 					sb.append(" X ");
 

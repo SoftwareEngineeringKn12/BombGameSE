@@ -7,11 +7,14 @@ import java.util.Observable;
 import bombgame.controller.PlayerTUI;
 import bombgame.controller.ai.ManAI;
 import bombgame.controller.gamehandler.IGameHandler;
-import bombgame.entities.impl.Bomb;
-import bombgame.entities.impl.Explosion;
+import bombgame.controller.gamehandler.IGameHandler2D;
+import bombgame.entities.IBomb;
+import bombgame.entities.IExplosion;
+import bombgame.entities.IGameObject;
+import bombgame.entities.IMan;
+import bombgame.entities.IWall;
 import bombgame.entities.impl.GameObject;
 import bombgame.entities.impl.Man;
-import bombgame.entities.impl.Wall;
 
 /**
  * Port class!
@@ -19,7 +22,7 @@ import bombgame.entities.impl.Wall;
  * @author jeganslo
  *
  */
-public final class GameHandler extends Observable implements IGameHandler {
+public final class GameHandler extends Observable implements IGameHandler2D, IGameHandler {
 
 	/**
 	 * Range in which player is spawned
@@ -30,22 +33,22 @@ public final class GameHandler extends Observable implements IGameHandler {
 	 * matrix holding all GameObjects in the game.
 	 * The array indices specify the position on the field.
 	 */
-	private GameObject field[][];
+	private IGameObject field[][];
 	
 	/**
 	 * List holding all Man-objects in the game.
 	 */
-	private List<Man> men;
+	private List<IMan> men;
 	
 	/**
 	 * List holding all Bomb-objects in the game.
 	 */
-	private List<Bomb> bombs;
+	private List<IBomb> bombs;
 	
 	/**
 	 * list of explosions
 	 */
-	private List<List<Explosion>> explosions;
+	private List<List<IExplosion>> explosions;
 	
 	/**
 	 * Human player.
@@ -102,12 +105,12 @@ public final class GameHandler extends Observable implements IGameHandler {
 		this.gameString = new GameToString(this);
 			
 		calc.initializeField(width, height);
-		men = new ArrayList<Man>();
-		bombs = new ArrayList<Bomb>();
-		explosions = new ArrayList<List<Explosion>>();
+		men = new ArrayList<IMan>();
+		bombs = new ArrayList<IBomb>();
+		explosions = new ArrayList<List<IExplosion>>();
 		ais = new ManAI[0];
 		
-		Man man = new Man(0,0);
+		IMan man = new Man(0,0);
 		addObject(man);
 		player = new PlayerTUI(man);
 	}
@@ -117,16 +120,16 @@ public final class GameHandler extends Observable implements IGameHandler {
 	 * (for testing purposes (JUnit))
 	 * @param f - field
 	 */
-	public GameHandler(final GameObject f[][]) {
+	public GameHandler(final IGameObject f[][]) {
 		field = new GameObject[f.length][f[0].length];
 		for( int i = 0; i < f.length; i++) {
 			for( int j = 0; j < f.length; j++) {
 				field[i][j] = f[i][j];
 			}
 		}
-		men = new ArrayList<Man>();
-		bombs = new ArrayList<Bomb>();
-		explosions = new ArrayList<List<Explosion>>();
+		men = new ArrayList<IMan>();
+		bombs = new ArrayList<IBomb>();
+		explosions = new ArrayList<List<IExplosion>>();
 		ais = new ManAI[0];
 		
 		this.updater = new GameUpdater(this);
@@ -139,19 +142,19 @@ public final class GameHandler extends Observable implements IGameHandler {
 	 * They can also be placed onto another GameObject (e.g. a Man-object).
 	 * @param obj - GameObject that should be added to the field
 	 */
-	public void addObject(GameObject obj) {
+	public void addObject(IGameObject obj) {
 		
-		if (obj instanceof Man) {
-			spawnMan((Man) obj);
+		if (obj instanceof IMan) {
+			spawnMan((IMan) obj);
 		}
 		
-		if (obj instanceof Bomb) {
-			bombs.add((Bomb) obj);
+		if (obj instanceof IBomb) {
+			bombs.add((IBomb) obj);
 		}
 		
-		if(obj instanceof Explosion) {
+		if(obj instanceof IExplosion) {
 			
-			List<Explosion> exp = calc.calculateExplosion((Explosion) obj);
+			List<IExplosion> exp = calc.calculateExplosion((IExplosion) obj);
 			addExplosionList(exp);
 			return;
 		}
@@ -164,17 +167,17 @@ public final class GameHandler extends Observable implements IGameHandler {
 	 * this method does nothing.
 	 * @param obj - GameObject that should be removed
 	 */
-	public void removeObject(GameObject obj) {
-		if (obj instanceof Man) {
-			men.remove((Man) obj);
+	public void removeObject(IGameObject obj) {
+		if (obj instanceof IMan) {
+			men.remove((IMan) obj);
 		}
 		
-		if (obj instanceof Bomb) {
-			bombs.remove((Bomb) obj);
+		if (obj instanceof IBomb) {
+			bombs.remove((IBomb) obj);
 		}
-		if(obj instanceof Explosion) {
+		if(obj instanceof IExplosion) {
 			
-			List<Explosion> list = getExplosion((Explosion) obj);
+			List<IExplosion> list = getExplosion((IExplosion) obj);
 			removeExplosionList(list);
 			return;
 		}
@@ -188,11 +191,11 @@ public final class GameHandler extends Observable implements IGameHandler {
 	 * Adds the specified List of Explosion-objects to the field.
 	 * @param list - ArrayList of Explosion-objects.
 	 */
-	protected void addExplosionList(List<Explosion> list) {
+	protected void addExplosionList(List<IExplosion> list) {
 		
 		explosions.add(list);
 		
-		for(Explosion e : list) {
+		for(IExplosion e : list) {
 			field[e.getX()][e.getY()] = e;
 		}
 	}
@@ -201,9 +204,9 @@ public final class GameHandler extends Observable implements IGameHandler {
 	 * Removes the specified List of Explosion-object from the field.
 	 * @param list - ArrayList of Explosion-objects.
 	 */
-	protected void removeExplosionList(List<Explosion> list) {
+	protected void removeExplosionList(List<IExplosion> list) {
 		
-		for(Explosion e : list) {
+		for(IExplosion e : list) {
 			field[e.getX()][e.getY()] = null;
 		}
 		
@@ -215,26 +218,26 @@ public final class GameHandler extends Observable implements IGameHandler {
 	 * is already used.
 	 * @param m - spawning Man-object
 	 */
-	protected void spawnMan(Man m) {
+	protected void spawnMan(IMan m) {
 		if(field[m.getX()][m.getY()] == null) {
 			men.add(m);
 			return;
 		}
 				
 		for(int i = 1; i < SPAWN_RANGE; i++ ) {
-			if(m.getX() + i < field.length && !(field[m.getX() + i][m.getY()] instanceof Wall)) {
+			if(m.getX() + i < field.length && !(field[m.getX() + i][m.getY()] instanceof IWall)) {
 				m.setPos(m.getX() + i, m.getY());
 				break;
 			}
-			if(m.getX() - i >= 0 && !(field[m.getX() - i][m.getY()] instanceof Wall)) {
+			if(m.getX() - i >= 0 && !(field[m.getX() - i][m.getY()] instanceof IWall)) {
 				m.setPos(m.getX() - i, m.getY());
 				break;
 			}
-			if(m.getY() + i < field[0].length && !(field[m.getX()][m.getY() + i] instanceof Wall)) {
+			if(m.getY() + i < field[0].length && !(field[m.getX()][m.getY() + i] instanceof IWall)) {
 				m.setPos(m.getX(), m.getY() + i);
 				break;
 			}
-			if(m.getY() - i >= 0 && !(field[m.getX()][m.getY() - i] instanceof Wall)) {
+			if(m.getY() - i >= 0 && !(field[m.getX()][m.getY() - i] instanceof IWall)) {
 				m.setPos(m.getX(), m.getY() - i);
 				break;
 			}
@@ -246,7 +249,7 @@ public final class GameHandler extends Observable implements IGameHandler {
 	 * Sets the GameObject 2D array.
 	 * @param field
 	 */
-	protected void setField(GameObject[][] field) {
+	protected void setField(IGameObject[][] field) {
 		
 		this.field = new GameObject[field.length][field[0].length];
 		
@@ -259,7 +262,7 @@ public final class GameHandler extends Observable implements IGameHandler {
 	 * Returns the matrix of the field.
 	 * @return - matrix of the field
 	 */
-	protected GameObject[][] getField() {
+	public IGameObject[][] getField() {
 		return field;
 	}
 		
@@ -267,7 +270,7 @@ public final class GameHandler extends Observable implements IGameHandler {
 	 * Returns the List of Man-objects.
 	 * @return - List of Man-objects
 	 */
-	protected List<Man> getMen() {
+	public List<IMan> getMen() {
 		return men;
 	}
 		
@@ -275,7 +278,7 @@ public final class GameHandler extends Observable implements IGameHandler {
 	 * Returns the List of Bomb-objects.
 	 * @return - List of Bomb-objects
 	 */
-	protected List<Bomb> getBombs() {
+	public List<IBomb> getBombs() {
 		return bombs;
 	}
 	
@@ -283,7 +286,7 @@ public final class GameHandler extends Observable implements IGameHandler {
 	 * Returns the List of Lists of Explosions.
 	 * @return - List of Lists of Explosions
 	 */
-	protected List<List<Explosion>> getExplosionList() {
+	protected List<List<IExplosion>> getExplosionList() {
 		return explosions;
 	}
 	
@@ -325,9 +328,9 @@ public final class GameHandler extends Observable implements IGameHandler {
 	 * @param exp - Explosion-object to be found
 	 * @return - ArrayList of Explosion-objects
 	 */
-	protected List<Explosion> getExplosion(Explosion exp){
-		for(List<Explosion> el : explosions) {
-			for(Explosion e : el) {
+	protected List<IExplosion> getExplosion(IExplosion exp){
+		for(List<IExplosion> el : explosions) {
+			for(IExplosion e : el) {
 				if(e==exp) {
 					return el;
 				}

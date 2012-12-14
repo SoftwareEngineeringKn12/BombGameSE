@@ -3,10 +3,11 @@ package bombgame.controller.ai;
 import java.util.Arrays;
 
 import bombgame.controller.ai.ManAI;
-import bombgame.entities.impl.GameObject;
-import bombgame.entities.impl.Man;
-import bombgame.entities.impl.Wall;
+
 import bombgame.controller.ai.NodeFinder.Node;
+import bombgame.entities.IGameObject;
+import bombgame.entities.IWall;
+import bombgame.entities.impl.Man;
 
 /**
  * This Class searches a target for an AI. It considers the movement history of the AI's enemy
@@ -102,7 +103,7 @@ public final class HistoryTargetFinder implements TargetFinder {
 	 * @param yfac - factor for the x-direction
 	 */
 	protected void findTarget( Position start, int xfac, int yfac) {
-		GameObject[][] field = ai.getHandler().getField();
+		IGameObject[][] field = ai.getHandler().getField();
 		
 		int i = 1;
 		int xtmp = start.getX() + xfac * i;
@@ -111,7 +112,7 @@ public final class HistoryTargetFinder implements TargetFinder {
 		while(ytmp >= 0 &&  ytmp < field[0].length &&
 				xtmp < field.length && xtmp >= 0) {
 			
-			if(field[xtmp][ytmp] instanceof Wall) {
+			if(field[xtmp][ytmp] instanceof IWall) {
 				//if way is blocked by Wall break the loop
 				break;
 			}

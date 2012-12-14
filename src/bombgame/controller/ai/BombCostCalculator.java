@@ -1,7 +1,7 @@
 package bombgame.controller.ai;
 
-import bombgame.controller.GameHandler;
-import bombgame.entities.impl.Bomb;
+import bombgame.controller.gamehandler.IGameHandler2D;
+import bombgame.entities.IBomb;
 import bombgame.entities.impl.Explosion;
 
 /**
@@ -14,7 +14,7 @@ public final class BombCostCalculator implements ExtraCostCalculator{
 	/**
 	 * GameHandler that is observed by this CostCalculator
 	 */
-	private GameHandler handler;
+	private IGameHandler2D handler;
 	
 	/**
 	 * additional cost if a Bomb blocks the way
@@ -25,7 +25,7 @@ public final class BombCostCalculator implements ExtraCostCalculator{
 	 * Creates a new BombCostCalculator observing the given GameHandler.
 	 * @param handler - GameHandler tah is observed
 	 */
-	public BombCostCalculator(GameHandler handler) {
+	public BombCostCalculator(IGameHandler2D handler) {
 		this.handler = handler;
 	}
 	
@@ -50,7 +50,7 @@ public final class BombCostCalculator implements ExtraCostCalculator{
 	 * @return - true if the Position is threated by a Bomb
 	 */
 	private boolean isInBombRange(Position pos) {
-		for(Bomb b : handler.getBombs()) {
+		for(IBomb b : handler.getBombs()) {
 			//simple and ineffective algorythm-> only checks radius
 			int dx = Math.abs(pos.getX() - b.getX());
 			int dy = Math.abs(pos.getY() - b.getY());

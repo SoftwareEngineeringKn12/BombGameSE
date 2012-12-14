@@ -7,7 +7,8 @@ import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.TreeSet;
 
-import bombgame.controller.GameHandler;
+import bombgame.controller.gamehandler.IGameHandler2D;
+
 
 /**
  * This class calculates the path between two Positions with the A*-Algorythm.
@@ -55,7 +56,7 @@ public final class PathFinderAStar implements PathFinder {
 	 * @param extraCostCalc- ExtraCostCalculator which will be considered
 	 * @param selector - ClosedListSelector which will be considered 
 	 */
-	public PathFinderAStar(final GameHandler handler, final ExtraCostCalculator extraCostCalc, final ClosedListSelector selector) {
+	public PathFinderAStar(final IGameHandler2D handler, final ExtraCostCalculator extraCostCalc, final ClosedListSelector selector) {
 		this.openlist = new PriorityQueue<Cell>();
 		this.closedlist = new TreeSet<Cell>();
 		this.extraCostCalc = extraCostCalc;
