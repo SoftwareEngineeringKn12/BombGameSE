@@ -1,6 +1,7 @@
 package bombgame.controller.gamehandler.impl;
 
-import java.util.ArrayList;
+import bombgame.controller.PlayerTUI;
+import bombgame.controller.ai.ManAI;
 import bombgame.entities.impl.Bomb;
 import bombgame.entities.impl.Explosion;
 import bombgame.entities.impl.GameObject;
@@ -104,15 +105,11 @@ public final class GameHandlerTest extends TestCase {
 		gh1.addObject(o4);
 		gh1.removeObject(o4);
 		assertNull(gh1.getField()[1][5]);
+		
+		gh1.addObject(new Wall(2,2));
+		gh1.removeObject(new Wall(2,2));
+		assertNotNull(gh1.getField()[2][2]);
 	}
-	
-	// Add expl
-	
-	// Remo expl
-	
-	// Spawn man
-	
-	// Set field
 	
 	public void testGetField() {
 		assertNotNull(gh1.getField());
@@ -154,10 +151,29 @@ public final class GameHandlerTest extends TestCase {
 		m.setDirection(Man.LEFT);
 		gh1.addObject(m);
 		gh1.addObject(new Explosion(0,0));
-		gh1.moveAll();
-		gh1.moveAll();
+		gh1.updateAll();
 		assertEquals(gh1.getMen().size(), 1);
 	}
 	
-	// To string
+	public void testSetPlayer() {
+		gh1.setPlayer(new PlayerTUI(new Man(1,1)));
+		assertNotNull(gh1.getPlayer());
+	}
+	
+	public void testAddAI() {
+		gh1.addAI(new ManAI(new Man(2,2), gh1));
+		assertEquals(gh1.getAIs().size(), 1);
+	}
+	
+	public void testGetUpdater() {
+		assertNotNull(gh1.getUpdater());
+	}
+	
+	public void testGetCalculator() {
+		assertNotNull(gh1.getCalculator());
+	}
+	
+	public void testToString() {
+		
+	}
 }
