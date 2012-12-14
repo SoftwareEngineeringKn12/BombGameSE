@@ -42,14 +42,14 @@ public final class GameToString {
 
 	protected String playerToString() {
 		StringBuilder sb = new StringBuilder("Players:\n");
-		sb.append(handler.getPlayer());
+		sb.append(handler.getPlayer()).append("\n");;
 		return sb.toString();
 	}
 
 	protected String aiToString() {
 		StringBuilder sb = new StringBuilder("AI:\n");
 		for( ManAI ai : handler.getAIs()) {
-			sb.append(ai);
+			sb.append(ai).append("\n");;
 		}
 		return sb.toString();
 	}
@@ -57,7 +57,7 @@ public final class GameToString {
 	protected String bombsToString() {
 		StringBuilder sb = new StringBuilder("Bombs:\n");
 		for(IBomb b : handler.getBombs()) {
-			sb.append(b);
+			sb.append(b).append("\n");
 		}
 		return sb.toString();
 	}
@@ -83,6 +83,7 @@ public final class GameToString {
 				i++;
 			}
 		}
+		sb.append("\n");
 		
 		return sb.toString();
 	}
