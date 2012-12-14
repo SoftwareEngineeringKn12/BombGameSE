@@ -95,7 +95,7 @@ public final class GameUpdater {
 	 * @param man - Man-object to check
 	 * @return - returns true if man is hit
 	 */
-	private boolean checkHit(IMan man) {
+	protected boolean checkHit(IMan man) {
 		return handler.getField()[man.getX()][man.getY()] instanceof IExplosion;
 	}
 	

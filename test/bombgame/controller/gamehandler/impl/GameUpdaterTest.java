@@ -6,52 +6,77 @@ import bombgame.entities.impl.Man;
 import junit.framework.TestCase;
 
 public final class GameUpdaterTest extends TestCase {
+	
+	GameUpdater gu;
+	GameHandler gh;
 
 	public void setUp() {
-		
+		gh = new GameHandler();
+		gu = new GameUpdater(gh);
 	}
 	
-	// Get handler
+	public void testGetHandler() {
+		assertEquals(gu.getHandler(), gh);
+	}
 	
 	public void testPlaceBombs() {
-		Man m = new Man(0,0);
+		Man m = new Man(0, 0);
 		m.setPlaceBomb(true);
-		gh1.addObject(new Man(1,1));
-		gh1.addObject(m);
-		gh1.placeBombs();
-		assertEquals(gh1.getBombs().size(),1);
-		
+		gh.addObject(new Man(1, 1));
+		gh.addObject(m);
+		gu.placeBombs();
+		assertEquals(gh.getBombs().size(), 1);
 	}
 	
 	public void testUpdateBombs() {
-		Bomb b = new Bomb(1,1);
-		gh1.addObject(b);
-		while(b.getTimer() > 0) {
-			gh1.updateBombs();
-		}
-		gh1.updateBombs();
+		Bomb b = new Bomb(1, 1);
+		gh.addObject(b);
 		
-		assertEquals(gh1.getBombs().size(),0);
+		while(b.getTimer() > 0) {
+			gu.updateBombs();
+		}
+		gu.updateBombs();
+		
+		assertEquals(gh.getBombs().size(), 0);
+		assertEquals(gh.getExplosionList().size(), 1);
 	}
 	
 	public void testUpdateExplosion() {
-		
-		Explosion exp = new Explosion(1,1);
-		gh1.addObject(exp);
+		Explosion exp = new Explosion(1, 1);
+		gh.addObject(exp);
 		
 		while(exp.getTimer() > 0) {
-			gh1.updateExplosion();
+			gu.updateExplosion();
 		}
 		
-		assertEquals(gh1.getExplosionList().size(),0);
-		
-		
+		assertEquals(gh.getExplosionList().size(), 0);
 	}
 	
-	// Update man
+	public void testUpdateMen() {
+		Man man = new Man(0, 0);
+		gh.addObject(man);
+		
+		gu.updateMen();
+		// Check moveMan -> no dir so do nothing
+		// is checked in TestcalcTest
+		
+		Explosion expl = new Explosion(0, 0);
+		gh.addObject(expl);
+		gu.updateMen();
+		assertEquals(gh.getMen().size(), 0);
+	}
 	
-	// Check hit
+	public void testCheckHit() {
+		Man man = new Man(0, 0);
+		assertFalse(gu.checkHit(man));
+		
+		Explosion expl = new Explosion(0, 0);
+		gh.addObject(expl);
+		assertTrue(gu.checkHit(man));
+	}
 	
-	// Update AIs
+	public void testUpdateAIs() {
+		
+	}
 	
 }
