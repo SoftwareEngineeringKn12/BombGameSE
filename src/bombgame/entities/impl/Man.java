@@ -1,7 +1,6 @@
 package bombgame.entities.impl;
 
-import bombgame.entities.GameObject;
-
+import bombgame.entities.IMan;
 
 /**
  * This class represents the only moving GameObject in this game. Objects created with 
@@ -9,7 +8,7 @@ import bombgame.entities.GameObject;
  * @author JeGa, Rookfighter
  *
  */
-public final class Man extends GameObject {
+public final class Man extends GameObject implements IMan {
 
 	/**
 	 * no direction (= standing still)

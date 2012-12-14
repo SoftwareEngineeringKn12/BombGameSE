@@ -4,7 +4,7 @@ import java.util.Deque;
 
 import junit.framework.TestCase;
 import bombgame.controller.GameHandler;
-import bombgame.entities.GameObject;
+import bombgame.entities.impl.GameObject;
 import bombgame.entities.impl.Wall;
 
 public class PathFinderAStarTest extends TestCase {

@@ -1,13 +1,13 @@
 package bombgame.entities.impl;
 
-import bombgame.entities.GameObject;
+import bombgame.entities.IExplosion;
 
 /**
  * This class determines the range of Explosions. These are placed by Man-objects.
  * @author JeGa, Rookfighter
  *
  */
-public final class Explosion extends GameObject {
+public final class Explosion extends GameObject implements IExplosion {
 	
 	/**
 	 * spreading range of the explosion

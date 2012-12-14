@@ -3,7 +3,7 @@ package bombgame.controller.ai;
 import java.util.Arrays;
 
 import bombgame.controller.ai.ManAI;
-import bombgame.entities.GameObject;
+import bombgame.entities.impl.GameObject;
 import bombgame.entities.impl.Man;
 import bombgame.entities.impl.Wall;
 import bombgame.controller.ai.NodeFinder.Node;

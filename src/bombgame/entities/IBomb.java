@@ -1,5 +1,5 @@
 package bombgame.entities;
 
-public interface IBomb {
+public interface IBomb extends IGameObject {
 
 }

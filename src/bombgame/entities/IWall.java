@@ -1,5 +1,5 @@
 package bombgame.entities;
 
-public interface IWall {
+public interface IWall extends IGameObject {
 
 }

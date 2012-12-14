@@ -1,4 +1,6 @@
-package bombgame.entities;
+package bombgame.entities.impl;
+
+import bombgame.entities.IGameObject;
 
 
 /**
@@ -6,7 +8,7 @@ package bombgame.entities;
  * @author JeGa, Rookfighter
  *
  */
-public abstract class GameObject {
+public abstract class GameObject implements IGameObject {
 	
 	/**
 	 * x-coordinate

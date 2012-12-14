@@ -1,14 +1,13 @@
 package bombgame.entities.impl;
 
-import bombgame.entities.GameObject;
-
+import bombgame.entities.IBomb;
 
 /**
  * This class represents a Bomb that has a delay until it explodes and then creates an Explosion-object.
  * @author JeGa, Roofighter
  *
  */
-public final class Bomb extends GameObject {
+public final class Bomb extends GameObject implements IBomb {
 	
 	/**
 	 * Delay until bomb explodes.

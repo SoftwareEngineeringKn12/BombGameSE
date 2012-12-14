@@ -1,7 +1,7 @@
 package bombgame.controller.ai;
 
 import bombgame.controller.GameHandler;
-import bombgame.entities.GameObject;
+import bombgame.entities.impl.GameObject;
 import bombgame.entities.impl.Man;
 import bombgame.entities.impl.Wall;
 import junit.framework.TestCase;

@@ -1,5 +1,5 @@
 package bombgame.entities;
 
-public interface IMan {
+public interface IMan extends IGameObject {
 
 }

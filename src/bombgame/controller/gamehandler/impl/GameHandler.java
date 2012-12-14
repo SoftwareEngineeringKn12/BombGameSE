@@ -7,9 +7,9 @@ import java.util.Observable;
 import bombgame.controller.PlayerTUI;
 import bombgame.controller.ai.ManAI;
 import bombgame.controller.gamehandler.IGameHandler;
-import bombgame.entities.GameObject;
 import bombgame.entities.impl.Bomb;
 import bombgame.entities.impl.Explosion;
+import bombgame.entities.impl.GameObject;
 import bombgame.entities.impl.Man;
 import bombgame.entities.impl.Wall;
 

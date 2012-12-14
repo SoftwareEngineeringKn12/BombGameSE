@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import bombgame.controller.MazeGen;
 import bombgame.controller.MazeGen.Cell;
-import bombgame.entities.GameObject;
 import bombgame.entities.impl.Explosion;
+import bombgame.entities.impl.GameObject;
 import bombgame.entities.impl.Man;
 import bombgame.entities.impl.Wall;
 

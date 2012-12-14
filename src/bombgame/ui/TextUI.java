@@ -5,7 +5,7 @@ import java.util.Observer;
 
 import bombgame.controller.gamehandler.impl.GameHandler;
 import bombgame.controller.gamehandler.IGameHandler;
-import bombgame.entities.GameObject;
+import bombgame.entities.impl.GameObject;
 
 /**
  * TextUI brings all components together.

@@ -2,7 +2,7 @@ package bombgame.controller.ai;
 
 import bombgame.controller.GameHandler;
 import bombgame.controller.ai.NodeFinder.Node;
-import bombgame.entities.GameObject;
+import bombgame.entities.impl.GameObject;
 import bombgame.entities.impl.Wall;
 import junit.framework.TestCase;
 
