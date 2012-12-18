@@ -1,4 +1,6 @@
-package bombgame.controller.ai;
+package bombgame.controller.ai.impl;
+
+
 
 /**
  * Has a selection Algorithm to move Objects to the closedlist.

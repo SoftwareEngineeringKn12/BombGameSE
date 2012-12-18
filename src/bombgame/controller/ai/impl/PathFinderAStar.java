@@ -1,4 +1,4 @@
-package bombgame.controller.ai;
+package bombgame.controller.ai.impl;
 
 import java.util.Arrays;
 import java.util.Deque;
@@ -7,6 +7,8 @@ import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.TreeSet;
 
+import bombgame.controller.ai.ExtraCostCalculator;
+import bombgame.controller.ai.PathFinder;
 import bombgame.controller.gamehandler.IGameHandler2D;
 
 

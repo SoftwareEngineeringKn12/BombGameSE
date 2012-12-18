@@ -1,6 +1,9 @@
-package bombgame.controller.ai;
+package bombgame.controller.ai.impl;
 
-import bombgame.controller.GameHandler;
+
+import bombgame.controller.ai.impl.ManAI;
+import bombgame.controller.ai.impl.Position;
+import bombgame.controller.gamehandler.impl.GameHandler;
 import bombgame.entities.impl.GameObject;
 import bombgame.entities.impl.Man;
 import bombgame.entities.impl.Wall;

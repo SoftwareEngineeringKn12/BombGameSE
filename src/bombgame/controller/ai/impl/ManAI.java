@@ -1,4 +1,4 @@
-package bombgame.controller.ai;
+package bombgame.controller.ai.impl;
 
 import java.util.Arrays;
 import java.util.Deque;
@@ -6,7 +6,10 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
 
-import bombgame.controller.ai.NodeFinder.Node;
+import bombgame.controller.ai.IManAI;
+import bombgame.controller.ai.PathFinder;
+import bombgame.controller.ai.TargetFinder;
+import bombgame.controller.ai.impl.NodeFinder.Node;
 import bombgame.controller.gamehandler.IGameHandler2D;
 import bombgame.entities.IMan;
 import bombgame.entities.impl.Man;
@@ -18,7 +21,7 @@ import bombgame.entities.impl.Man;
  * @author Rookfighter
  *
  */
-public final class ManAI {
+public final class ManAI implements IManAI{
 	
 	
 //################################################################################
@@ -325,7 +328,7 @@ public final class ManAI {
 	 * Returns an array of the Nodes in the GameHandler watched by this AI.
 	 * @return - array of Nodes
 	 */
-	public Node[] getNodes() {
+	protected Node[] getNodes() {
 		return nodes;
 	}
 	
@@ -334,7 +337,7 @@ public final class ManAI {
 	 * Returns the GameHandler in which this AI plays.
 	 * @return
 	 */
-	public IGameHandler2D getHandler() {
+	protected IGameHandler2D getHandler() {
 		return handler;
 	}
 	
@@ -343,7 +346,7 @@ public final class ManAI {
 	 * Returns the x-coordinate of the Man which is currently focused by this AI.
 	 * @return - x-coordinate of the focused Man
 	 */
-	public int getFocusedEnemyX() {
+	protected int getFocusedEnemyX() {
 		return focusedEnemy.getX();
 	}
 	
@@ -352,7 +355,7 @@ public final class ManAI {
 	 * Returns the y-coordinate of the Man which is currently focused by this AI.
 	 * @return - y-coordinate of the focused Man
 	 */
-	public int getFocusedEnemyY() {
+	protected int getFocusedEnemyY() {
 		return focusedEnemy.getY();
 	}
 	
@@ -362,7 +365,7 @@ public final class ManAI {
 	 * @param index - index at which the value is set
 	 * @param value - new value 
 	 */
-	public void setDirectionCount( int index, int value) {
+	protected void setDirectionCount( int index, int value) {
 		directionCount[index] = value;
 	}
 	
@@ -370,7 +373,7 @@ public final class ManAI {
 	/**
 	 * Counts the direction from the direction history.
 	 */
-	public void countDirections() {
+	protected void countDirections() {
 		//initialize directionCount with 0
 		Arrays.fill(directionCount,  0);
 		
@@ -385,7 +388,7 @@ public final class ManAI {
 	 * Returns the array of the Direction count. The index equates the direction.
 	 * @return - array of direction count
 	 */
-	public int[] getDirectionCount() {
+	protected int[] getDirectionCount() {
 		return directionCount;
 	}
 	
@@ -394,7 +397,7 @@ public final class ManAI {
 	 * Sets the focused Enemy of this AI to the given Man.
 	 * @param man - focused enemy
 	 */
-	public void setFocusedEnemy(final IMan man) {
+	protected void setFocusedEnemy(final IMan man) {
 		focusedEnemy = man;
 	}
 	
@@ -402,7 +405,7 @@ public final class ManAI {
 	 * Returns the currently focused Man.
 	 * @return - focused enemy
 	 */
-	public IMan getFocusedEnemy() {
+	protected IMan getFocusedEnemy() {
 		return focusedEnemy;
 	}
 	
@@ -410,7 +413,7 @@ public final class ManAI {
 	 * Returns the current target Position.
 	 * @return - target Position
 	 */
-	public Position getTarget() {
+	protected Position getTarget() {
 		return target;
 	}
 	
@@ -434,8 +437,16 @@ public final class ManAI {
 	 * Returns true if the ai wants to place a bomb at the target.
 	 * @return - wants to place a bomb
 	 */
-	public boolean getPlaceBomb() {
+	protected boolean getPlaceBomb() {
 		return placebomb;
+	}
+	
+	/**
+	 * Returns the Man controlled by this AI.
+	 * @return - Man controlled by AI
+	 */
+	public IMan getMan() {
+		return man;
 	}
 	
 	/**

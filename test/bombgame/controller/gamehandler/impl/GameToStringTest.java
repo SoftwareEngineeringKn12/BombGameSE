@@ -1,7 +1,7 @@
 package bombgame.controller.gamehandler.impl;
 
 import bombgame.controller.PlayerTUI;
-import bombgame.controller.ai.ManAI;
+import bombgame.controller.ai.impl.ManAI;
 import bombgame.entities.impl.Bomb;
 import bombgame.entities.impl.Explosion;
 import bombgame.entities.impl.GameObject;
@@ -23,13 +23,10 @@ public final class GameToStringTest extends TestCase {
 		gh1.addObject(new Explosion(0,0));
 		gh1.addObject(new Explosion(9,9));
 		
-		Man man = new Man(2,2);
-		gh1.addObject(man);
-		PlayerTUI player = new PlayerTUI(man);
+		PlayerTUI player = new PlayerTUI(new Man(2,2));
 		gh1.setPlayer(player);
 		
 		Man man2 = new Man(3,3);
-		gh1.addObject(man2);
 		ManAI ai = new ManAI(man2,gh1);
 		gh1.addAI(ai);
 		

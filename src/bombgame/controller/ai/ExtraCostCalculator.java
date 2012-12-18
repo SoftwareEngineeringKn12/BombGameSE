@@ -1,5 +1,8 @@
 package bombgame.controller.ai;
 
+import bombgame.controller.ai.impl.Position;
+
+
 /**
  * Instances of this class calculate the extra costs for specific Positions.
  * @author Rookfighter

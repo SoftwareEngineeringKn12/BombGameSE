@@ -1,4 +1,4 @@
-package bombgame.controller.ai;
+package bombgame.controller.ai.impl;
 
 /**
  * This Class holds a x- and a y-coordinate and defines a Position in a 2 dimensional
@@ -6,7 +6,7 @@ package bombgame.controller.ai;
  * @author Rookfighter
  *
  */
- final class Position {
+ public final class Position {
 	
 	 
 	 /**

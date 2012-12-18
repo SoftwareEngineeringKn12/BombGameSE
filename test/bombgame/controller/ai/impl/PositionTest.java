@@ -1,5 +1,6 @@
-package bombgame.controller.ai;
+package bombgame.controller.ai.impl;
 
+import bombgame.controller.ai.impl.Position;
 import junit.framework.TestCase;
 
 public class PositionTest extends TestCase{

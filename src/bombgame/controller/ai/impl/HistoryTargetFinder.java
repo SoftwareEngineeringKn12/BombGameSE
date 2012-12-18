@@ -1,10 +1,10 @@
-package bombgame.controller.ai;
+package bombgame.controller.ai.impl;
 
 import java.util.Arrays;
 
-import bombgame.controller.ai.ManAI;
+import bombgame.controller.ai.TargetFinder;
 
-import bombgame.controller.ai.NodeFinder.Node;
+import bombgame.controller.ai.impl.NodeFinder.Node;
 import bombgame.entities.IGameObject;
 import bombgame.entities.IWall;
 import bombgame.entities.impl.Man;

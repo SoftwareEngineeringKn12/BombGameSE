@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Observable;
 
 import bombgame.controller.PlayerTUI;
-import bombgame.controller.ai.ManAI;
+import bombgame.controller.ai.IManAI;
 import bombgame.controller.gamehandler.IGameHandler;
 import bombgame.controller.gamehandler.IGameHandler2D;
 import bombgame.entities.IBomb;
@@ -58,7 +58,7 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 	/**
 	 * All ais
 	 */
-	private List<ManAI> ais;
+	private List<IManAI> ais;
 	
 	/**
 	 * GameUpdater which updates all GameObjects -> Man, Bombs, ...
@@ -108,7 +108,7 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 		men = new ArrayList<IMan>();
 		bombs = new ArrayList<IBomb>();
 		explosions = new ArrayList<List<IExplosion>>();
-		ais = new ArrayList<ManAI>();
+		ais = new ArrayList<IManAI>();
 		
 		IMan man = new Man(0,0);
 		addObject(man);
@@ -130,7 +130,7 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 		men = new ArrayList<IMan>();
 		bombs = new ArrayList<IBomb>();
 		explosions = new ArrayList<List<IExplosion>>();
-		ais = new ArrayList<ManAI>();
+		ais = new ArrayList<IManAI>();
 		
 		this.updater = new GameUpdater(this);
 		this.calc = new GameCalculator(this);
@@ -263,13 +263,15 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 	 */
 	protected void setPlayer(final PlayerTUI player) {
 		this.player = player;
+		addObject(player.getMan());
 	}
 	
 	/**
 	 * 
 	 */
-	protected void addAI(ManAI ai) {
+	protected void addAI(IManAI ai) {
 		ais.add(ai);
+		addObject(ai.getMan());
 	}
 	
 	/**
@@ -316,7 +318,7 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 	 * Returns the List of AIs.
 	 * @return - List of AIs
 	 */
-	protected List<ManAI> getAIs() {
+	protected List<IManAI> getAIs() {
 		return ais;
 	}
 	

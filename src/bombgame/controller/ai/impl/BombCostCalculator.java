@@ -1,5 +1,6 @@
-package bombgame.controller.ai;
+package bombgame.controller.ai.impl;
 
+import bombgame.controller.ai.ExtraCostCalculator;
 import bombgame.controller.gamehandler.IGameHandler2D;
 import bombgame.entities.IBomb;
 import bombgame.entities.impl.Explosion;

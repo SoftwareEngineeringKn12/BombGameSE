@@ -2,7 +2,8 @@ package bombgame.controller.gamehandler.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import bombgame.controller.ai.ManAI;
+
+import bombgame.controller.ai.IManAI;
 import bombgame.entities.IBomb;
 import bombgame.entities.IExplosion;
 import bombgame.entities.IMan;
@@ -103,7 +104,7 @@ public final class GameUpdater {
 	 * Updates all AIs on the Field.
 	 */
 	protected void updateAIs() {
-		for(ManAI ai : handler.getAIs()) {
+		for(IManAI ai : handler.getAIs()) {
 			ai.calcNextStep();
 		}
 	}

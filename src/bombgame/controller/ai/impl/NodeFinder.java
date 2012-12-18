@@ -1,4 +1,4 @@
-package bombgame.controller.ai;
+package bombgame.controller.ai.impl;
 
 import java.util.Arrays;
 

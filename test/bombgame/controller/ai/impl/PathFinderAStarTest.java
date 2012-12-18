@@ -1,9 +1,13 @@
-package bombgame.controller.ai;
+package bombgame.controller.ai.impl;
 
 import java.util.Deque;
 
 import junit.framework.TestCase;
-import bombgame.controller.GameHandler;
+import bombgame.controller.ai.impl.AISelector;
+import bombgame.controller.ai.impl.BombCostCalculator;
+import bombgame.controller.ai.impl.PathFinderAStar;
+import bombgame.controller.ai.impl.Position;
+import bombgame.controller.gamehandler.impl.GameHandler;
 import bombgame.entities.impl.GameObject;
 import bombgame.entities.impl.Wall;
 

@@ -1,7 +1,8 @@
 package bombgame.controller.gamehandler.impl;
 
 import java.util.List;
-import bombgame.controller.ai.ManAI;
+
+import bombgame.controller.ai.IManAI;
 import bombgame.entities.IBomb;
 import bombgame.entities.IExplosion;
 import bombgame.entities.IGameObject;
@@ -48,7 +49,7 @@ public final class GameToString {
 
 	protected String aiToString() {
 		StringBuilder sb = new StringBuilder("AI:\n");
-		for( ManAI ai : handler.getAIs()) {
+		for( IManAI ai : handler.getAIs()) {
 			sb.append(ai).append("\n");;
 		}
 		return sb.toString();
