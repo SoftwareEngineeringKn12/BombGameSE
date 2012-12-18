@@ -23,7 +23,7 @@ public final class TextUITest extends TestCase {
 		tui2 = new TextUI(new GameObject[10][10]);
 	}
 	
-	public void testPrintField() {
+	/*public void testPrintField() {
 		PrintStream original = System.out;
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		PrintStream ps = new PrintStream(os);
@@ -105,6 +105,6 @@ public final class TextUITest extends TestCase {
 		assertTrue(tui1.update());
 		System.setIn(stdin);
 		assertFalse(tui2.update());
-	}
+	}*/
 	
 }
