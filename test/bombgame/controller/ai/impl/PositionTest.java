@@ -35,5 +35,10 @@ public class PositionTest extends TestCase{
 		assertFalse(pos.equals(s));
 		
 	}
+	
+	public void testHashCode() {
+		Position pos = new Position(1,0);
+		assertEquals(pos.hashCode(), 961);
+	}
 
 }

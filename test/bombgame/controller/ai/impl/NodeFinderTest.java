@@ -83,4 +83,9 @@ public class NodeFinderTest extends TestCase{
 		q2 = new Node(0,2,0,null);
 		assertEquals(-1, q1.compareTo(q2));
 	}
+	
+	public void testHashCode() {
+		Node q = new Node(1,0,0,null);
+		assertEquals(q.hashCode(), 961);
+	}
 }

@@ -1,4 +1,6 @@
-package bombgame.controller.ai.impl;
+package bombgame.controller.ai;
+
+import bombgame.controller.ai.impl.Position;
 
 
 

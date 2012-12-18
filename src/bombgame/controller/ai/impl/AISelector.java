@@ -1,6 +1,7 @@
 package bombgame.controller.ai.impl;
 
 
+import bombgame.controller.ai.ClosedListSelector;
 import bombgame.controller.gamehandler.IGameHandler2D;
 import bombgame.entities.impl.Explosion;
 import bombgame.entities.impl.Wall;

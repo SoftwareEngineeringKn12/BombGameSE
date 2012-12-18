@@ -7,6 +7,7 @@ import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.TreeSet;
 
+import bombgame.controller.ai.ClosedListSelector;
 import bombgame.controller.ai.ExtraCostCalculator;
 import bombgame.controller.ai.PathFinder;
 import bombgame.controller.gamehandler.IGameHandler2D;

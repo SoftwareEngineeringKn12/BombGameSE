@@ -115,6 +115,22 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 		player = new PlayerTUI(man);
 	}
 	
+	public GameHandler(final int width, final int height, PlayerTUI player ) {
+		this.updater = new GameUpdater(this);
+		this.calc = new GameCalculator(this);
+		this.gameString = new GameToString(this);
+		
+		this.calc.initializeField(width, height);
+		
+		this.men = new ArrayList<IMan>();
+		this.bombs = new ArrayList<IBomb>();
+		this.explosions = new ArrayList<List<IExplosion>>();
+		
+		this.ais = new ArrayList<IManAI>();
+		
+		setPlayer(player);
+	}
+	
 	/**
 	 * Creates a new GameHandler with the given field.
 	 * (for testing purposes (JUnit))
@@ -269,7 +285,7 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 	/**
 	 * 
 	 */
-	protected void addAI(IManAI ai) {
+	public void addAI(IManAI ai) {
 		ais.add(ai);
 		addObject(ai.getMan());
 	}

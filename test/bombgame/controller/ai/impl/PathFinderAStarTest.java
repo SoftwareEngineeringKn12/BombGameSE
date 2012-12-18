@@ -59,5 +59,10 @@ public class PathFinderAStarTest extends TestCase {
 		assertEquals(c1.toString(), s);
 		
 	}
+	
+	public void testCellHashCode() {
+		PathFinderAStar.Cell c1 = pfas.new Cell(1,0,null);
+		assertEquals(c1.hashCode(), 961);
+	}
 
 }
