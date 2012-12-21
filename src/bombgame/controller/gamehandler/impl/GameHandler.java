@@ -88,33 +88,19 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 	/**
 	 * Creates a new GameHandler including a field of FIELDWIDTH x FIELDHEIGHT elements with randomly
 	 * generated environment.
+	 * @param player - player that controls a man
 	 */
-	public GameHandler() {
-		this(DEFWIDTH, DEFHEIGHT);
-	}
+	public GameHandler(PlayerTUI player) {
+		this(DEFWIDTH, DEFHEIGHT, player);
+	}	
 	
 	/**
 	 * Creates a new GameHandler including a field of width x height elements with randomly
 	 * generated environment.
 	 * @param width - width of the new field
 	 * @param height - height of the new field
+	 * @param player - player that controls a man
 	 */
-	public GameHandler(final int width, final int height) {
-		this.updater = new GameUpdater(this);
-		this.calc = new GameCalculator(this);
-		this.gameString = new GameToString(this);
-			
-		calc.initializeField(width, height);
-		men = new ArrayList<IMan>();
-		bombs = new ArrayList<IBomb>();
-		explosions = new ArrayList<List<IExplosion>>();
-		ais = new ArrayList<IManAI>();
-		
-		IMan man = new Man(0,0);
-		addObject(man);
-		player = new PlayerTUI(man);
-	}
-	
 	public GameHandler(final int width, final int height, PlayerTUI player ) {
 		this.updater = new GameUpdater(this);
 		this.calc = new GameCalculator(this);
