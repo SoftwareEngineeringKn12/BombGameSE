@@ -3,7 +3,6 @@ package bombgame.controller.gamehandler.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
-
 import bombgame.controller.PlayerTUI;
 import bombgame.controller.ai.IManAI;
 import bombgame.controller.gamehandler.IGameHandler;
@@ -14,7 +13,6 @@ import bombgame.entities.IGameObject;
 import bombgame.entities.IMan;
 import bombgame.entities.IWall;
 import bombgame.entities.impl.GameObject;
-import bombgame.entities.impl.Man;
 
 /**
  * Port class!
