@@ -28,10 +28,9 @@ public final class PlayerTUI {
 	/**
 	 * Moves the man Object according to the user-input.
 	 */
-	public void move() { // String str
-		Scanner in = new Scanner(System.in);
-		
-		String str = in.next();
+	public void move(String str) {
+		//Scanner in = new Scanner(System.in);
+		//String str = in.next();
 		
 		if (str.equals("w")) {
 			man.setDirection(Man.UP);

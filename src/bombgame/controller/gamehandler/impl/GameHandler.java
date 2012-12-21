@@ -361,7 +361,7 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 	 */
 	public void updateAll() {
 		updater.updateAIs();
-		player.move();
+		//player.move();
 		updater.updateMen();
 		updater.updateBombs();
 		updater.placeBombs();
