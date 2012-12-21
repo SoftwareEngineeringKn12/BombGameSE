@@ -8,6 +8,11 @@ import bombgame.entities.impl.Man;
 import bombgame.ui.TextUI;
 import bombgame.ui.UserInterface;
 
+/**
+ * 
+ * @author Rookfighter
+ *
+ */
 public final class App {
 	
 	private App() {
@@ -18,7 +23,7 @@ public final class App {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		//PropertyConfigurator.configureAndWatch("log4j.properties");
+		PropertyConfigurator.configureAndWatch("log4j.properties");
 		UserInterface ui = new TextUI(new GameHandler(new PlayerTUI(new Man(0,0))));
 		boolean cont = true;
 		// LOOP
