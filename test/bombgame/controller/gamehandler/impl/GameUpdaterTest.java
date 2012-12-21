@@ -1,5 +1,6 @@
 package bombgame.controller.gamehandler.impl;
 
+import bombgame.controller.PlayerTUI;
 import bombgame.entities.impl.Bomb;
 import bombgame.entities.impl.Explosion;
 import bombgame.entities.impl.Man;
@@ -11,7 +12,7 @@ public final class GameUpdaterTest extends TestCase {
 	GameHandler gh;
 
 	public void setUp() {
-		gh = new GameHandler();
+		gh = new GameHandler(new PlayerTUI(new Man(0,0)));
 		gu = new GameUpdater(gh);
 	}
 	

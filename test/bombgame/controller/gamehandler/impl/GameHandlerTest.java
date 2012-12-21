@@ -21,8 +21,8 @@ public final class GameHandlerTest extends TestCase {
 		
 		gh1 = new GameHandler(new GameObject[10][10]);
 		gh2 = new GameHandler(new GameObject[2][3]);
-		gh3 = new GameHandler(2, 3);
-		gh4 = new GameHandler();
+		gh3 = new GameHandler(2, 3, new PlayerTUI(new Man(0,0)));
+		gh4 = new GameHandler(new PlayerTUI(new Man(0,0)));
 		gh5 = new GameHandler(new GameObject[3][3]);
 	}
 	
