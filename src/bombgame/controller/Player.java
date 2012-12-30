@@ -25,26 +25,21 @@ public final class Player {
 	/**
 	 * Moves the man Object according to the user-input.
 	 */
-	public void move(String str) {
-		//Scanner in = new Scanner(System.in);
-		//String str = in.next();
-		
-		if (str.equals("w")) {
+	public void move(char c) {
+		if (c == 'w') {
 			man.setDirection(Man.UP);
-		} else if (str.equals("s")) {
+		} else if (c == 's') {
 			man.setDirection(Man.DOWN);
-		} else if (str.equals("d")) {
+		} else if (c == 'd') {
 			man.setDirection(Man.RIGHT);
-		} else if (str.equals("a")) {
+		} else if (c == 'a') {
 			man.setDirection(Man.LEFT);
-		} else if (str.equals("j")) {
+		} else if (c == 'j') {
 			man.setPlaceBomb(true);	
 			man.setDirection(Man.NO_DIR);
 		} else {
 			man.setDirection(Man.NO_DIR);
 		}
-
-		//in.close();
 	}
 	
 	/**

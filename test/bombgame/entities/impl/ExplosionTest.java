@@ -9,9 +9,8 @@ public final class ExplosionTest extends TestCase {
 		ex = new Explosion(1, 1);
 	}
 	
-	
 	public void testGetDuration() {
-		assertEquals(ex.getTimer(),4);
+		assertEquals(ex.getTimer(), 4);
 	}
 	
 	public void testDecrementDuration() {

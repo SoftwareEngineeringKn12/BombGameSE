@@ -1,12 +1,9 @@
 package bombgame.controller;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-
 import bombgame.entities.impl.Man;
 import junit.framework.TestCase;
 
-public final class PlayerTUITest extends TestCase {
+public final class PlayerTest extends TestCase {
 
 	Player player;
 	Man man;
@@ -17,33 +14,27 @@ public final class PlayerTUITest extends TestCase {
 	}
 	
 	public void testMove() {
-		InputStream in = System.in;
-		
+		/*InputStream in = System.in;
 		System.setIn(new ByteArrayInputStream("w".getBytes()));
-		player.move();
+		System.setIn(in);*/
+		
+		player.move('w');
 		assertEquals(player.getMan().getDirection(), Man.UP);
 		
-		System.setIn(new ByteArrayInputStream("s".getBytes()));
-		player.move();
+		player.move('s');
 		assertEquals(player.getMan().getDirection(), Man.DOWN);
 		
-		System.setIn(new ByteArrayInputStream("d".getBytes()));
-		player.move();
+		player.move('d');
 		assertEquals(player.getMan().getDirection(), Man.RIGHT);
 		
-		System.setIn(new ByteArrayInputStream("a".getBytes()));
-		player.move();
+		player.move('a');
 		assertEquals(player.getMan().getDirection(), Man.LEFT);
 		
-		System.setIn(new ByteArrayInputStream("j".getBytes()));
-		player.move();
+		player.move('j');
 		assertEquals(player.getMan().getPlaceBomb(), true);
 		
-		System.setIn(new ByteArrayInputStream("x".getBytes()));
-		player.move();
+		player.move('x');
 		assertEquals(player.getMan().getDirection(), Man.NO_DIR);
-		
-		System.setIn(in);
 	}
 	
 	public void testGetMan() {

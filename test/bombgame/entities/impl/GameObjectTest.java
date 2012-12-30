@@ -23,5 +23,4 @@ public class GameObjectTest extends TestCase {
 		assertEquals(1,go.getX());
 		assertEquals(1,go.getY());
 	}
-
 }

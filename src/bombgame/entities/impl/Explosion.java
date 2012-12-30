@@ -10,16 +10,19 @@ import bombgame.entities.IExplosion;
 public final class Explosion extends GameObject implements IExplosion {
 	
 	/**
-	 * spreading range of the explosion
+	 * Spreading range of the explosion
 	 */
 	public static final int RANGE = 3;
 	
+	/**
+	 * Time the explosion stays in the field
+	 */
 	public static final int DURATION = 4;
 	
 	/**
-	 * time the explosion stays in the field
+	 * Timer until explosion is removed
 	 */
-	private  int timer = DURATION;
+	private int timer = DURATION;
 	
 	/**
 	 * Creates an Explosion-object with the specified coordinates and a range of 3.
@@ -30,7 +33,6 @@ public final class Explosion extends GameObject implements IExplosion {
 		super(x, y);
 	}
 	
-	
 	/**
 	 * Returns the current remaining duration of the Explosion-object.
 	 * @return - remaining duration
@@ -39,7 +41,6 @@ public final class Explosion extends GameObject implements IExplosion {
 		return timer;
 	}
 	
-	
 	/**
 	 * Decrements the duration of the Explosion-object
 	 */
@@ -47,6 +48,10 @@ public final class Explosion extends GameObject implements IExplosion {
 		timer--;
 	}
 	
+	/**
+	 * Returns String representation of the explosion.
+	 * @return - Explosion String
+	 */
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("Explosion: ");

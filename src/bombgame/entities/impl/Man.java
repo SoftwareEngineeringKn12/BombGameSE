@@ -6,7 +6,7 @@ import bombgame.entities.IMan;
  * This class represents the only moving GameObject in this game. Objects created with 
  * this class are further obtained by a player or the AI.
  * @author JeGa, Rookfighter
- *
+ * 
  */
 public final class Man extends GameObject implements IMan {
 
@@ -56,7 +56,6 @@ public final class Man extends GameObject implements IMan {
 		direction = 0;
 	}
 	
-	
 	/**
 	 * Returns a new Bomb-object with the current coordinates of the Man-object.
 	 * @return - created Bomb-object
@@ -66,7 +65,6 @@ public final class Man extends GameObject implements IMan {
 		return new Bomb(getX(), getY());
 	}
 	
-	
 	/**
 	 * Returns the current direction of the Man-object. This indicates the Movementdirection the Man will take
 	 * next turn.
@@ -75,7 +73,6 @@ public final class Man extends GameObject implements IMan {
 	public int getDirection() {
 		return direction;
 	}
-	
 	
 	/**
 	 * Sets the direction of the Man-object to the specified value.
@@ -99,4 +96,5 @@ public final class Man extends GameObject implements IMan {
 	public void setPlaceBomb(boolean placeBomb) {
 		this.placeBomb = placeBomb;
 	}
+	
 }

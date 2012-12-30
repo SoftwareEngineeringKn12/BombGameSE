@@ -18,7 +18,6 @@ public final class GameHandlerTest extends TestCase {
 	GameHandler gh5;
 	
 	public void setUp() {
-		
 		gh1 = new GameHandler(new GameObject[10][10]);
 		gh2 = new GameHandler(new GameObject[2][3]);
 		gh3 = new GameHandler(2, 3, new Player(new Man(0,0)));
@@ -111,6 +110,24 @@ public final class GameHandlerTest extends TestCase {
 		assertNotNull(gh1.getField()[2][2]);
 	}
 	
+	// addExplosionList
+	
+	// removeExplositionList
+	
+	// SpawnMan
+	
+	// SetField
+	
+	public void testSetPlayer() {
+		gh1.setPlayer(new Player(new Man(1,1)));
+		assertNotNull(gh1.getPlayer());
+	}
+	
+	public void testAddAI() {
+		gh1.addAI(new ManAI(new Man(2,2), gh1));
+		assertEquals(gh1.getAIs().size(), 1);
+	}
+	
 	public void testGetField() {
 		assertNotNull(gh1.getField());
 	}
@@ -123,17 +140,21 @@ public final class GameHandlerTest extends TestCase {
 		assertNotNull(gh1.getBombs());
 	}
 	
+	// Get player
+	
 	public void testGetExplosionList() {
 		assertNotNull(gh1.getExplosionList());
 	}
 	
-	// Get player
-	
 	// Get AIs
 	
-	// Get updater
+	public void testGetUpdater() {
+		assertNotNull(gh1.getUpdater());
+	}
 	
-	// Get calculato
+	public void testGetCalculator() {
+		assertNotNull(gh1.getCalculator());
+	}
 	
 	public void testGetExplosion() {
 		Explosion exp = new Explosion(3,4);
@@ -145,32 +166,24 @@ public final class GameHandlerTest extends TestCase {
 	}
 	
 	// Update all
-	public void testMoveAll() {
-		gh1.addObject(new Man(1,1));
-		Man m = new Man(1,2);
-		m.setDirection(Man.LEFT);
-		gh1.addObject(m);
-		gh1.addObject(new Explosion(0,0));
+	public void testUpdateAll() {	
+		// Add Men (Player not needed, direction is made manual)
+		Man m1 = new Man(6, 6);
+		m1.setDirection(Man.RIGHT); // Moves right
+		Man m2 = new Man(5, 5);
+		m2.setPlaceBomb(true); // Places bomb
+		Man m3 = new Man(0, 0); // Is destroyed
+		gh1.addObject(m1);
+		gh1.addObject(m2);
+		gh1.addObject(m3);
+		
+		// Add Explosions
+		gh1.addObject(new Explosion(0, 0));
+		
 		gh1.updateAll();
-		assertEquals(gh1.getMen().size(), 1);
-	}
-	
-	public void testSetPlayer() {
-		gh1.setPlayer(new Player(new Man(1,1)));
-		assertNotNull(gh1.getPlayer());
-	}
-	
-	public void testAddAI() {
-		gh1.addAI(new ManAI(new Man(2,2), gh1));
-		assertEquals(gh1.getAIs().size(), 1);
-	}
-	
-	public void testGetUpdater() {
-		assertNotNull(gh1.getUpdater());
-	}
-	
-	public void testGetCalculator() {
-		assertNotNull(gh1.getCalculator());
+		assertEquals(gh1.getMen().size(), 2); // destroyed
+		assertEquals(gh1.getField()[7][6], m1); // position
+		assertEquals(gh1.getBombs().size(), 1); // bomb
 	}
 	
 	public void testToString() {

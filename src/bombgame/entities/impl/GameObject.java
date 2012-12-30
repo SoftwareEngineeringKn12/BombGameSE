@@ -2,11 +2,10 @@ package bombgame.entities.impl;
 
 import bombgame.entities.IGameObject;
 
-
 /**
- * 
+ * Abstract class: All Entities inherit from this class.
  * @author JeGa, Rookfighter
- *
+ * 
  */
 public abstract class GameObject implements IGameObject {
 	

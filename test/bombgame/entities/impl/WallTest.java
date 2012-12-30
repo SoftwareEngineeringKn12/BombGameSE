@@ -11,7 +11,7 @@ public final class WallTest extends TestCase {
 	}
 	
 	public void testGetX() {
-		assertEquals(2,w.getX());
+		assertEquals(2, w.getX());
 	}
 	
 	public void testGetY() {

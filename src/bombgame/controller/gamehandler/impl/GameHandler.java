@@ -99,7 +99,7 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 	 * @param height - height of the new field
 	 * @param player - player that controls a man
 	 */
-	public GameHandler(final int width, final int height, Player player ) {
+	public GameHandler(final int width, final int height, Player player) {
 		this.updater = new GameUpdater(this);
 		this.calc = new GameCalculator(this);
 		this.gameString = new GameToString(this);
@@ -109,7 +109,6 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 		this.men = new ArrayList<IMan>();
 		this.bombs = new ArrayList<IBomb>();
 		this.explosions = new ArrayList<List<IExplosion>>();
-		
 		this.ais = new ArrayList<IManAI>();
 		
 		setPlayer(player);
@@ -126,15 +125,15 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 			for( int j = 0; j < f.length; j++) {
 				field[i][j] = f[i][j];
 			}
-		}
+		}		
+		this.updater = new GameUpdater(this);
+		this.calc = new GameCalculator(this);
+		this.gameString = new GameToString(this);
+		
 		men = new ArrayList<IMan>();
 		bombs = new ArrayList<IBomb>();
 		explosions = new ArrayList<List<IExplosion>>();
 		ais = new ArrayList<IManAI>();
-		
-		this.updater = new GameUpdater(this);
-		this.calc = new GameCalculator(this);
-		this.gameString = new GameToString(this);
 	}
 	
 	/**
@@ -261,7 +260,7 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 	/**
 	 * 
 	 */
-	protected void setPlayer(final Player player) {
+	public void setPlayer(final Player player) {
 		this.player = player;
 		addObject(player.getMan());
 	}
@@ -361,7 +360,6 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 	 */
 	public void updateAll() {
 		updater.updateAIs();
-		//player.move();
 		updater.updateMen();
 		updater.updateBombs();
 		updater.placeBombs();

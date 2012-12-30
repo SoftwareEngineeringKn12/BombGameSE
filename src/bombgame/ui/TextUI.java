@@ -5,7 +5,6 @@ import java.util.Observer;
 import org.apache.log4j.Logger;
 import bombgame.controller.gamehandler.impl.GameHandler;
 import bombgame.controller.gamehandler.IGameHandler;
-import bombgame.entities.impl.GameObject;
 
 /**
  * TextUI brings all components together.
@@ -30,16 +29,14 @@ public final class TextUI implements UserInterface, Observer {
 	public TextUI(GameHandler handler) {
 		this.handler = handler;
 		handler.addObserver(this);
-		
-	    
 	}
 	
 	/**
-	 * Creates a GameHandler for unit tests
-	 * @param field - GameObject field
+	 * Returns GameHandler for unit tests.
+	 * @return - the game handler
 	 */
-	protected TextUI(final GameObject[][] field) {
-		handler = new GameHandler(field);
+	protected IGameHandler getGameHandler() {
+		return handler;
 	}
 
 	/**
@@ -48,9 +45,7 @@ public final class TextUI implements UserInterface, Observer {
 	 */
 	@Override
 	public boolean update(String str) {
-		//!! to interface: handler.getPlayer().move(str);
-		
-		handler.getPlayer().move(str);
+		handler.getPlayer().move(str.charAt(0));
 		handler.updateAll();
 		
 		return true;
@@ -62,9 +57,9 @@ public final class TextUI implements UserInterface, Observer {
 	 */
 	@Override
 	public void update(Observable obs, Object message) {
-		if(!(message instanceof String)) {
+		/*if(!(message instanceof String)) {
 			return;
-		}
+		}*/
 		
 		String s = (String) message;
 		logger.info(s);

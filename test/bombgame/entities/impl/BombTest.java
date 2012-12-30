@@ -31,7 +31,7 @@ public final class BombTest extends TestCase {
 		
 		// explode
 		Explosion exp = null;
-		for(int i = 0; i < bomb.getDelay(); i++) {
+		for(int i = 0; i < bomb.getDelay()-1; i++) {
 			exp = bomb.decrementTimer();
 		}
 		

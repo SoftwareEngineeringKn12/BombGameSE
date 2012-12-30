@@ -29,7 +29,6 @@ public final class Bomb extends GameObject implements IBomb {
 		super(x, y);
 	}
 	
-	
 	/**
 	 * Returns am Bomb-object with the same coordinates as the Bomb.
 	 * @return - new Explosion-object
@@ -37,7 +36,6 @@ public final class Bomb extends GameObject implements IBomb {
 	public Explosion explode() {
 		return new Explosion(getX(), getY());
 	}
-	
 	
 	/**
 	 * Returns explosion-delay of the Bomb-object
