@@ -2,10 +2,7 @@ package bombgame.ui;
 
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Scanner;
-
 import org.apache.log4j.Logger;
-
 import bombgame.controller.gamehandler.impl.GameHandler;
 import bombgame.controller.gamehandler.IGameHandler;
 import bombgame.entities.impl.GameObject;
@@ -50,9 +47,10 @@ public final class TextUI implements UserInterface, Observer {
 	 * calculation of Explosions, ...
 	 */
 	@Override
-	public boolean update(String str) { // look at interface
-		// to interface: handler.getPlayer().move(str);
+	public boolean update(String str) {
+		//!! to interface: handler.getPlayer().move(str);
 		
+		handler.getPlayer().move(str);
 		handler.updateAll();
 		
 		return true;

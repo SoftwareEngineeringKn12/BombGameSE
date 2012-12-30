@@ -8,12 +8,12 @@ import junit.framework.TestCase;
 
 public final class PlayerTUITest extends TestCase {
 
-	PlayerTUI player;
+	Player player;
 	Man man;
 	
 	public void setUp() {
 		man = new Man(0, 0);
-		player = new PlayerTUI(man);
+		player = new Player(man);
 	}
 	
 	public void testMove() {

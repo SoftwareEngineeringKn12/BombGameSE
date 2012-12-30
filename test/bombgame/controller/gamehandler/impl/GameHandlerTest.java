@@ -1,6 +1,6 @@
 package bombgame.controller.gamehandler.impl;
 
-import bombgame.controller.PlayerTUI;
+import bombgame.controller.Player;
 import bombgame.controller.ai.impl.ManAI;
 import bombgame.entities.impl.Bomb;
 import bombgame.entities.impl.Explosion;
@@ -21,8 +21,8 @@ public final class GameHandlerTest extends TestCase {
 		
 		gh1 = new GameHandler(new GameObject[10][10]);
 		gh2 = new GameHandler(new GameObject[2][3]);
-		gh3 = new GameHandler(2, 3, new PlayerTUI(new Man(0,0)));
-		gh4 = new GameHandler(new PlayerTUI(new Man(0,0)));
+		gh3 = new GameHandler(2, 3, new Player(new Man(0,0)));
+		gh4 = new GameHandler(new Player(new Man(0,0)));
 		gh5 = new GameHandler(new GameObject[3][3]);
 	}
 	
@@ -156,7 +156,7 @@ public final class GameHandlerTest extends TestCase {
 	}
 	
 	public void testSetPlayer() {
-		gh1.setPlayer(new PlayerTUI(new Man(1,1)));
+		gh1.setPlayer(new Player(new Man(1,1)));
 		assertNotNull(gh1.getPlayer());
 	}
 	

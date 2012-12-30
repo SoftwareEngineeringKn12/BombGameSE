@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import bombgame.controller.PlayerTUI;
+import bombgame.controller.Player;
 import bombgame.controller.ai.impl.ManAI;
 import bombgame.controller.gamehandler.impl.GameHandler;
 import bombgame.entities.impl.Man;
@@ -32,7 +32,7 @@ public class GameHandlerFactory {
 		int width = 30;
 		int height = 20;
 		
-		PlayerTUI player = new PlayerTUI(new Man(0,0));
+		Player player = new Player(new Man(0,0));
 		
 		GameHandler gh = new GameHandler(width , height, player);
 		
@@ -93,7 +93,7 @@ public class GameHandlerFactory {
 		
 		Random rand = new Random();
 		int playernr = rand.nextInt(4);
-		PlayerTUI player = new PlayerTUI(menlist.remove(playernr));
+		Player player = new Player(menlist.remove(playernr));
 		
 		GameHandler gh = new GameHandler(width, height, player);
 		

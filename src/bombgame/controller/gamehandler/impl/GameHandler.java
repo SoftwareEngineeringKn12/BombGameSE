@@ -3,7 +3,7 @@ package bombgame.controller.gamehandler.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
-import bombgame.controller.PlayerTUI;
+import bombgame.controller.Player;
 import bombgame.controller.ai.IManAI;
 import bombgame.controller.gamehandler.IGameHandler;
 import bombgame.controller.gamehandler.IGameHandler2D;
@@ -51,7 +51,7 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 	/**
 	 * Human player.
 	 */
-	private PlayerTUI player;
+	private Player player;
 	
 	/**
 	 * All ais
@@ -88,7 +88,7 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 	 * generated environment.
 	 * @param player - player that controls a man
 	 */
-	public GameHandler(PlayerTUI player) {
+	public GameHandler(Player player) {
 		this(DEFWIDTH, DEFHEIGHT, player);
 	}	
 	
@@ -99,7 +99,7 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 	 * @param height - height of the new field
 	 * @param player - player that controls a man
 	 */
-	public GameHandler(final int width, final int height, PlayerTUI player ) {
+	public GameHandler(final int width, final int height, Player player ) {
 		this.updater = new GameUpdater(this);
 		this.calc = new GameCalculator(this);
 		this.gameString = new GameToString(this);
@@ -261,7 +261,7 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 	/**
 	 * 
 	 */
-	protected void setPlayer(final PlayerTUI player) {
+	protected void setPlayer(final Player player) {
 		this.player = player;
 		addObject(player.getMan());
 	}
@@ -299,19 +299,19 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 	}
 	
 	/**
+	 * Returns the human player object.
+	 * @return - Human player object
+	 */
+	public Player getPlayer() {
+		return player;
+	}
+	
+	/**
 	 * Returns the List of Lists of Explosions.
 	 * @return - List of Lists of Explosions
 	 */
 	protected List<List<IExplosion>> getExplosionList() {
 		return explosions;
-	}
-	
-	/**
-	 * Returns the human player object.
-	 * @return - Human player object
-	 */
-	protected PlayerTUI getPlayer() {
-		return player;
 	}
 	
 	/**
