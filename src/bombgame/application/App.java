@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 import org.apache.log4j.PropertyConfigurator;
 
-import bombgame.controller.Player;
 import bombgame.controller.gamehandler.impl.GameHandler;
+import bombgame.controller.player.impl.Player;
 import bombgame.entities.impl.Man;
 import bombgame.ui.TextUI;
 import bombgame.ui.UserInterface;

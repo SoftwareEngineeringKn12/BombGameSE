@@ -1,8 +1,11 @@
-package bombgame.controller;
+package bombgame.controller.mazegen.impl;
 
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Random;
+
+import bombgame.controller.mazegen.ICell;
+import bombgame.controller.mazegen.IMazeGen;
 
 /**
  * Generates a random maze with the depth-first search algorithm. The maze is a
@@ -15,7 +18,7 @@ import java.util.Random;
  * @author jens
  * 
  */
-public final class MazeGen {
+public final class MazeGen implements IMazeGen {
 
 	/**
 	 * Width of the maze field.
@@ -81,7 +84,7 @@ public final class MazeGen {
 	 * @author jens
 	 * 
 	 */
-	static public class Cell {
+	static public class Cell implements ICell {
 		private int x;
 		private int y;
 

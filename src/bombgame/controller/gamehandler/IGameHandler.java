@@ -1,10 +1,10 @@
 package bombgame.controller.gamehandler;
 
-import bombgame.controller.Player; //!!
+import bombgame.controller.player.IPlayer;
 
 public interface IGameHandler {
 
 	public void updateAll();
-	public Player getPlayer(); //!! Here TODO: Interface for Player!!
+	public IPlayer getPlayer(); //!! Here TODO: Interface for Player!!
 
 }

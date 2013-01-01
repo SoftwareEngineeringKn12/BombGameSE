@@ -1,5 +1,6 @@
 package bombgame.controller;
 
+import bombgame.controller.player.impl.Player;
 import bombgame.entities.impl.Man;
 import junit.framework.TestCase;
 

@@ -2,7 +2,9 @@ package bombgame.controller;
 
 import java.util.LinkedList;
 import java.util.List;
-import bombgame.controller.MazeGen.Cell;
+
+import bombgame.controller.mazegen.impl.MazeGen;
+import bombgame.controller.mazegen.impl.MazeGen.Cell;
 import junit.framework.TestCase;
 
 public final class MazeGenTest extends TestCase {

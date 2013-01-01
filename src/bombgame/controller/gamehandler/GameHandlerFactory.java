@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import bombgame.controller.Player;
 import bombgame.controller.ai.impl.ManAI;
 import bombgame.controller.gamehandler.impl.GameHandler;
+import bombgame.controller.player.impl.Player;
 import bombgame.entities.impl.Man;
 
 /**

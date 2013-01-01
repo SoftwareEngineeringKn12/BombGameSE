@@ -2,8 +2,8 @@ package bombgame.ui;
 
 import org.apache.log4j.PropertyConfigurator;
 
-import bombgame.controller.Player;
 import bombgame.controller.gamehandler.impl.GameHandler;
+import bombgame.controller.player.impl.Player;
 import bombgame.entities.IGameObject;
 import bombgame.entities.impl.GameObject;
 import bombgame.entities.impl.Man;

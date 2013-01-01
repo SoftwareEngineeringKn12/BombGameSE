@@ -2,8 +2,9 @@ package bombgame.controller.gamehandler.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import bombgame.controller.MazeGen;
-import bombgame.controller.MazeGen.Cell;
+import bombgame.controller.mazegen.ICell;
+import bombgame.controller.mazegen.IMazeGen;
+import bombgame.controller.mazegen.impl.MazeGen;
 import bombgame.entities.IBomb;
 import bombgame.entities.IExplosion;
 import bombgame.entities.IGameObject;
@@ -202,11 +203,11 @@ public final class GameCalculator {
 	 * @param height - height of field
 	 */
 	protected void initializeField(final int width, final int height) {
-		MazeGen generator = new MazeGen(width, height);
+		IMazeGen generator = new MazeGen(width, height); //!! to creator class
 		IGameObject[][] field = new GameObject[width][height];
 
 		generator.genNonPerfectMaze();
-		Cell[][] cellArray = generator.getMaze();
+		ICell[][] cellArray = generator.getMaze();
 		
 		int xLength = cellArray.length;
 		int yLength = cellArray[0].length;

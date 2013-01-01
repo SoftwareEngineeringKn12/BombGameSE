@@ -1,5 +1,6 @@
-package bombgame.controller;
+package bombgame.controller.player.impl;
 
+import bombgame.controller.player.IPlayer;
 import bombgame.entities.IMan;
 import bombgame.entities.impl.Man;
 
@@ -10,7 +11,7 @@ import bombgame.entities.impl.Man;
  * @author jens
  * 
  */
-public final class Player {
+public final class Player implements IPlayer {
 
 	private IMan man;
 
