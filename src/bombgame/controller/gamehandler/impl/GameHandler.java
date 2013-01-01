@@ -317,7 +317,7 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 	 * Returns the List of AIs.
 	 * @return - List of AIs
 	 */
-	protected List<IManAI> getAIs() {
+	public List<IManAI> getAIs() {
 		return ais;
 	}
 	
