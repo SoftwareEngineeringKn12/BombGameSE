@@ -1,6 +1,7 @@
 package bombgame.controller.gamehandler.impl;
 
 import bombgame.controller.Player;
+import bombgame.controller.ai.impl.ManAI;
 import bombgame.entities.impl.Bomb;
 import bombgame.entities.impl.Explosion;
 import bombgame.entities.impl.Man;
@@ -77,7 +78,8 @@ public final class GameUpdaterTest extends TestCase {
 	}
 	
 	public void testUpdateAIs() {
-
+			gh.addAI(new ManAI(new Man(9,9),gh));
+			gu.updateAIs();
 	}
 	
 }

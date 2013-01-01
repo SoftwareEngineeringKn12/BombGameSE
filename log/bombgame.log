@@ -345,3 +345,43 @@ Explosions:
  -  - 
  -  M 
 
+2013-01-01 13:02:57,511 INFO  [main] bombgame.ui.TextUI: 
+Players:
+-> Player: [1] [0] Direction: 3
+AI:
+Bombs:
+Explosions:
+
+ -  M 
+ -  - 
+
+2013-01-01 13:02:57,526 INFO  [main] bombgame.ui.TextUI: 
+Players:
+-> Player: [1] [1] Direction: 2
+AI:
+Bombs:
+Explosions:
+
+ -  - 
+ -  M 
+
+2013-01-01 13:07:55,614 INFO  [main] bombgame.ui.TextUI: 
+Players:
+-> Player: [1] [0] Direction: 3
+AI:
+Bombs:
+Explosions:
+
+ -  M 
+ -  - 
+
+2013-01-01 13:07:55,614 INFO  [main] bombgame.ui.TextUI: 
+Players:
+-> Player: [1] [1] Direction: 2
+AI:
+Bombs:
+Explosions:
+
+ -  - 
+ -  M 
+

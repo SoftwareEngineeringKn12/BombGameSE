@@ -297,10 +297,6 @@ public final class ManAI implements IManAI{
 		int dx = pos.getX() - man.getX();
 		int dy = pos.getY() - man.getY();
 		
-		if(dx != 0 && dy != 0) {
-			throw new IndexOutOfBoundsException("dx and dy are both != 0!");
-		}
-		
 		//decide which direction should be taken
 		if(dx == 1) {
 			
