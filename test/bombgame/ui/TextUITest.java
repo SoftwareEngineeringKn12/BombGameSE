@@ -40,5 +40,13 @@ public final class TextUITest extends TestCase {
 		
 		assertEquals(tui2.getGameHandler().getPlayer().getMan().getX(), 1);
 		assertEquals(tui2.getGameHandler().getPlayer().getMan().getY(), 1);
+		try{ tui1.update(gh, new Man(0,0));
+		} catch (IllegalArgumentException e) {}
+		
+		
+		GameHandler gh2 = new GameHandler(new GameObject[2][2]);
+		TextUI tui3 = new TextUI(gh2);
+		tui3.update("j");
+		
 	}
 }
