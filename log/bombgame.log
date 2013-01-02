@@ -709,3 +709,63 @@ Explosions:
  -  -  #  -  -  -  #  -  -  -  #  -  -  -  -  -  #  -  -  -  -  -  #  -  -  -  -  -  -  - 
  -  #  #  #  #  -  #  #  #  #  #  -  -  #  #  #  #  #  #  -  #  -  #  -  -  #  -  #  -  # 
 
+2013-01-02 16:23:00,552 INFO  [main] bombgame.ui.TextUI: 
+Players:
+-> Player: [1] [0] Direction: 3
+AI:
+Bombs:
+Explosions:
+
+ -  M 
+ -  - 
+
+2013-01-02 16:23:00,554 INFO  [main] bombgame.ui.TextUI: 
+Players:
+-> Player: [1] [1] Direction: 2
+AI:
+Bombs:
+Explosions:
+
+ -  - 
+ -  M 
+
+2013-01-02 16:23:00,554 INFO  [main] bombgame.ui.TextUI: 
+Players:
+null
+AI:
+Bombs:
+Explosions:
+
+ -  - 
+ -  - 
+
+2013-01-02 16:23:34,359 INFO  [main] bombgame.ui.TextUI: 
+Players:
+-> Player: [1] [0] Direction: 3
+AI:
+Bombs:
+Explosions:
+
+ -  M 
+ -  - 
+
+2013-01-02 16:23:34,362 INFO  [main] bombgame.ui.TextUI: 
+Players:
+-> Player: [1] [1] Direction: 2
+AI:
+Bombs:
+Explosions:
+
+ -  - 
+ -  M 
+
+2013-01-02 16:23:34,363 INFO  [main] bombgame.ui.TextUI: 
+Players:
+null
+AI:
+Bombs:
+Explosions:
+
+ -  - 
+ -  - 
+

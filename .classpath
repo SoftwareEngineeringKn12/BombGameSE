@@ -24,5 +24,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="C:/Data/HTWG/Semester 3/Software Engineering/lib/lwjgl-2.8.5/jar/lwjgl.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="C:/Data/HTWG/Semester 3/Software Engineering/lib/lwjgl-2.8.5/native/windows"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Data/HTWG/Semester 3/Software Engineering/lib/slick.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
