@@ -13,7 +13,8 @@ public final class GameUpdaterTest extends TestCase {
 	GameHandler gh;
 
 	public void setUp() {
-		gh = new GameHandler(new Player(new Man(0,0)));
+		gh = new GameHandler();
+		gh.setPlayer(new Player(new Man(0,0)));
 		gu = new GameUpdater(gh);
 	}
 	

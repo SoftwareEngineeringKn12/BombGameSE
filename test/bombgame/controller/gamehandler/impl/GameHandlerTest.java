@@ -20,8 +20,10 @@ public final class GameHandlerTest extends TestCase {
 	public void setUp() {
 		gh1 = new GameHandler(new GameObject[10][10]);
 		gh2 = new GameHandler(new GameObject[2][3]);
-		gh3 = new GameHandler(2, 3, new Player(new Man(0,0)));
-		gh4 = new GameHandler(new Player(new Man(0,0)));
+		gh3 = new GameHandler(2, 3 );
+		gh3.setPlayer(new Player(new Man(0,0)));
+		gh4 = new GameHandler();
+		gh4.setPlayer(new Player(new Man(0,0)));
 		gh5 = new GameHandler(new GameObject[3][3]);
 	}
 	
