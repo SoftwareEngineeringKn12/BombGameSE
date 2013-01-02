@@ -88,8 +88,8 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 	 * generated environment.
 	 * @param player - player that controls a man
 	 */
-	public GameHandler(IPlayer player) {
-		this(DEFWIDTH, DEFHEIGHT, player);
+	public GameHandler() {
+		this(DEFWIDTH, DEFHEIGHT);
 	}	
 	
 	/**
@@ -99,7 +99,7 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 	 * @param height - height of the new field
 	 * @param player - player that controls a man
 	 */
-	public GameHandler(final int width, final int height, IPlayer player) {
+	public GameHandler(final int width, final int height) {
 		this.updater = new GameUpdater(this);
 		this.calc = new GameCalculator(this);
 		this.gameString = new GameToString(this);
@@ -110,8 +110,6 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 		this.bombs = new ArrayList<IBomb>();
 		this.explosions = new ArrayList<List<IExplosion>>();
 		this.ais = new ArrayList<IManAI>();
-		
-		setPlayer(player);
 	}
 	
 	/**

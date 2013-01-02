@@ -19,23 +19,16 @@ import bombgame.entities.impl.Man;
  * config.set...
  * IGH = config.createGH();
  * 
- * --> Factory method pattern for different spawn possibilities.
- * create subclasses with different spawn method
- * (the spawnMan method in gamehandler checks if it is possible to set the man
- * at this position)
- * ----> subclass: GameHandlerConfiguration_spawnEdge
- * 
  * @author jens
  *
  */
-public abstract class GameHandlerConfiguration {
+public class GameHandlerConfiguration {
 	
 	private int field_width;
 	
 	private int field_height;
 	
 	private int numberOfAIs;
-	
 	
 	private GameHandler handler;
 	
@@ -58,6 +51,12 @@ public abstract class GameHandlerConfiguration {
 	 */
 	private static final int MAX_HEIGHT = 100;
 	
+	public GameHandlerConfiguration(int width, int height, int ais) {
+		field_width = width;
+		field_height = height;
+		numberOfAIs = ais;
+	}
+	
 	/**
 	 * Creates a new GameHandler with the given configuration.
 	 * @return
@@ -66,19 +65,23 @@ public abstract class GameHandlerConfiguration {
 		
 		// Check if configuration is complete
 		if (!checkConfiguration()) {
-			//throw new wahtever Exception("GameHandler configuration is not correct.");
+			throw new IllegalArgumentException("GameHandler configuration is not correct.");
 		}
 		
 		// Create player
 		player = new Player(new Man(0, 0));
 		
 		// Create GameHandler
-		// (to run a minimalistic game GameHandler needs the width, height and a player.
-		handler = new GameHandler(field_width, field_height, player);
+		// (to run a minimal game GameHandler needs the width, height and a player.
+		handler = new GameHandler(field_width, field_height);
 		
-		// Set AI
-		for (ManAI ai : ais) {
-			handler.addAI(ai);
+		// Set player
+		handler.setPlayer(player);
+		
+		// Create and set AIs
+		for (int i = 0; i < MAXAI; i++) {
+			// new AI with spawn
+			//handler.addAI(ai);
 		}
 		
 		return handler;
@@ -104,15 +107,29 @@ public abstract class GameHandlerConfiguration {
 		return true;
 	}
 	
-	/**
-	 * Factory method.
-	 */
-	abstract void spawn(Man man);
-	/**
-	 * Hier bin ihc nicht sicher, ob das wirklcih ein anwendungsfall
-	 * fuer eine fabric ist, weil wie haben ja keine vererbung, also keien
-	 * verschiedenen Man implementierungen oder ähnlich. also kann man
-	 * das ja einfach nur mir verscheidenen methoden machen und dann im konstruktor
-	 * die art des spawnens bestimmen. würd wahrscheinlcih dann die struktur auch kalrer machen.
-	 */
+	public void setFieldWidth(int width) {
+		field_width = width;
+	}
+	
+	public void setFieldheight(int height) {
+		field_height = height;
+	}
+	
+	public void setNumberOfAIs(int ais) {
+		numberOfAIs = ais;
+	}
+	
+	public int setFieldWidth() {
+		return field_width;
+	}
+	
+	public int getFieldheight() {
+		return field_height;
+	}
+	
+	public int getNumberOfAIs() {
+		return numberOfAIs;
+	}
+	
+	//abstract void spawn(Man man);
 }

@@ -1,12 +1,8 @@
 package bombgame.application;
 
 import java.util.Scanner;
-
 import org.apache.log4j.PropertyConfigurator;
-
-import bombgame.controller.gamehandler.impl.GameHandler;
-import bombgame.controller.player.impl.Player;
-import bombgame.entities.impl.Man;
+import bombgame.controller.gamehandler.GameHandlerConfiguration;
 import bombgame.ui.TextUI;
 import bombgame.ui.UserInterface;
 
@@ -29,7 +25,8 @@ public final class App {
 		
 		// Create TUI - gets concrete Player and AI
 		// Here than player, man, mazegen -> googleguice
-		UserInterface ui = new TextUI(new GameHandler(new Player(new Man(0,0))));
+		GameHandlerConfiguration config = new GameHandlerConfiguration(30, 20, 3);
+		UserInterface ui = new TextUI(config.createGameHandler());
 		
 		// LOOP
 		boolean cont = true;

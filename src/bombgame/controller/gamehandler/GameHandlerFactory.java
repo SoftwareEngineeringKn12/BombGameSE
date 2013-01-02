@@ -34,7 +34,8 @@ public class GameHandlerFactory {
 		
 		Player player = new Player(new Man(0,0));
 		
-		GameHandler gh = new GameHandler(width , height, player);
+		GameHandler gh = new GameHandler(width , height);
+		gh.setPlayer(player);
 		
 		gh.addAI(new ManAI(new Man(0, height -1), gh));
 		gh.addAI(new ManAI(new Man(width -1, height -1), gh));
@@ -95,7 +96,8 @@ public class GameHandlerFactory {
 		int playernr = rand.nextInt(4);
 		Player player = new Player(menlist.remove(playernr));
 		
-		GameHandler gh = new GameHandler(width, height, player);
+		GameHandler gh = new GameHandler(width, height);
+		gh.setPlayer(player);
 		
 		for(Man m : menlist) {
 			gh.addAI(new ManAI(m,gh));

@@ -3,7 +3,6 @@ package bombgame.ui;
 import java.util.Observable;
 import java.util.Observer;
 import org.apache.log4j.Logger;
-import bombgame.controller.gamehandler.impl.GameHandler;
 import bombgame.controller.gamehandler.IGameHandler;
 
 /**
@@ -26,7 +25,7 @@ public final class TextUI implements UserInterface, Observer {
 	/**
 	 * Creates a GameHandler with standard Constructor.
 	 */
-	public TextUI(GameHandler handler) {
+	public TextUI(IGameHandler handler) {
 		this.handler = handler;
 		handler.addObserver(this);
 	}
@@ -45,7 +44,10 @@ public final class TextUI implements UserInterface, Observer {
 	 */
 	@Override
 	public boolean update(String str) {
-		handler.getPlayer().move(str.charAt(0));
+		if (handler.getPlayer() != null) {
+			handler.getPlayer().move(str.charAt(0));
+		}
+		
 		handler.updateAll();
 		
 		return true;
@@ -57,9 +59,9 @@ public final class TextUI implements UserInterface, Observer {
 	 */
 	@Override
 	public void update(Observable obs, Object message) {
-		/*if(!(message instanceof String)) {
-			return;
-		}*/
+		if(!(message instanceof String)) {
+			throw new IllegalArgumentException();
+		}
 		
 		String s = (String) message;
 		logger.info(s);
