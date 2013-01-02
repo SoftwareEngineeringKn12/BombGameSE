@@ -20,7 +20,8 @@ public final class TextUITest extends TestCase {
 		// Configure log4j
 		PropertyConfigurator.configureAndWatch("log4j.properties");
 				
-		gh = new GameHandler(new Player(new Man(0, 0)));
+		gh = new GameHandler();
+		gh.setPlayer(new Player(new Man(0, 0)));
 		tui1 = new TextUI(gh);
 		
 		IGameObject field[][] = new GameObject[2][2];
