@@ -1,6 +1,7 @@
 package bombgame.controller.gamehandler;
 
 import java.util.List;
+
 import bombgame.controller.ai.impl.ManAI;
 import bombgame.controller.gamehandler.impl.GameHandler;
 import bombgame.controller.player.impl.Player;
@@ -23,6 +24,11 @@ import bombgame.entities.impl.Man;
  *
  */
 public class GameHandlerConfiguration {
+	
+	public final static int TOP_EDGE = 0;
+	public final static int BOTTOM_EDGE = 1;
+	public final static int LEFT_EDGE = 2;
+	public final static int RIGHT_EDGE = 3;
 	
 	private int field_width;
 	
@@ -78,10 +84,9 @@ public class GameHandlerConfiguration {
 		// Set player
 		handler.setPlayer(player);
 		
-		// Create and set AIs
-		for (int i = 0; i < MAXAI; i++) {
-			// new AI with spawn
-			//handler.addAI(ai);
+		spawn();
+		for (ManAI ai : ais) {
+			handler.addAI(ai);
 		}
 		
 		return handler;
@@ -131,5 +136,40 @@ public class GameHandlerConfiguration {
 		return numberOfAIs;
 	}
 	
-	//abstract void spawn(Man man);
+	/**
+	 * Spawns Men on the Edges of the field with same distance.
+	 */
+	private void spawn() {
+		
+		int menperedge = numberOfAIs / 4;
+		int rest = numberOfAIs % 4;
+		int[] men = {menperedge, menperedge, menperedge, menperedge };
+		
+		while(rest > 0) {
+			men[rest % 4] += 1;
+			rest--;
+		}
+		
+		placeMen(men[TOP_EDGE], 1, 0, 0,0);
+		placeMen(men[BOTTOM_EDGE], 1, 0, 0, handler.getField()[0].length - 1);
+		placeMen(men[LEFT_EDGE], 0, 1,0,0);
+		placeMen(men[RIGHT_EDGE], 0, 1, handler.getField().length - 1,0);
+		
+	}
+	
+	/**
+	 * Places the men at the given edge of the field.
+	 */
+	private void placeMen(int mencount, int xfac, int yfac, int x, int y) {
+		int distx = handler.getField().length / (mencount + 1);
+		int disty = handler.getField()[0].length / (mencount + 1);
+
+		
+		while(mencount > 0) {
+			x += distx * xfac;
+			y += disty * yfac;
+			ais.add(new ManAI(new Man(x, y), handler));
+			mencount--;
+		}
+	}
 }
