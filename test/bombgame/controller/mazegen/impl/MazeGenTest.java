@@ -1,4 +1,4 @@
-package bombgame.controller;
+package bombgame.controller.mazegen.impl;
 
 import java.util.LinkedList;
 import java.util.List;

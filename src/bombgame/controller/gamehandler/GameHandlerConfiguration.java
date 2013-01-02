@@ -1,5 +1,6 @@
 package bombgame.controller.gamehandler;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import bombgame.controller.ai.impl.ManAI;
@@ -13,17 +14,10 @@ import bombgame.entities.impl.Man;
  * This is the class which creates the concrete objects,
  * in all other classes the interfaces are used.
  * 
- * Creation in App:
- * config = new GHconfig();
- * config.setfield(xw, yw);
- * config.stenumAI(3);
- * config.set...
- * IGH = config.createGH();
- * 
  * @author jens
  *
  */
-public class GameHandlerConfiguration {
+public final class GameHandlerConfiguration {
 	
 	public final static int TOP_EDGE = 0;
 	public final static int BOTTOM_EDGE = 1;
@@ -45,22 +39,24 @@ public class GameHandlerConfiguration {
 	/**
 	 * Maximal number of AIs
 	 */
-	private static final int MAXAI = 6;
+	public static final int MAXAI = 6;
 	
 	/**
 	 * Maximal width of the game field.
 	 */
-	private static final int MAX_WIDTH = 100;
+	public static final int MAX_WIDTH = 100;
 	
 	/**
 	 * Maximal height of the game field.
 	 */
-	private static final int MAX_HEIGHT = 100;
+	public static final int MAX_HEIGHT = 100;
 	
-	public GameHandlerConfiguration(int width, int height, int ais) {
+	public GameHandlerConfiguration(int width, int height, int numberAis) {
 		field_width = width;
 		field_height = height;
-		numberOfAIs = ais;
+		numberOfAIs = numberAis;
+		
+		ais = new LinkedList<ManAI>();
 	}
 	
 	/**
@@ -75,7 +71,7 @@ public class GameHandlerConfiguration {
 		}
 		
 		// Create player
-		player = new Player(new Man(0, 0));
+		player = new Player(new Man(field_width/2, field_height/2));
 		
 		// Create GameHandler
 		// (to run a minimal game GameHandler needs the width, height and a player.
@@ -96,27 +92,29 @@ public class GameHandlerConfiguration {
 	 * Checks if all settings are correct.
 	 * @return
 	 */
-	private boolean checkConfiguration() {
+	protected boolean checkConfiguration() {
+		boolean ret = true;
+		
 		if (field_width <= 0 || field_width > MAX_WIDTH) {
-			return false;
+			ret = false;
 		}
 		
 		if (field_height <= 0 || field_height > MAX_HEIGHT) {
-			return false;
+			ret = false;
 		}
 		
-		if (numberOfAIs > MAXAI) {
-			return false;
+		if (numberOfAIs <= 0 || numberOfAIs > MAXAI) {
+			ret = false;
 		}
 			
-		return true;
+		return ret;
 	}
 	
 	public void setFieldWidth(int width) {
 		field_width = width;
 	}
 	
-	public void setFieldheight(int height) {
+	public void setFieldHeight(int height) {
 		field_height = height;
 	}
 	
@@ -124,11 +122,11 @@ public class GameHandlerConfiguration {
 		numberOfAIs = ais;
 	}
 	
-	public int setFieldWidth() {
+	public int getFieldWidth() {
 		return field_width;
 	}
 	
-	public int getFieldheight() {
+	public int getFieldHeight() {
 		return field_height;
 	}
 	
@@ -140,6 +138,8 @@ public class GameHandlerConfiguration {
 	 * Spawns Men on the Edges of the field with same distance.
 	 */
 	private void spawn() {
+		
+		ais.clear();
 		
 		int menperedge = numberOfAIs / 4;
 		int rest = numberOfAIs % 4;

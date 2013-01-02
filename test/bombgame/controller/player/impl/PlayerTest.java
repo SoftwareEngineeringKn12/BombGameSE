@@ -1,4 +1,4 @@
-package bombgame.controller;
+package bombgame.controller.player.impl;
 
 import bombgame.controller.player.impl.Player;
 import bombgame.entities.impl.Man;
