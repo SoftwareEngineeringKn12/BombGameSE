@@ -23,11 +23,6 @@ import bombgame.entities.impl.GameObject;
 public final class GameHandler extends Observable implements IGameHandler2D, IGameHandler {
 
 	/**
-	 * Range in which player is spawned
-	 */
-	private static final int SPAWN_RANGE = 7;
-	
-	/**
 	 * matrix holding all GameObjects in the game.
 	 * The array indices specify the position on the field.
 	 */
@@ -220,8 +215,19 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 			men.add(m);
 			return;
 		}
-				
-		for(int i = 1; i < SPAWN_RANGE; i++ ) {
+		
+		int biggerValue; // Or equal
+		if (field.length > field[0].length) {
+			// Width
+			biggerValue = field.length;
+		} else {
+			// Height
+			biggerValue = field[0].length;
+		}
+		
+		// Run through the whole field to search a spawn point
+		// from the initial spawn point
+		for(int i = 1; i <= biggerValue; i++) {
 			if(m.getX() + i < field.length && !(field[m.getX() + i][m.getY()] instanceof IWall)) {
 				m.setPos(m.getX() + i, m.getY());
 				break;
