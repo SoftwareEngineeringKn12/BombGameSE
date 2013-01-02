@@ -42,7 +42,11 @@ public final class GameHandlerConfigurationTest extends TestCase {
 		config.setFieldHeight(30);
 		config.setNumberOfAIs(-1);
 		
-		config.createGameHandler();
+		try {
+			config.createGameHandler();
+		} catch(IllegalArgumentException e) {
+			assertEquals("GameHandler configuration is not correct.", e.getMessage());
+		}
 		
 		config.setNumberOfAIs(3);
 		
