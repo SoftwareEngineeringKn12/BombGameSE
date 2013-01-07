@@ -159,7 +159,7 @@ public final class GraphicalUI_Game extends BasicGameState {
 	}
 	
 	public void keyReleased(int key, char c) {
-		user_input = '?';
+		//user_input = '?';
 	}
 
 }
