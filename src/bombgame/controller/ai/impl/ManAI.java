@@ -173,7 +173,7 @@ public final class ManAI implements IManAI{
 			return;
 		}
 		
-		//adds next history value if a man is focused
+		//adds next history value if a Man is focused
 		updateHistory();
 		
 		if(path.isEmpty()) {
