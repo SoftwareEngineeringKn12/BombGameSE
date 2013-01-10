@@ -2,10 +2,8 @@ package bombgame.entities;
 
 public interface IGameObject {
 	
-	public int getX();
-	
-	public int getY();
-	
-	public void setPos(int x, int y);
+	int getX();
+	int getY();
+	void setPos(int x, int y);
 	
 }

@@ -26,9 +26,9 @@ public final class GameHandlerConfiguration {
 	
 	public static final int EDGES = 4;
 	
-	private int field_width;
+	private int fieldwidth;
 	
-	private int field_height;
+	private int fieldheight;
 	
 	private int numberOfAIs;
 	
@@ -54,8 +54,8 @@ public final class GameHandlerConfiguration {
 	public static final int MAX_HEIGHT = 100;
 	
 	public GameHandlerConfiguration(int width, int height, int numberAis) {
-		field_width = width;
-		field_height = height;
+		fieldwidth = width;
+		fieldheight = height;
 		numberOfAIs = numberAis;
 		
 		ais = new LinkedList<ManAI>();
@@ -73,11 +73,11 @@ public final class GameHandlerConfiguration {
 		}
 		
 		// Create player
-		player = new Player(new Man(field_width/2, field_height/2));
+		player = new Player(new Man(fieldwidth/2, fieldheight/2));
 		
 		// Create GameHandler
 		// (to run a minimal game GameHandler needs the width, height and a player.
-		handler = new GameHandler(field_width, field_height);
+		handler = new GameHandler(fieldwidth, fieldheight);
 		
 		// Set player
 		handler.setPlayer(player);
@@ -97,11 +97,11 @@ public final class GameHandlerConfiguration {
 	protected boolean checkConfiguration() {
 		boolean ret = true;
 		
-		if (field_width <= 0 || field_width > MAX_WIDTH) {
+		if (fieldwidth <= 0 || fieldwidth > MAX_WIDTH) {
 			ret = false;
 		}
 		
-		if (field_height <= 0 || field_height > MAX_HEIGHT) {
+		if (fieldheight <= 0 || fieldheight > MAX_HEIGHT) {
 			ret = false;
 		}
 		
@@ -113,11 +113,11 @@ public final class GameHandlerConfiguration {
 	}
 	
 	public void setFieldWidth(int width) {
-		field_width = width;
+		fieldwidth = width;
 	}
 	
 	public void setFieldHeight(int height) {
-		field_height = height;
+		fieldheight = height;
 	}
 	
 	public void setNumberOfAIs(int ais) {
@@ -125,11 +125,11 @@ public final class GameHandlerConfiguration {
 	}
 	
 	public int getFieldWidth() {
-		return field_width;
+		return fieldwidth;
 	}
 	
 	public int getFieldHeight() {
-		return field_height;
+		return fieldheight;
 	}
 	
 	public int getNumberOfAIs() {

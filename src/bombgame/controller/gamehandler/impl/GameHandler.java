@@ -215,8 +215,8 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 			men.add(m);
 			return;
 		}
-		
-		int biggerValue; // Or equal
+		// Or equal
+		int biggerValue; 
 		if (field.length > field[0].length) {
 			// Width
 			biggerValue = field.length;

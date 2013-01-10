@@ -180,7 +180,6 @@ public final class GameCalculator {
 				while(exp == null) {
 					exp = bomb.decrementTimer();
 				}
-				System.out.println("chain");
 				handler.removeObject(bomb);
 				handler.addObject(exp);
 			}

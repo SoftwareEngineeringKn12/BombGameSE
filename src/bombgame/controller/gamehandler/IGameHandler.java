@@ -8,9 +8,9 @@ import bombgame.controller.player.IPlayer;
 
 public interface IGameHandler {
 
-	public void updateAll();
-	public IPlayer getPlayer();
-	public List<IManAI> getAIs();
-	public void addObserver(Observer observer);
+	void updateAll();
+	IPlayer getPlayer();
+	List<IManAI> getAIs();
+	void addObserver(Observer observer);
 
 }

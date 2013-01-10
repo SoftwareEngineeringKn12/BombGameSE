@@ -43,14 +43,14 @@ public final class GameToString {
 
 	protected String playerToString() {
 		StringBuilder sb = new StringBuilder("Players:\n");
-		sb.append(handler.getPlayer()).append("\n");;
+		sb.append(handler.getPlayer()).append("\n");
 		return sb.toString();
 	}
 
 	protected String aiToString() {
 		StringBuilder sb = new StringBuilder("AI:\n");
 		for( IManAI ai : handler.getAIs()) {
-			sb.append(ai).append("\n");;
+			sb.append(ai).append("\n");
 		}
 		return sb.toString();
 	}

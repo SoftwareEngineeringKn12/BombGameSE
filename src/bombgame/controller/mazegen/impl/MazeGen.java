@@ -84,7 +84,7 @@ public final class MazeGen implements IMazeGen {
 	 * @author jens
 	 * 
 	 */
-	static public class Cell implements ICell {
+	public static class Cell implements ICell {
 		private int x;
 		private int y;
 
@@ -175,7 +175,6 @@ public final class MazeGen implements IMazeGen {
 
 				if (!foundWay) {
 					if (checked[0] && checked[1] && checked[2] && checked[3]) {
-						// System.out.println("All checked: No way, go back.");
 						allChecked = true;
 						temp = backtrack.pop();
 					}
@@ -258,8 +257,9 @@ public final class MazeGen implements IMazeGen {
 	 * @return
 	 */
 	private boolean isInMazeField(final Cell cell) {
-		if (cell.x < xLength && cell.x >= 0 && cell.y < yLength && cell.y >= 0)
+		if (cell.x < xLength && cell.x >= 0 && cell.y < yLength && cell.y >= 0){
 			return true;
+		}
 		return false;
 	}
 

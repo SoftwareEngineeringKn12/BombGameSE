@@ -12,13 +12,13 @@ public final class Bomb extends GameObject implements IBomb {
 	/**
 	 * Delay until bomb explodes.
 	 */
-	private static final int delay = 5;
+	private static final int DELAY = 5;
 	
 	/**
 	 * Timer for the bomb.
 	 * Bomb explodes at timer = 0
 	 */
-	private int timer = delay;
+	private int timer = DELAY;
 
 	/**
 	 * Creates a Bomb-object with the specified coordinates.
@@ -42,7 +42,7 @@ public final class Bomb extends GameObject implements IBomb {
 	 * @return delay value
 	 */
 	public int getDelay() {
-		return delay;
+		return DELAY;
 	}
 	
 	/**
