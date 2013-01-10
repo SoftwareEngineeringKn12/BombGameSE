@@ -19,10 +19,12 @@ import bombgame.entities.impl.Man;
  */
 public final class GameHandlerConfiguration {
 	
-	public final static int TOP_EDGE = 0;
-	public final static int BOTTOM_EDGE = 1;
-	public final static int LEFT_EDGE = 2;
-	public final static int RIGHT_EDGE = 3;
+	public static final int TOP_EDGE = 0;
+	public static final int BOTTOM_EDGE = 1;
+	public static final int LEFT_EDGE = 2;
+	public static final int RIGHT_EDGE = 3;
+	
+	public static final int EDGES = 4;
 	
 	private int field_width;
 	
@@ -141,12 +143,12 @@ public final class GameHandlerConfiguration {
 		
 		ais.clear();
 		
-		int menperedge = numberOfAIs / 4;
-		int rest = numberOfAIs % 4;
+		int menperedge = numberOfAIs / EDGES;
+		int rest = numberOfAIs % EDGES;
 		int[] men = {menperedge, menperedge, menperedge, menperedge };
 		
 		while(rest > 0) {
-			men[rest % 4] += 1;
+			men[rest % EDGES] += 1;
 			rest--;
 		}
 		
