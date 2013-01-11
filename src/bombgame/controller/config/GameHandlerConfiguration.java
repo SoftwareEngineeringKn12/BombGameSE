@@ -1,9 +1,10 @@
-package bombgame.controller.gamehandler;
+package bombgame.controller.config;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import bombgame.controller.ai.impl.ManAI;
+import bombgame.controller.gamehandler.IGameHandler;
 import bombgame.controller.gamehandler.impl.GameHandler;
 import bombgame.controller.player.impl.Player;
 import bombgame.entities.impl.Man;

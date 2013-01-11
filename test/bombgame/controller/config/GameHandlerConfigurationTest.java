@@ -1,5 +1,6 @@
-package bombgame.controller.gamehandler;
+package bombgame.controller.config;
 
+import bombgame.controller.config.GameHandlerConfiguration;
 import junit.framework.TestCase;
 
 public final class GameHandlerConfigurationTest extends TestCase {

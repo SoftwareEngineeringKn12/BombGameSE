@@ -2,7 +2,8 @@ package bombgame.application;
 
 import java.util.Scanner;
 import org.apache.log4j.PropertyConfigurator;
-import bombgame.controller.gamehandler.GameHandlerConfiguration;
+
+import bombgame.controller.config.GameHandlerConfiguration;
 import bombgame.ui.TextUI;
 import bombgame.ui.UserInterface;
 
