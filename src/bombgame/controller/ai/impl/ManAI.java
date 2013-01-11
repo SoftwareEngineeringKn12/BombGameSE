@@ -7,6 +7,7 @@ import java.util.Queue;
 import java.util.Random;
 
 import bombgame.controller.ai.IManAI;
+import bombgame.controller.ai.IPosition;
 import bombgame.controller.ai.PathFinder;
 import bombgame.controller.ai.TargetFinder;
 import bombgame.controller.ai.impl.NodeFinder.Node;
@@ -86,12 +87,12 @@ public final class ManAI implements IManAI{
 	/**
 	 * target Position of the AI
 	 */
-	private Position target;
+	private IPosition target;
 	
 	/**
 	 * Path which was calculated by A*
 	 */
-	private Deque<Position> path;
+	private Deque<IPosition> path;
 	
 	/**
 	 * determines if Man-object should place a bomb at the target
@@ -150,7 +151,7 @@ public final class ManAI implements IManAI{
 		this.handler = handler;
 		this.rand = new Random();
 		this.turns = 0;
-		this.path = new LinkedList<Position>();
+		this.path = new LinkedList<IPosition>();
 		this.directionHistory = new LinkedList<Integer>();
 		this.directionCount = new int[NUMBER_OF_DIRECTIONS];
 		this.nodes = NodeFinder.findAllNodes(handler);
@@ -292,7 +293,7 @@ public final class ManAI implements IManAI{
 	protected void calcManDirection() {
 		
 		//get Position on top of stack
-		Position pos = path.pop();
+		IPosition pos = path.pop();
 		
 		int dx = pos.getX() - man.getX();
 		int dy = pos.getY() - man.getY();
@@ -409,7 +410,7 @@ public final class ManAI implements IManAI{
 	 * Returns the current target Position.
 	 * @return - target Position
 	 */
-	protected Position getTarget() {
+	protected IPosition getTarget() {
 		return target;
 	}
 	
@@ -449,7 +450,7 @@ public final class ManAI implements IManAI{
 	 * Returns a Deque of the current path.
 	 * @return - current path
 	 */
-	protected Deque<Position> getPath() {
+	protected Deque<IPosition> getPath() {
 		return path;
 	}
 	

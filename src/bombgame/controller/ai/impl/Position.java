@@ -1,12 +1,14 @@
 package bombgame.controller.ai.impl;
 
+import bombgame.controller.ai.IPosition;
+
 /**
  * This Class holds a x- and a y-coordinate and defines a Position in a 2 dimensional
  * area.
  * @author Rookfighter
  *
  */
- public final class Position {
+ public final class Position implements IPosition{
 	
 	 
 	 /**
@@ -38,7 +40,7 @@ package bombgame.controller.ai.impl;
 	  * Returns the x-coordinate.
 	  * @return - x-coordinate
 	  */
-	 int getX() {
+	 public int getX() {
 		return x;
 	}
 	
@@ -46,7 +48,7 @@ package bombgame.controller.ai.impl;
 	  * Returns the y-coordinate.
 	  * @return - y-coordinate
 	  */
-	 int getY() {
+	 public int getY() {
 		return y;
 	}
 	

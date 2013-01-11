@@ -1,6 +1,7 @@
 package bombgame.controller.ai.impl;
 
 import bombgame.controller.ai.ExtraCostCalculator;
+import bombgame.controller.ai.IPosition;
 import bombgame.controller.gamehandler.IGameHandler2D;
 import bombgame.entities.IBomb;
 import bombgame.entities.impl.Explosion;
@@ -34,7 +35,7 @@ public final class BombCostCalculator implements ExtraCostCalculator{
 	/**
 	 * Returns an extra cost if the position is in the range of a Bomb, else 0.
 	 */
-	public int calcExtraCost(Position pos) {
+	public int calcExtraCost(IPosition pos) {
 		if(isInBombRange(pos))	{
 			return BOMB_COST;
 		} else {
@@ -50,7 +51,7 @@ public final class BombCostCalculator implements ExtraCostCalculator{
 	 * @param pos - Cell that is to be proofed to be out of danger
 	 * @return - true if the Position is threated by a Bomb
 	 */
-	private boolean isInBombRange(Position pos) {
+	private boolean isInBombRange(IPosition pos) {
 		for(IBomb b : handler.getBombs()) {
 			//simple and ineffective algorythm-> only checks radius
 			int dx = Math.abs(pos.getX() - b.getX());

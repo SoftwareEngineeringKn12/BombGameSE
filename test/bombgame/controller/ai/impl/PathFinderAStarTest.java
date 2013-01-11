@@ -3,6 +3,7 @@ package bombgame.controller.ai.impl;
 import java.util.Deque;
 
 import junit.framework.TestCase;
+import bombgame.controller.ai.IPosition;
 import bombgame.controller.ai.impl.AISelector;
 import bombgame.controller.ai.impl.BombCostCalculator;
 import bombgame.controller.ai.impl.PathFinderAStar;
@@ -22,7 +23,7 @@ public class PathFinderAStarTest extends TestCase {
 	}
 	
 	public void testCalculatePath() {
-		Deque<Position> path = pfas.calculatePath(new Position(0,0), new Position(9,9));
+		Deque<IPosition> path = pfas.calculatePath(new Position(0,0), new Position(9,9));
 		assertNotNull(path);
 		gh.addObject(new Wall(1,0));
 		gh.addObject(new Wall(0,1));

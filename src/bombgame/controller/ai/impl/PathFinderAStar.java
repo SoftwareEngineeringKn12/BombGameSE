@@ -9,6 +9,7 @@ import java.util.TreeSet;
 
 import bombgame.controller.ai.ClosedListSelector;
 import bombgame.controller.ai.ExtraCostCalculator;
+import bombgame.controller.ai.IPosition;
 import bombgame.controller.ai.PathFinder;
 import bombgame.controller.gamehandler.IGameHandler2D;
 
@@ -72,9 +73,9 @@ public final class PathFinderAStar implements PathFinder {
 	 * Calculates the Path from start to target with the A* Algorythm.
 	 */
 	@Override
-	public Deque<Position> calculatePath(final Position start, final Position target) {
+	public Deque<IPosition> calculatePath(final IPosition start, final IPosition target) {
 		
-		Deque<Position> path = new LinkedList<Position>();
+		Deque<IPosition> path = new LinkedList<IPosition>();
 		
 		clearLists();		
 		
@@ -196,7 +197,7 @@ public final class PathFinderAStar implements PathFinder {
 	/**
 	 * Pushes the path referenced by target.prev onto path.
 	 */
-	protected void pushOnPath(final Deque<Position> path) {
+	protected void pushOnPath(final Deque<IPosition> path) {
 		
 		path.clear();
 		if(target.prev != null) {

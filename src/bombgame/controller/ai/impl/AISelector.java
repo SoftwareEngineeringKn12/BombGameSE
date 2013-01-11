@@ -2,6 +2,7 @@ package bombgame.controller.ai.impl;
 
 
 import bombgame.controller.ai.ClosedListSelector;
+import bombgame.controller.ai.IPosition;
 import bombgame.controller.gamehandler.IGameHandler2D;
 import bombgame.entities.impl.Explosion;
 import bombgame.entities.impl.Wall;
@@ -33,7 +34,7 @@ public final class AISelector implements ClosedListSelector{
 	 * has a higher timer than the given pathcost return true. Else false.
 	 */
 	@Override
-	public boolean moveToClosedList(Position pos, int pathcost) {
+	public boolean moveToClosedList(IPosition pos, int pathcost) {
 		//if Wall is blocking the way immediately put to closed list
 		if(handler.getField()[pos.getX()][pos.getY()] instanceof Wall) {
 				return true;

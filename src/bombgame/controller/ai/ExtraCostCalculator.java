@@ -1,8 +1,5 @@
 package bombgame.controller.ai;
 
-import bombgame.controller.ai.impl.Position;
-
-
 /**
  * Instances of this class calculate the extra costs for specific Positions.
  * @author Rookfighter
@@ -15,6 +12,6 @@ public interface ExtraCostCalculator {
 	 * @param pos - examined Position
 	 * @return - extra cost
 	 */
-	int calcExtraCost(Position pos);
+	int calcExtraCost(IPosition pos);
 	
 }

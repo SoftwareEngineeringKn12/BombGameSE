@@ -1,7 +1,5 @@
 package bombgame.controller.ai;
 
-import bombgame.controller.ai.impl.Position;
-
 
 
 /**
@@ -17,6 +15,6 @@ public interface ClosedListSelector {
 	 * @param pathcost - cost up to the given Position
 	 * @return - true if Position should be moved to the closedlist
 	 */
-	boolean moveToClosedList(Position pos, int pathcost);
+	boolean moveToClosedList(IPosition pos, int pathcost);
 	
 }
