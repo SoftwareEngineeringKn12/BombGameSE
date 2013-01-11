@@ -3,6 +3,7 @@ package bombgame.controller.ai.impl;
 import bombgame.controller.ai.impl.NodeFinder;
 import bombgame.controller.ai.impl.NodeFinder.Node;
 import bombgame.controller.gamehandler.impl.GameHandler;
+import bombgame.entities.impl.Field;
 import bombgame.entities.impl.GameObject;
 import bombgame.entities.impl.Wall;
 import junit.framework.TestCase;
@@ -12,27 +13,27 @@ public class NodeFinderTest extends TestCase{
 	private GameHandler gh;
 	
 	public void setUp() {
-		gh = new GameHandler(new GameObject[10][10]);
+		gh = new GameHandler(new Field(new GameObject[10][10]));
 		new NodeFinder();
 	}
 	
 	public void testFindAllNodes() {
-		assertEquals(10 * 10, NodeFinder.findAllNodes(gh).length);
+		assertEquals(10 * 10, NodeFinder.findAllNodes(gh.getField()).length);
 	}
 	
 	public void testCreateNode() {
 		gh.addObject(new Wall(0,0));
 		Node[] nodes = new Node[1];
 		int[] count =  new int[1];
-		NodeFinder.createNode(0, 0, gh, nodes, count);
+		NodeFinder.createNode(0, 0, gh.getField(), nodes, count);
 		assertEquals(count[0], 0);
 	}
 	
 	public void testCheckDirections() {
 		gh.addObject(new Wall(0,0));
-		assertEquals(0, NodeFinder.checkDirections(0, 0, 0, 0, null, 0, gh.getField()));
-		assertEquals(0, NodeFinder.checkDirections(1, 0, -1, 0, null, 0, gh.getField()));
-		assertEquals(0, NodeFinder.checkDirections(0, 1, 0, -1, null, 0, gh.getField()));
+		assertEquals(0, NodeFinder.checkDirections(0, 0, 0, 0, null, 0, gh.getField().getField()));
+		assertEquals(0, NodeFinder.checkDirections(1, 0, -1, 0, null, 0, gh.getField().getField()));
+		assertEquals(0, NodeFinder.checkDirections(0, 1, 0, -1, null, 0, gh.getField().getField()));
 	}
 	
 	public void testAddNode() {

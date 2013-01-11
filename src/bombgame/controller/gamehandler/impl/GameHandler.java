@@ -1,18 +1,18 @@
 package bombgame.controller.gamehandler.impl;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 import bombgame.controller.ai.IManAI;
 import bombgame.controller.gamehandler.IGameHandler;
-import bombgame.controller.gamehandler.IGameHandler2D;
 import bombgame.controller.player.IPlayer;
 import bombgame.entities.IBomb;
 import bombgame.entities.IExplosion;
+import bombgame.entities.IField;
 import bombgame.entities.IGameObject;
 import bombgame.entities.IMan;
 import bombgame.entities.IWall;
-import bombgame.entities.impl.GameObject;
+import bombgame.entities.impl.Field;
 
 /**
  * Port class!
@@ -20,28 +20,9 @@ import bombgame.entities.impl.GameObject;
  * @author jeganslo
  *
  */
-public final class GameHandler extends Observable implements IGameHandler2D, IGameHandler {
+public final class GameHandler extends Observable implements IGameHandler {
 
-	/**
-	 * matrix holding all GameObjects in the game.
-	 * The array indices specify the position on the field.
-	 */
-	private IGameObject field[][];
-	
-	/**
-	 * List holding all Man-objects in the game.
-	 */
-	private List<IMan> men;
-	
-	/**
-	 * List holding all Bomb-objects in the game.
-	 */
-	private List<IBomb> bombs;
-	
-	/**
-	 * list of explosions
-	 */
-	private List<List<IExplosion>> explosions;
+	private IField field;
 	
 	/**
 	 * Human player.
@@ -101,10 +82,7 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 		
 		this.calc.initializeField(width, height);
 		
-		this.men = new ArrayList<IMan>();
-		this.bombs = new ArrayList<IBomb>();
-		this.explosions = new ArrayList<List<IExplosion>>();
-		this.ais = new ArrayList<IManAI>();
+		this.ais = new LinkedList<IManAI>();
 	}
 	
 	/**
@@ -112,21 +90,13 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 	 * (for testing purposes (JUnit))
 	 * @param f - field
 	 */
-	public GameHandler(final IGameObject f[][]) {
-		field = new GameObject[f.length][f[0].length];
-		for( int i = 0; i < f.length; i++) {
-			for( int j = 0; j < f.length; j++) {
-				field[i][j] = f[i][j];
-			}
-		}		
+	public GameHandler(final IField f) {
+		field = f;
 		this.updater = new GameUpdater(this);
 		this.calc = new GameCalculator(this);
 		this.gameString = new GameToString(this);
 		
-		men = new ArrayList<IMan>();
-		bombs = new ArrayList<IBomb>();
-		explosions = new ArrayList<List<IExplosion>>();
-		ais = new ArrayList<IManAI>();
+		ais = new LinkedList<IManAI>();
 	}
 	
 	/**
@@ -141,7 +111,7 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 		}
 		
 		if (obj instanceof IBomb) {
-			bombs.add((IBomb) obj);
+			field.getBombs().add((IBomb) obj);
 		}
 		
 		if(obj instanceof IExplosion) {
@@ -151,7 +121,7 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 			return;
 		}
 		
-		field[obj.getX()][obj.getY()] = obj;
+		field.getField()[obj.getX()][obj.getY()] = obj;
 	}
 	
 	/**
@@ -161,11 +131,11 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 	 */
 	public void removeObject(IGameObject obj) {
 		if (obj instanceof IMan) {
-			men.remove((IMan) obj);
+			field.getMen().remove((IMan) obj);
 		}
 		
 		if (obj instanceof IBomb) {
-			bombs.remove((IBomb) obj);
+			field.getBombs().remove((IBomb) obj);
 		}
 		if(obj instanceof IExplosion) {
 			
@@ -174,8 +144,8 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 			return;
 		}
 		
-		if(field[obj.getX()][obj.getY()] == obj) {
-			field[obj.getX()][obj.getY()] = null;
+		if(field.getField()[obj.getX()][obj.getY()] == obj) {
+			field.getField()[obj.getX()][obj.getY()] = null;
 		}
 	}
 	
@@ -185,10 +155,10 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 	 */
 	protected void addExplosionList(List<IExplosion> list) {
 		
-		explosions.add(list);
+		field.getExplosionList().add(list);
 		
 		for(IExplosion e : list) {
-			field[e.getX()][e.getY()] = e;
+			field.getField()[e.getX()][e.getY()] = e;
 		}
 	}
 	
@@ -199,10 +169,10 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 	protected void removeExplosionList(List<IExplosion> list) {
 		
 		for(IExplosion e : list) {
-			field[e.getX()][e.getY()] = null;
+			field.getField()[e.getX()][e.getY()] = null;
 		}
 		
-		explosions.remove(list);
+		field.getExplosionList().remove(list);
 	}
 	
 	/**
@@ -211,41 +181,41 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 	 * @param m - spawning Man-object
 	 */
 	protected void spawnMan(IMan m) {
-		if(field[m.getX()][m.getY()] == null) {
-			men.add(m);
+		if(field.getField()[m.getX()][m.getY()] == null) {
+			field.getMen().add(m);
 			return;
 		}
 		// Or equal
 		int biggerValue; 
-		if (field.length > field[0].length) {
+		if (field.getWidth() > field.getHeight()) {
 			// Width
-			biggerValue = field.length;
+			biggerValue = field.getWidth();
 		} else {
 			// Height
-			biggerValue = field[0].length;
+			biggerValue = field.getHeight();
 		}
 		
 		// Run through the whole field to search a spawn point
 		// from the initial spawn point
 		for(int i = 1; i <= biggerValue; i++) {
-			if(m.getX() + i < field.length && !(field[m.getX() + i][m.getY()] instanceof IWall)) {
+			if(m.getX() + i < field.getWidth() && !(field.getField()[m.getX() + i][m.getY()] instanceof IWall)) {
 				m.setPos(m.getX() + i, m.getY());
 				break;
 			}
-			if(m.getX() - i >= 0 && !(field[m.getX() - i][m.getY()] instanceof IWall)) {
+			if(m.getX() - i >= 0 && !(field.getField()[m.getX() - i][m.getY()] instanceof IWall)) {
 				m.setPos(m.getX() - i, m.getY());
 				break;
 			}
-			if(m.getY() + i < field[0].length && !(field[m.getX()][m.getY() + i] instanceof IWall)) {
+			if(m.getY() + i < field.getHeight() && !(field.getField()[m.getX()][m.getY() + i] instanceof IWall)) {
 				m.setPos(m.getX(), m.getY() + i);
 				break;
 			}
-			if(m.getY() - i >= 0 && !(field[m.getX()][m.getY() - i] instanceof IWall)) {
+			if(m.getY() - i >= 0 && !(field.getField()[m.getX()][m.getY() - i] instanceof IWall)) {
 				m.setPos(m.getX(), m.getY() - i);
 				break;
 			}
 		}
-		men.add(m);
+		field.getMen().add(m);
 	}
 	
 	/**
@@ -253,12 +223,8 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 	 * @param field
 	 */
 	protected void setField(IGameObject[][] field) {
+		this.field = new Field(field);
 		
-		this.field = new GameObject[field.length][field[0].length];
-		
-		for(int i = 0; i < field.length; i++) {
-			System.arraycopy(field[i], 0, this.field[i], 0, field[i].length);
-		}
 	}
 	
 	/**
@@ -278,43 +244,11 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 	}
 	
 	/**
-	 * Returns the matrix of the field.
-	 * @return - matrix of the field
-	 */
-	public IGameObject[][] getField() {
-		return field;
-	}
-		
-	/**
-	 * Returns the List of Man-objects.
-	 * @return - List of Man-objects
-	 */
-	public List<IMan> getMen() {
-		return men;
-	}
-		
-	/**
-	 * Returns the List of Bomb-objects.
-	 * @return - List of Bomb-objects
-	 */
-	public List<IBomb> getBombs() {
-		return bombs;
-	}
-	
-	/**
 	 * Returns the human player object.
 	 * @return - Human player object
 	 */
 	public IPlayer getPlayer() {
 		return player;
-	}
-	
-	/**
-	 * Returns the List of Lists of Explosions.
-	 * @return - List of Lists of Explosions
-	 */
-	protected List<List<IExplosion>> getExplosionList() {
-		return explosions;
 	}
 	
 	/**
@@ -342,13 +276,22 @@ public final class GameHandler extends Observable implements IGameHandler2D, IGa
 	}
 	
 	/**
+	 * Returns the field.
+	 * @return - field
+	 */
+	@Override
+	public IField getField() {
+		return field;
+	}
+	
+	/**
 	 * Returns the List of Explosion-objects in which the specified Explosion-oject is included.
 	 * If the specified object is not found the Method returns null.
 	 * @param exp - Explosion-object to be found
 	 * @return - ArrayList of Explosion-objects
 	 */
 	protected List<IExplosion> getExplosion(IExplosion exp){
-		for(List<IExplosion> el : explosions) {
+		for(List<IExplosion> el : field.getExplosionList()) {
 			for(IExplosion e : el) {
 				if(e==exp) {
 					return el;

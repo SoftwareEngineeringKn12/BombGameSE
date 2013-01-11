@@ -4,6 +4,7 @@ package bombgame.controller.ai.impl;
 import bombgame.controller.ai.impl.ManAI;
 import bombgame.controller.ai.impl.Position;
 import bombgame.controller.gamehandler.impl.GameHandler;
+import bombgame.entities.impl.Field;
 import bombgame.entities.impl.GameObject;
 import bombgame.entities.impl.Man;
 import bombgame.entities.impl.Wall;
@@ -16,10 +17,10 @@ public class ManAITest extends TestCase {
 	private GameHandler gh;
 	
 	public void setUp() {
-		gh = new GameHandler(new GameObject[10][10]);
+		gh = new GameHandler(new Field(new GameObject[10][10]));
 		man = new Man(1,1);
 		gh.addObject(man);
-		ai = new ManAI(man,gh);
+		ai = new ManAI(man,gh.getField());
 		
 	}
 	
@@ -61,7 +62,7 @@ public class ManAITest extends TestCase {
 		assertNull(ai.getTarget());
 		
 		gh.addObject(new Man(3,5));
-		ai = new ManAI(man, gh);
+		ai = new ManAI(man, gh.getField());
 		gh.addObject(new Wall(man.getX() + 1, man.getY()));
 		gh.addObject(new Wall(man.getX() , man.getY() + 1));
 		gh.addObject(new Wall(man.getX() -1 , man.getY()));
@@ -127,8 +128,8 @@ public class ManAITest extends TestCase {
 		assertNotNull(ai.getNodes());
 	}
 	
-	public void testGetHandler() {
-		assertNotNull(ai.getHandler());
+	public void testGetField() {
+		assertNotNull(ai.getField());
 	}
 	
 	public void testSetFocusedEnemy() {

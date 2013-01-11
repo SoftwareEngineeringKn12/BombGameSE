@@ -1,6 +1,6 @@
 package bombgame.controller.gamehandler.impl;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import bombgame.controller.ai.IManAI;
@@ -36,7 +36,7 @@ public final class GameUpdater {
 	 * Checks if any Man-object from men wants to place a bomb. If so a Bomb-object is added.
 	 */
 	protected void placeBombs() {
-		for (IMan man : handler.getMen()) {
+		for (IMan man : handler.getField().getMen()) {
 			if (man.getPlaceBomb()) {
 				handler.addObject(man.placeBomb());
 			}
@@ -49,7 +49,7 @@ public final class GameUpdater {
 	 */
 	protected void updateBombs() {
 		//new ArrayList is needed to remove a bomb during iteration
-		List<IBomb> bs = new ArrayList<IBomb>(handler.getBombs());
+		List<IBomb> bs = new LinkedList<IBomb>(handler.getField().getBombs());
 		for (IBomb bomb : bs) {
 			IExplosion expl = bomb.decrementTimer();
 			if (expl != null) {
@@ -64,7 +64,7 @@ public final class GameUpdater {
 	 */
 	protected void updateExplosion() {
 		//new ArrayList is needed to remove a Explosionlist during iteration
-		List<List<IExplosion>> explist = new ArrayList<List<IExplosion>>(handler.getExplosionList()); 
+		List<List<IExplosion>> explist = new LinkedList<List<IExplosion>>(handler.getField().getExplosionList()); 
 		for(List<IExplosion> explosion : explist) {
 			IExplosion exp = explosion.get(0);
 			exp.decrementTimer();
@@ -80,7 +80,7 @@ public final class GameUpdater {
 	 */
 	protected void updateMen() {
 		//new ArrayList is needed to remove a man during iteration
-		List<IMan> m = new ArrayList<IMan>(handler.getMen());
+		List<IMan> m = new LinkedList<IMan>(handler.getField().getMen());
 		for (IMan man : m) {
 			if(checkHit(man)) {
 				handler.removeObject(man);
@@ -97,7 +97,7 @@ public final class GameUpdater {
 	 * @return - returns true if man is hit
 	 */
 	protected boolean checkHit(IMan man) {
-		return handler.getField()[man.getX()][man.getY()] instanceof IExplosion;
+		return handler.getField().getField()[man.getX()][man.getY()] instanceof IExplosion;
 	}
 	
 	/**

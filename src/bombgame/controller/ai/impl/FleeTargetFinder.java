@@ -2,7 +2,7 @@ package bombgame.controller.ai.impl;
 
 import bombgame.controller.ai.IPosition;
 import bombgame.controller.ai.TargetFinder;
-import bombgame.controller.gamehandler.IGameHandler2D;
+import bombgame.entities.IField;
 import bombgame.entities.IWall;
 
 public class FleeTargetFinder implements TargetFinder {
@@ -63,18 +63,18 @@ public class FleeTargetFinder implements TargetFinder {
 	 * @return
 	 */
 	protected IPosition search(int xfac, int yfac) {
-		IGameHandler2D handler = ai.getHandler();
+		IField field = ai.getField();
 		int x = ai.getMan().getX();
 		int y = ai.getMan().getY();
 
 		
-		while(getDist( ai.getMan().getX(), ai.getMan().getY(), x, y) < RANGE && isInField(x + xfac,y + yfac,handler)) {
+		while(getDist( ai.getMan().getX(), ai.getMan().getY(), x, y) < RANGE && isInField(x + xfac,y + yfac,field)) {
 			x += xfac;
 			y += yfac;
 		}
 		
 		boolean swap = true;
-		while(handler.getField()[x][y] instanceof IWall) {
+		while(field.getField()[x][y] instanceof IWall) {
 			if(swap) {
 				x-= xfac;
 				swap = false;
@@ -96,8 +96,8 @@ public class FleeTargetFinder implements TargetFinder {
 	 * @param handler - handler that has the field
 	 * @return 
 	 */
-	protected boolean isInField(int x, int y, IGameHandler2D handler) {
-		return x >= 0 && x < handler.getField().length && y >= 0 && y < handler.getField()[0].length;
+	protected boolean isInField(int x, int y, IField field) {
+		return x >= 0 && x < field.getWidth() && y >= 0 && y < field.getHeight();
 	}
 
 }

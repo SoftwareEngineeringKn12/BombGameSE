@@ -11,7 +11,7 @@ import bombgame.controller.ai.ClosedListSelector;
 import bombgame.controller.ai.ExtraCostCalculator;
 import bombgame.controller.ai.IPosition;
 import bombgame.controller.ai.PathFinder;
-import bombgame.controller.gamehandler.IGameHandler2D;
+import bombgame.entities.IField;
 
 
 /**
@@ -60,12 +60,12 @@ public final class PathFinderAStar implements PathFinder {
 	 * @param extraCostCalc- ExtraCostCalculator which will be considered
 	 * @param selector - ClosedListSelector which will be considered 
 	 */
-	public PathFinderAStar(final IGameHandler2D handler, final ExtraCostCalculator extraCostCalc, final ClosedListSelector selector) {
+	public PathFinderAStar(final IField field, final ExtraCostCalculator extraCostCalc, final ClosedListSelector selector) {
 		this.openlist = new PriorityQueue<Cell>();
 		this.closedlist = new TreeSet<Cell>();
 		this.extraCostCalc = extraCostCalc;
 		this.selector = selector;
-		this.inclosed = new boolean[handler.getField().length][handler.getField()[0].length];
+		this.inclosed = new boolean[field.getWidth()][field.getHeight()];
 	}
 	
 	

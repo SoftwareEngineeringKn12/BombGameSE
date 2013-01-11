@@ -7,6 +7,7 @@ import bombgame.controller.mazegen.IMazeGen;
 import bombgame.controller.mazegen.impl.MazeGen;
 import bombgame.entities.IBomb;
 import bombgame.entities.IExplosion;
+import bombgame.entities.IField;
 import bombgame.entities.IGameObject;
 import bombgame.entities.IMan;
 import bombgame.entities.IWall;
@@ -52,6 +53,7 @@ public final class GameCalculator {
 	 * @param man - Man-object that should move
 	 */
 	protected void moveMan( final IMan man) {
+		IField field = handler.getField();
 		
 		switch(man.getDirection()) {
 		
@@ -59,68 +61,68 @@ public final class GameCalculator {
 			break;
 			
 		case Man.UP:
-			if( man.getY() != 0 && !(handler.getField()[man.getX()][man.getY() - 1] instanceof IWall) ) {
+			if( man.getY() != 0 && !(field.getField()[man.getX()][man.getY() - 1] instanceof IWall) ) {
 				
-				if(handler.getField()[man.getX()][man.getY()] == man) {
+				if(field.getField()[man.getX()][man.getY()] == man) {
 					//only replace with null if man is the user of the field
-					handler.getField()[man.getX()][man.getY()] = null;
+					field.getField()[man.getX()][man.getY()] = null;
 				}
 				man.setPos(man.getX(), man.getY() - 1);
 				
-				if(handler.getField()[man.getX()][man.getY()] == null) {
+				if(field.getField()[man.getX()][man.getY()] == null) {
 					//if field is already used e.g. by a bomb or explosion
-					handler.getField()[man.getX()][man.getY()] = man;
+					field.getField()[man.getX()][man.getY()] = man;
 				}
 				
 			}
 			break;
 			
 		case Man.DOWN:
-			if( man.getY() != (handler.getField()[0].length - 1) && !(handler.getField()[man.getX()][man.getY() + 1] instanceof IWall) ) {
+			if( man.getY() != (field.getHeight() - 1) && !(field.getField()[man.getX()][man.getY() + 1] instanceof IWall) ) {
 				
-				if(handler.getField()[man.getX()][man.getY()] == man) {
+				if(field.getField()[man.getX()][man.getY()] == man) {
 					//only replace with null if man is the user of the field
-					handler.getField()[man.getX()][man.getY()] = null;
+					field.getField()[man.getX()][man.getY()] = null;
 				}
 				man.setPos(man.getX(), man.getY() + 1);
 				
-				if(handler.getField()[man.getX()][man.getY()] == null) {
+				if(field.getField()[man.getX()][man.getY()] == null) {
 					//if field is already used e.g. by a bomb or explosion
-					handler.getField()[man.getX()][man.getY()] = man;
+					field.getField()[man.getX()][man.getY()] = man;
 				}
 				
 			}
 			break;
 			
 		case Man.LEFT:
-			if( man.getX() != 0 && !(handler.getField()[man.getX() - 1][man.getY()] instanceof IWall) ) {
+			if( man.getX() != 0 && !(field.getField()[man.getX() - 1][man.getY()] instanceof IWall) ) {
 				
-				if(handler.getField()[man.getX()][man.getY()] == man) {
+				if(field.getField()[man.getX()][man.getY()] == man) {
 					//only replace with null if man is the user of the field
-					handler.getField()[man.getX()][man.getY()] = null;
+					field.getField()[man.getX()][man.getY()] = null;
 				}
 				man.setPos(man.getX() - 1, man.getY());
 				
-				if(handler.getField()[man.getX()][man.getY()] == null) {
+				if(field.getField()[man.getX()][man.getY()] == null) {
 					//if field is already used e.g. by a bomb or explosion
-					handler.getField()[man.getX()][man.getY()] = man;
+					field.getField()[man.getX()][man.getY()] = man;
 				}
 				
 			}
 			break;
 			
 		case Man.RIGHT:
-			if( man.getX() != (handler.getField().length - 1) && !(handler.getField()[man.getX() + 1][man.getY()] instanceof IWall) ) {
+			if( man.getX() != (field.getWidth() - 1) && !(field.getField()[man.getX() + 1][man.getY()] instanceof IWall) ) {
 				
-				if(handler.getField()[man.getX()][man.getY()] == man) {
+				if(field.getField()[man.getX()][man.getY()] == man) {
 					//only replace with null if man is the user of the field
-					handler.getField()[man.getX()][man.getY()] = null;
+					field.getField()[man.getX()][man.getY()] = null;
 				}
 				man.setPos(man.getX() + 1, man.getY());
 				
-				if(handler.getField()[man.getX()][man.getY()] == null) {
+				if(field.getField()[man.getX()][man.getY()] == null) {
 					//if field is already used e.g. by a bomb or explosion
-					handler.getField()[man.getX()][man.getY()] = man;
+					field.getField()[man.getX()][man.getY()] = man;
 				}
 				
 			}
@@ -169,14 +171,15 @@ public final class GameCalculator {
 	 * @return - returns true if Explosion-object was successfully created
 	 */
 	protected boolean nextExplosion(int x, int y, boolean free, List<IExplosion> list) {
-		if( free && x < handler.getField().length && x >= 0 && y < handler.getField()[0].length && y >= 0 && !(handler.getField()[x][y] instanceof IWall)) {
+		IField field = handler.getField();
+		if( free && x < field.getWidth() && x >= 0 && y < field.getHeight() && y >= 0 && !(field.getField()[x][y] instanceof IWall)) {
 			
 			list.add(new Explosion(x, y));
 			
 			
-			if(handler.getField()[x][y] instanceof IBomb) {
+			if(field.getField()[x][y] instanceof IBomb) {
 				IExplosion exp = null;
-				IBomb bomb = (IBomb) handler.getField()[x][y];
+				IBomb bomb = (IBomb) field.getField()[x][y];
 				while(exp == null) {
 					exp = bomb.decrementTimer();
 				}

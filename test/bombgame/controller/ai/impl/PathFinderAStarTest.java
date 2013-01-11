@@ -9,6 +9,7 @@ import bombgame.controller.ai.impl.BombCostCalculator;
 import bombgame.controller.ai.impl.PathFinderAStar;
 import bombgame.controller.ai.impl.Position;
 import bombgame.controller.gamehandler.impl.GameHandler;
+import bombgame.entities.impl.Field;
 import bombgame.entities.impl.GameObject;
 import bombgame.entities.impl.Wall;
 
@@ -18,8 +19,8 @@ public class PathFinderAStarTest extends TestCase {
 	private PathFinderAStar pfas;
 	
 	public void setUp() {
-		gh = new GameHandler(new GameObject[10][10]);
-		pfas = new PathFinderAStar(gh, new BombCostCalculator(gh), new AISelector(gh));
+		gh = new GameHandler(new Field(new GameObject[10][10]));
+		pfas = new PathFinderAStar(gh.getField(), new BombCostCalculator(gh.getField()), new AISelector(gh.getField()));
 	}
 	
 	public void testCalculatePath() {
@@ -35,12 +36,12 @@ public class PathFinderAStarTest extends TestCase {
 		pfas.addOpenList(null);
 		assertEquals(pfas.getOpenlist().size(), 0);
 		
-		PathFinderAStar pfastmp = new PathFinderAStar(gh, null, new AISelector(gh));
+		PathFinderAStar pfastmp = new PathFinderAStar(gh.getField(), null, new AISelector(gh.getField()));
 		pfastmp.setTarget( pfastmp.new Cell(9,9,null));
 		pfastmp.addOpenList(pfastmp.new Cell(2,2,null));
 		assertEquals(pfastmp.getOpenlist().size(), 1);
 		
-		pfastmp = new PathFinderAStar(gh, new BombCostCalculator(gh), null);
+		pfastmp = new PathFinderAStar(gh.getField(), new BombCostCalculator(gh.getField()), null);
 		pfastmp.setTarget(pfastmp.new Cell(9,9,null));
 		pfastmp.addOpenList(pfastmp.new Cell(0,1,null));
 		assertEquals(pfastmp.getOpenlist().size(), 1);

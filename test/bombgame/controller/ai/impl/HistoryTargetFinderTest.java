@@ -5,6 +5,7 @@ import bombgame.controller.ai.impl.HistoryTargetFinder;
 import bombgame.controller.ai.impl.ManAI;
 import bombgame.controller.ai.impl.Position;
 import bombgame.controller.gamehandler.impl.GameHandler;
+import bombgame.entities.impl.Field;
 import bombgame.entities.impl.GameObject;
 import bombgame.entities.impl.Man;
 import bombgame.entities.impl.Wall;
@@ -17,8 +18,8 @@ public class HistoryTargetFinderTest extends TestCase{
 	private GameHandler gh;
 	
 	public void setUp() {
-		gh = new GameHandler(new GameObject[10][10]);
-		ai = new ManAI(new Man(0,0), gh);
+		gh = new GameHandler(new Field(new GameObject[10][10]));
+		ai = new ManAI(new Man(0,0), gh.getField());
 		htf = new HistoryTargetFinder(ai);
 	}
 	
@@ -64,7 +65,7 @@ public class HistoryTargetFinderTest extends TestCase{
 		assertEquals(htf.getTarget(), new Position(0,0));
 		
 		gh.addObject(new Wall(1,2));
-		ai = new ManAI(new Man(0,1), gh);
+		ai = new ManAI(new Man(0,1), gh.getField());
 		htf = new HistoryTargetFinder(ai);
 		
 		htf.findTarget(new Position(0,1),1,0);

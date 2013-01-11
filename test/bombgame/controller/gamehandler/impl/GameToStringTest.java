@@ -4,6 +4,7 @@ import bombgame.controller.ai.impl.ManAI;
 import bombgame.controller.player.impl.Player;
 import bombgame.entities.impl.Bomb;
 import bombgame.entities.impl.Explosion;
+import bombgame.entities.impl.Field;
 import bombgame.entities.impl.GameObject;
 import bombgame.entities.impl.Man;
 import bombgame.entities.impl.Wall;
@@ -15,7 +16,7 @@ public final class GameToStringTest extends TestCase {
 	private GameToString gts;
 	
 	public void setUp() {
-		gh1 = new GameHandler(new GameObject[10][10]);
+		gh1 = new GameHandler(new Field(new GameObject[10][10]));
 		gts = new GameToString(gh1);
 	}
 	
@@ -27,7 +28,7 @@ public final class GameToStringTest extends TestCase {
 		gh1.setPlayer(player);
 		
 		Man man2 = new Man(3,3);
-		ManAI ai = new ManAI(man2,gh1);
+		ManAI ai = new ManAI(man2,gh1.getField());
 		gh1.addAI(ai);
 		
 		gh1.addObject(new Wall(4,0));

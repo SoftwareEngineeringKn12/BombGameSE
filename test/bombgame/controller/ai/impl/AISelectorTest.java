@@ -4,6 +4,7 @@ import bombgame.controller.ai.impl.AISelector;
 import bombgame.controller.ai.impl.Position;
 import bombgame.controller.gamehandler.impl.GameHandler;
 import bombgame.entities.impl.Explosion;
+import bombgame.entities.impl.Field;
 import bombgame.entities.impl.GameObject;
 import bombgame.entities.impl.Wall;
 import junit.framework.TestCase;
@@ -15,8 +16,8 @@ public class AISelectorTest extends TestCase{
 	private AISelector as;
 	
 	public void setUp() {
-		gh = new GameHandler(new GameObject[10][10]);
-		as = new AISelector(gh);
+		gh = new GameHandler(new Field(new GameObject[10][10]));
+		as = new AISelector(gh.getField());
 	}
 	
 	public void testMoveToClosedList() {

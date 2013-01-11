@@ -5,6 +5,7 @@ import bombgame.controller.ai.impl.BombCostCalculator;
 import bombgame.controller.ai.impl.Position;
 import bombgame.controller.gamehandler.impl.GameHandler;
 import bombgame.entities.impl.Bomb;
+import bombgame.entities.impl.Field;
 import bombgame.entities.impl.GameObject;
 
 public class BombCostCalculatorTest extends TestCase {
@@ -13,8 +14,8 @@ public class BombCostCalculatorTest extends TestCase {
 	private BombCostCalculator bcc;
 	
 	public void setUp() {
-		gh = new GameHandler(new GameObject[10][10]);
-		bcc = new BombCostCalculator(gh);
+		gh = new GameHandler(new Field(new GameObject[10][10]));
+		bcc = new BombCostCalculator(gh.getField());
 	}
 	
 	public void testCalcExtraCost() {

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import bombgame.entities.IExplosion;
 import bombgame.entities.impl.Bomb;
 import bombgame.entities.impl.Explosion;
+import bombgame.entities.impl.Field;
 import bombgame.entities.impl.GameObject;
 import bombgame.entities.impl.Man;
 import bombgame.entities.impl.Wall;
@@ -18,10 +19,10 @@ public final class GameCalculatorTest extends TestCase {
 	private GameHandler gh2;
 	
 	public void setUp() {
-		gh1 = new GameHandler(new GameObject[3][3]);
+		gh1 = new GameHandler(new Field(new GameObject[3][3]));
 		gc1 = new GameCalculator(gh1);
 		
-		gh2 = new GameHandler(new GameObject[10][10]);
+		gh2 = new GameHandler(new Field(new GameObject[10][10]));
 		gc2 = new GameCalculator(gh2);
 		
 		

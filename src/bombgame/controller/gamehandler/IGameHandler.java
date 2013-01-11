@@ -5,6 +5,7 @@ import java.util.Observer;
 
 import bombgame.controller.ai.IManAI;
 import bombgame.controller.player.IPlayer;
+import bombgame.entities.IField;
 
 public interface IGameHandler {
 
@@ -12,5 +13,6 @@ public interface IGameHandler {
 	IPlayer getPlayer();
 	List<IManAI> getAIs();
 	void addObserver(Observer observer);
+	IField getField();
 
 }

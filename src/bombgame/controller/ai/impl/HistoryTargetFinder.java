@@ -103,7 +103,7 @@ public final class HistoryTargetFinder implements TargetFinder {
 	 * @param yfac - factor for the x-direction
 	 */
 	protected void findTarget( Position start, int xfac, int yfac) {
-		IGameObject[][] field = ai.getHandler().getField();
+		IGameObject[][] field = ai.getField().getField();
 		
 		int i = 1;
 		int xtmp = start.getX() + xfac * i;

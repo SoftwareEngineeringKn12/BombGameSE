@@ -5,6 +5,7 @@ import bombgame.controller.ai.ClosedListSelector;
 import bombgame.controller.ai.impl.AISelector;
 import bombgame.controller.ai.impl.Position;
 import bombgame.controller.gamehandler.impl.GameHandler;
+import bombgame.entities.impl.Field;
 import bombgame.entities.impl.GameObject;
 import bombgame.entities.impl.Wall;
 
@@ -14,8 +15,8 @@ public class ClosedListSelectorTest extends TestCase{
 	private ClosedListSelector cls;
 	
 	public void setUp() {
-		gh = new GameHandler(new GameObject[10][10]);
-		cls = new AISelector(gh);
+		gh = new GameHandler(new Field(new GameObject[10][10]));
+		cls = new AISelector(gh.getField());
 	}
 	
 	public void testMoveToClosedList() {

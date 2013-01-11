@@ -5,6 +5,7 @@ import org.apache.log4j.PropertyConfigurator;
 import bombgame.controller.gamehandler.impl.GameHandler;
 import bombgame.controller.player.impl.Player;
 import bombgame.entities.IGameObject;
+import bombgame.entities.impl.Field;
 import bombgame.entities.impl.GameObject;
 import bombgame.entities.impl.Man;
 import bombgame.ui.TextUI;
@@ -25,7 +26,7 @@ public final class TextUITest extends TestCase {
 		tui1 = new TextUI(gh);
 		
 		IGameObject field[][] = new GameObject[2][2];
-		GameHandler gh2 = new GameHandler(field);
+		GameHandler gh2 = new GameHandler(new Field(field));
 		gh2.setPlayer(new Player(new Man(0, 0)));
 		tui2 = new TextUI(gh2);
 	}
@@ -44,7 +45,7 @@ public final class TextUITest extends TestCase {
 		} catch (IllegalArgumentException e) {}
 		
 		
-		GameHandler gh2 = new GameHandler(new GameObject[2][2]);
+		GameHandler gh2 = new GameHandler(new Field(new GameObject[2][2]));
 		TextUI tui3 = new TextUI(gh2);
 		tui3.update("j");
 		

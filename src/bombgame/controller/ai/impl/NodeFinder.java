@@ -2,7 +2,7 @@ package bombgame.controller.ai.impl;
 
 import java.util.Arrays;
 
-import bombgame.controller.gamehandler.IGameHandler2D;
+import bombgame.entities.IField;
 import bombgame.entities.IGameObject;
 import bombgame.entities.IWall;
 
@@ -27,16 +27,16 @@ public class NodeFinder {
 	 * Searches through the field given by handler and 
 	 * and returns an ordered (by natural order) Array of all found Nodes.
 	 */
-	public static Node[] findAllNodes(IGameHandler2D handler) {
+	public static Node[] findAllNodes(IField field) {
 		
 		Node[] nodes = new Node[DEF_SIZE];
 		int[] count = {0};
 		
 		//go through the whole field and create a Node if the given place fulfills the conditions
-		for(int i = 0; i < handler.getField().length; i++) {
-			for(int j = 0; j < handler.getField()[0].length; j++) {
+		for(int i = 0; i < field.getWidth(); i++) {
+			for(int j = 0; j < field.getHeight(); j++) {
 				nodes = ensureCapacity(count, nodes);
-				createNode(i,j, handler, nodes, count);
+				createNode(i,j, field, nodes, count);
 			}
 		}
 		
@@ -56,12 +56,12 @@ public class NodeFinder {
 	 * @param x - x-coordinate
 	 * @param y - y-coordinate
 	 */
-	protected static void createNode(int x, int y, IGameHandler2D handler, Node[] nodes, int[] count) {
+	protected static void createNode(int x, int y, IField field, Node[] nodes, int[] count) {
 		
-		IGameObject field[][] = handler.getField();
+		IGameObject f[][] = field.getField();
 		
 		//if it is a Wall it cannot be a Node
-		if(field[x][y] instanceof IWall) {
+		if(f[x][y] instanceof IWall) {
 			return;
 		}
 		
@@ -69,10 +69,10 @@ public class NodeFinder {
 		int directions = 0;
 		
 		//check the directions of the given Position
-		directions += checkDirections(x, y, 1, 0, direction, Node.RIGHT, field);
-		directions += checkDirections(x, y, -1, 0, direction, Node.LEFT, field);
-		directions += checkDirections(x, y, 0, -1, direction, Node.UP, field);
-		directions += checkDirections(x, y, 0, 1, direction, Node.DOWN, field);
+		directions += checkDirections(x, y, 1, 0, direction, Node.RIGHT, f);
+		directions += checkDirections(x, y, -1, 0, direction, Node.LEFT, f);
+		directions += checkDirections(x, y, 0, -1, direction, Node.UP, f);
+		directions += checkDirections(x, y, 0, 1, direction, Node.DOWN, f);
 		
 		Node q = new Node(x, y, directions, direction);
 		addNode(q, nodes, count);

@@ -7,6 +7,7 @@ import bombgame.controller.ai.impl.ManAI;
 import bombgame.controller.gamehandler.IGameHandler;
 import bombgame.controller.gamehandler.impl.GameHandler;
 import bombgame.controller.player.impl.Player;
+import bombgame.entities.IField;
 import bombgame.entities.impl.Man;
 
 /**
@@ -34,6 +35,8 @@ public final class GameHandlerConfiguration {
 	private int numberOfAIs;
 	
 	private GameHandler handler;
+	
+	private IField field;
 	
 	private Player player;
 	
@@ -79,6 +82,7 @@ public final class GameHandlerConfiguration {
 		// Create GameHandler
 		// (to run a minimal game GameHandler needs the width, height and a player.
 		handler = new GameHandler(fieldwidth, fieldheight);
+		field = handler.getField();
 		
 		// Set player
 		handler.setPlayer(player);
@@ -154,9 +158,9 @@ public final class GameHandlerConfiguration {
 		}
 		
 		placeMen(men[TOP_EDGE], 1, 0, 0,0);
-		placeMen(men[BOTTOM_EDGE], 1, 0, 0, handler.getField()[0].length - 1);
+		placeMen(men[BOTTOM_EDGE], 1, 0, 0, field.getHeight() - 1);
 		placeMen(men[LEFT_EDGE], 0, 1,0,0);
-		placeMen(men[RIGHT_EDGE], 0, 1, handler.getField().length - 1,0);
+		placeMen(men[RIGHT_EDGE], 0, 1, field.getWidth()- 1,0);
 		
 	}
 	
@@ -164,14 +168,14 @@ public final class GameHandlerConfiguration {
 	 * Places the men at the given edge of the field.
 	 */
 	private void placeMen(int mencount, int xfac, int yfac, int x, int y) {
-		int distx = handler.getField().length / (mencount + 1);
-		int disty = handler.getField()[0].length / (mencount + 1);
+		int distx = field.getWidth() / (mencount + 1);
+		int disty = field.getHeight() / (mencount + 1);
 
 		
 		while(mencount > 0) {
 			x += distx * xfac;
 			y += disty * yfac;
-			ais.add(new ManAI(new Man(x, y), handler));
+			ais.add(new ManAI(new Man(x, y), field));
 			mencount--;
 		}
 	}

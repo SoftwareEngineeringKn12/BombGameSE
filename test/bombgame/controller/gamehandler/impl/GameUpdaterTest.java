@@ -28,7 +28,7 @@ public final class GameUpdaterTest extends TestCase {
 		gh.addObject(new Man(1, 1));
 		gh.addObject(m);
 		gu.placeBombs();
-		assertEquals(gh.getBombs().size(), 1);
+		assertEquals(gh.getField().getBombs().size(), 1);
 	}
 	
 	public void testUpdateBombs() {
@@ -40,8 +40,8 @@ public final class GameUpdaterTest extends TestCase {
 		}
 		gu.updateBombs();
 		
-		assertEquals(gh.getBombs().size(), 0);
-		assertEquals(gh.getExplosionList().size(), 1);
+		assertEquals(gh.getField().getBombs().size(), 0);
+		assertEquals(gh.getField().getExplosionList().size(), 1);
 	}
 	
 	public void testUpdateExplosion() {
@@ -52,7 +52,7 @@ public final class GameUpdaterTest extends TestCase {
 			gu.updateExplosion();
 		}
 		
-		assertEquals(gh.getExplosionList().size(), 0);
+		assertEquals(gh.getField().getExplosionList().size(), 0);
 	}
 	
 	public void testUpdateMen() {
@@ -66,7 +66,7 @@ public final class GameUpdaterTest extends TestCase {
 		Explosion expl = new Explosion(0, 0);
 		gh.addObject(expl);
 		gu.updateMen();
-		assertEquals(gh.getMen().size(), 0);
+		assertEquals(gh.getField().getMen().size(), 0);
 	}
 	
 	public void testCheckHit() {
@@ -79,7 +79,7 @@ public final class GameUpdaterTest extends TestCase {
 	}
 	
 	public void testUpdateAIs() {
-			gh.addAI(new ManAI(new Man(9,9),gh));
+			gh.addAI(new ManAI(new Man(9,9),gh.getField()));
 			gu.updateAIs();
 	}
 	

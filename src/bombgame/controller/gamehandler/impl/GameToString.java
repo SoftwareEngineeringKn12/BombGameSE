@@ -57,7 +57,7 @@ public final class GameToString {
 
 	protected String bombsToString() {
 		StringBuilder sb = new StringBuilder("Bombs:\n");
-		for(IBomb b : handler.getBombs()) {
+		for(IBomb b : handler.getField().getBombs()) {
 			sb.append(b).append("\n");
 		}
 		return sb.toString();
@@ -72,7 +72,7 @@ public final class GameToString {
 		
 		sb.append("Explosions:\n");
 		
-		for(List<IExplosion> list : handler.getExplosionList()) {
+		for(List<IExplosion> list : handler.getField().getExplosionList()) {
 			sb.append("->Explosion: { ");
 			int i = 0;
 			for(IExplosion exp : list) {
@@ -95,7 +95,7 @@ public final class GameToString {
 	 */
 	protected String fieldToString() {
 		StringBuilder sb = new StringBuilder();
-		IGameObject[][] field = handler.getField();
+		IGameObject[][] field = handler.getField().getField();
 
 		for (int i = 0; i < field[0].length; i++) {
 

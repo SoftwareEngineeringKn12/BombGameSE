@@ -11,7 +11,7 @@ import bombgame.controller.ai.IPosition;
 import bombgame.controller.ai.PathFinder;
 import bombgame.controller.ai.TargetFinder;
 import bombgame.controller.ai.impl.NodeFinder.Node;
-import bombgame.controller.gamehandler.IGameHandler2D;
+import bombgame.entities.IField;
 import bombgame.entities.IMan;
 import bombgame.entities.impl.Man;
 
@@ -81,7 +81,7 @@ public final class ManAI implements IManAI{
 	/**
 	 * Handler wich handles this ManAI-object
 	 */
-	private final IGameHandler2D handler;
+	private final IField field;
 	
 	
 	/**
@@ -146,16 +146,16 @@ public final class ManAI implements IManAI{
 	 * @param man - Man-object controlled by AI
 	 * @param handler - GameHandler in which AI acts
 	 */
-	public ManAI (final IMan man, final IGameHandler2D handler) {
+	public ManAI (final IMan man, final IField field) {
 		this.man = man;
-		this.handler = handler;
+		this.field = field;
 		this.rand = new Random();
 		this.turns = 0;
 		this.path = new LinkedList<IPosition>();
 		this.directionHistory = new LinkedList<Integer>();
 		this.directionCount = new int[NUMBER_OF_DIRECTIONS];
-		this.nodes = NodeFinder.findAllNodes(handler);
-		this.pathfinder = new PathFinderAStar(handler, new BombCostCalculator(handler), new AISelector(handler));
+		this.nodes = NodeFinder.findAllNodes(field);
+		this.pathfinder = new PathFinderAStar(field, new BombCostCalculator(field), new AISelector(field));
 		this.targetfinder = new HistoryTargetFinder(this);
 		
 	}
@@ -245,10 +245,10 @@ public final class ManAI implements IManAI{
 	protected void focusEnemy() {
 		focusedEnemy = null;
 		directionHistory.clear();
-		int size = handler.getMen().size();
+		int size = field.getMen().size();
 		while(size > 1) {
 			int i = rand.nextInt(size);
-			IMan m = handler.getMen().get(i);
+			IMan m = field.getMen().get(i);
 			if( m != this.man) {
 				focusedEnemy = m;
 				return;
@@ -349,8 +349,8 @@ public final class ManAI implements IManAI{
 	 * Returns the GameHandler in which this AI plays.
 	 * @return
 	 */
-	public IGameHandler2D getHandler() {
-		return handler;
+	protected IField getField() {
+		return field;
 	}
 	
 	

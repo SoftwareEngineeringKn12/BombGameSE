@@ -3,7 +3,7 @@ package bombgame.controller.ai.impl;
 
 import bombgame.controller.ai.ClosedListSelector;
 import bombgame.controller.ai.IPosition;
-import bombgame.controller.gamehandler.IGameHandler2D;
+import bombgame.entities.IField;
 import bombgame.entities.impl.Explosion;
 import bombgame.entities.impl.Wall;
 
@@ -19,14 +19,14 @@ public final class AISelector implements ClosedListSelector{
 	/**
 	 * Observed GameHandler
 	 */
-	private final IGameHandler2D handler;
+	private final IField field;
 	
 	/**
 	 * Creates a Selector observing the given GameHandler.
 	 * @param handler - GameHandler observed by this Selector
 	 */
-	public AISelector(final IGameHandler2D handler) {
-		this.handler = handler;
+	public AISelector(final IField field) {
+		this.field = field;
 	}
 	
 	/**
@@ -36,13 +36,13 @@ public final class AISelector implements ClosedListSelector{
 	@Override
 	public boolean moveToClosedList(IPosition pos, int pathcost) {
 		//if Wall is blocking the way immediately put to closed list
-		if(handler.getField()[pos.getX()][pos.getY()] instanceof Wall) {
+		if(field.getField()[pos.getX()][pos.getY()] instanceof Wall) {
 				return true;
 		}
 				
 		//if an Explosion is in the way
-		if(handler.getField()[pos.getX()][pos.getY()] instanceof Explosion) {
-			Explosion exp = (Explosion) handler.getField()[pos.getX()][pos.getY()];
+		if(field.getField()[pos.getX()][pos.getY()] instanceof Explosion) {
+			Explosion exp = (Explosion) field.getField()[pos.getX()][pos.getY()];
 			if(exp.getTimer() >= pathcost) {
 				return true;
 			}

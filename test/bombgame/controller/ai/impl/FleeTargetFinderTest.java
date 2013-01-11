@@ -2,6 +2,7 @@ package bombgame.controller.ai.impl;
 
 import junit.framework.TestCase;
 import bombgame.controller.gamehandler.impl.GameHandler;
+import bombgame.entities.impl.Field;
 import bombgame.entities.impl.GameObject;
 import bombgame.entities.impl.Man;
 import bombgame.entities.impl.Wall;
@@ -13,8 +14,8 @@ public class FleeTargetFinderTest extends TestCase{
 	private GameHandler gh;
 	
 	public void setUp() {
-		gh = new GameHandler(new GameObject[15][15]);
-		ai = new ManAI(new Man(5,5), gh);
+		gh = new GameHandler(new Field(new GameObject[15][15]));
+		ai = new ManAI(new Man(5,5), gh.getField());
 		ftf = new FleeTargetFinder(ai);
 	}
 	
@@ -32,14 +33,14 @@ public class FleeTargetFinderTest extends TestCase{
 		gh.addObject(new Wall(9,10));
 		assertEquals(ftf.search(1,1), new Position(9,9));
 		
-		ManAI ai2 = new ManAI(new Man(10,10) ,gh);
+		ManAI ai2 = new ManAI(new Man(10,10) ,gh.getField());
 		ftf = new FleeTargetFinder(ai2);
 		assertEquals(ftf.search(1,1), new Position(14,14));
 	}
 	
 	public void testIsInField() {
-		assertFalse(ftf.isInField(-1, 10, gh));
-		assertFalse(ftf.isInField(10, -1, gh));
-		assertFalse(ftf.isInField(10, 17, gh));
+		assertFalse(ftf.isInField(-1, 10, gh.getField()));
+		assertFalse(ftf.isInField(10, -1, gh.getField()));
+		assertFalse(ftf.isInField(10, 17, gh.getField()));
 	}
 }
