@@ -290,6 +290,8 @@ public final class ManAI implements IManAI{
 				mode = FLEE_MODE;
 			} else if(mode == FLEE_MODE) {
 				mode = ATK_MODE;
+			} else {
+				mode = ATK_MODE;
 			}
 			return true;
 		}
@@ -347,7 +349,7 @@ public final class ManAI implements IManAI{
 	 * Returns the GameHandler in which this AI plays.
 	 * @return
 	 */
-	protected IGameHandler2D getHandler() {
+	public IGameHandler2D getHandler() {
 		return handler;
 	}
 	
@@ -415,7 +417,7 @@ public final class ManAI implements IManAI{
 	 * Returns the currently focused Man.
 	 * @return - focused enemy
 	 */
-	protected IMan getFocusedEnemy() {
+	public IMan getFocusedEnemy() {
 		return focusedEnemy;
 	}
 	
@@ -449,6 +451,14 @@ public final class ManAI implements IManAI{
 	 */
 	protected boolean getPlaceBomb() {
 		return placebomb;
+	}
+	
+	/**
+	 * Sets the targetfinder to the given one.
+	 * @param tf - targetfinder
+	 */
+	protected void setTargetFinder(final TargetFinder tf) {
+		targetfinder = tf;
 	}
 	
 	/**

@@ -72,11 +72,21 @@ public class ManAITest extends TestCase {
 		
 		ai.getPath().push(new Position(man.getX() + 4, man.getY()));
 		ai.calcNextStep();
+		
+		ai.getPath().clear();
+		ai.setTargetFinder(null);
+		ai.calcNextStep();
 	}
 	
 	public void testCheckTargetReached() {
 		ai.setTarget( new Position(man.getX(),man.getY() + 1));
 		assertFalse(ai.checkTargetReached());
+		ai.setTarget( new Position(man.getX(),man.getY()));
+		ai.setMode(1);
+		assertTrue(ai.checkTargetReached());
+		ai.setTarget( new Position(man.getX(),man.getY()));
+		ai.setMode(12);
+		assertTrue(ai.checkTargetReached());
 	}
 	
 	public void testCalcManDirection() {
