@@ -168,7 +168,7 @@ public final class ManAI implements IManAI{
 	public void calcNextStep() {
 		incrementTurns();
 		
-		//if target is reached do sth. 
+		//if target is reached 
 		if(checkTargetReached()) {
 			//no movement in this round anymore
 			return;
@@ -182,13 +182,20 @@ public final class ManAI implements IManAI{
 				if(focusedEnemy == null) {
 					return;
 				}
-				target = targetfinder.searchTarget();
+				//set historytargetfinder
+				if(targetfinder == null ) {
+					targetfinder = new HistoryTargetFinder(this);
+				}
 				placebomb = true;
 			} else if ( mode == FLEE_MODE) {
-				return;
+				if(targetfinder == null ) {
+					targetfinder = new FleeTargetFinder(this);
+				}
+				placebomb = false;
 			} else {
 				return;
 			}
+			target = targetfinder.searchTarget();
 		}
 		
 		Position start = new Position(man.getX(), man.getY());
@@ -275,9 +282,15 @@ public final class ManAI implements IManAI{
 		
 		if(target != null && man.getX() == target.getX() && man.getY() == target.getY()) {
 			target = null;
+			targetfinder = null;
 			man.setPlaceBomb(placebomb);
 			man.setDirection(Man.NO_DIR);
 			placebomb = false;
+			if(mode == ATK_MODE) {
+				mode = FLEE_MODE;
+			} else if(mode == FLEE_MODE) {
+				mode = ATK_MODE;
+			}
 			return true;
 		}
 		return false;
