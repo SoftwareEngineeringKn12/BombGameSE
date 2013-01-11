@@ -50,9 +50,11 @@ public class ManAITest extends TestCase {
 		ai.setMode( ManAI.FLEE_MODE);
 		ai.setTarget( null);
 		ai.calcNextStep();
-		assertTrue(ai.getPath().isEmpty());
-		assertNull(ai.getTarget());
+		assertFalse(ai.getPath().isEmpty());
+		assertNotNull(ai.getTarget());
 		
+		ai.getPath().clear();
+		ai.setTarget( null);
 		ai.setMode( 123);
 		ai.calcNextStep();
 		assertTrue(ai.getPath().isEmpty());
