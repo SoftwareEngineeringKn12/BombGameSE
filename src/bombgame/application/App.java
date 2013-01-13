@@ -13,9 +13,14 @@ import bombgame.ui.gui.GraphicalUI;
  */
 public final class App {
 	
-	
+	/**
+	 * Thread that holds TUI.
+	 */
 	private Thread tuithread;
 	
+	/**
+	 * Thread that holds GUI.
+	 */
 	private Thread guithread;
 	
 	/**
