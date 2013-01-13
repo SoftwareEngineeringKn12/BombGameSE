@@ -4,6 +4,15 @@
   <artifactId>BombGameSE</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>BombGameSE</name>
+  
+  <repositories>
+	  <repository>
+		<id>slick</id>
+		<name>slick</name>
+		<url>http://slick.cokeandcode.com/mavenrepo<;/url>
+	  </repository>
+  </repositories>
+  
   <build>
     <sourceDirectory>src</sourceDirectory>
     <testSourceDirectory>test</testSourceDirectory>
@@ -37,7 +46,7 @@
     	<version>2.8.5</version>
 	</dependency>
 	<dependency>
-		<groupId>slick</groupId>
+		<groupId>com.cokeandcode.slick</groupId>
 		<artifactId>slick</artifactId>
 		<version>274</version>
 	</dependency>
