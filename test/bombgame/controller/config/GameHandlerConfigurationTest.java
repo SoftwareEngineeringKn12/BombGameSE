@@ -6,9 +6,11 @@ import junit.framework.TestCase;
 public final class GameHandlerConfigurationTest extends TestCase {
 
 	GameHandlerConfiguration config;
+	GameHandlerConfiguration config2;
 	
 	public void setUp() {
 		config = new GameHandlerConfiguration(0, 0, 0);
+		config2 = new GameHandlerConfiguration(30, 20, 3);
 	}
 	
 	public void testSetterGetter() {
@@ -36,6 +38,11 @@ public final class GameHandlerConfigurationTest extends TestCase {
 		config.setFieldHeight(GameHandlerConfiguration.MAX_HEIGHT+1);
 		config.setNumberOfAIs(GameHandlerConfiguration.MAXAI+1);
 		assertFalse(config.checkConfiguration());
+	}
+	
+	public void testCreateSingelGameHandler() {
+		assertNotNull(config2.createSingleGameHandler());
+		assertNotNull(config2.createSingleGameHandler());
 	}
 	
 	public void testCreateGameHandler() {

@@ -26,6 +26,8 @@ public final class GameHandlerConfiguration {
 	public static final int LEFT_EDGE = 2;
 	public static final int RIGHT_EDGE = 3;
 	
+	private IGameHandler singlehandler;
+	
 	public static final int EDGES = 4;
 	
 	private int fieldwidth;
@@ -63,6 +65,7 @@ public final class GameHandlerConfiguration {
 		numberOfAIs = numberAis;
 		
 		ais = new LinkedList<ManAI>();
+		singlehandler = null;
 	}
 	
 	/**
@@ -93,6 +96,13 @@ public final class GameHandlerConfiguration {
 		}
 		
 		return handler;
+	}
+	
+	public IGameHandler createSingleGameHandler() {
+		if(singlehandler == null) {
+			singlehandler = createGameHandler();
+		}
+		return singlehandler;
 	}
 	
 	/**

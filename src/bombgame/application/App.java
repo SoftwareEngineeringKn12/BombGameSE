@@ -1,11 +1,10 @@
 package bombgame.application;
 
-import java.util.Scanner;
 import org.apache.log4j.PropertyConfigurator;
 
 import bombgame.controller.config.GameHandlerConfiguration;
 import bombgame.ui.TextUI;
-import bombgame.ui.UserInterface;
+import bombgame.ui.gui.GraphicalUI;
 
 /**
  * 
@@ -14,15 +13,10 @@ import bombgame.ui.UserInterface;
  */
 public final class App {
 	
-	/**
-	 * Scanner for TUI
-	 */
-	private Scanner in;
 	
-	/**
-	 * TUI
-	 */
-	private UserInterface tui;
+	private Thread tuithread;
+	
+	private Thread guithread;
 	
 	/**
 	 * Configures log4j, creates Scanner and TUI.
@@ -31,24 +25,21 @@ public final class App {
 		// Configure log4j
 		PropertyConfigurator.configureAndWatch("log4j.properties");
 		
-		// Scanner for TUI
-		in = new Scanner(System.in);
-		
 		// Create TUI
 		GameHandlerConfiguration config = new GameHandlerConfiguration(30, 20, 3);
-		tui = new TextUI(config.createGameHandler());
+		TextUI tui = new TextUI(config.createSingleGameHandler());
+		GraphicalUI gui = new GraphicalUI("BombGameSE", config.createSingleGameHandler());
+		
+		tuithread = new Thread(new TUIThread(tui));
+		guithread = new Thread(new SlickThread(gui));
 	}
 	
 	/**
 	 * Starts the TUI loop
 	 */
 	public void start() {
-		// LOOP
-		boolean cont = true;
-		while(cont) {
-			cont = tui.update(in.next());
-		}
-		in.close();
+		tuithread.start();
+		guithread.start();
 	}
 
 	/**
