@@ -12,6 +12,7 @@ public class AppTest extends TestCase {
 	
 	public void testStart() {
 		//application.start();
+		assertTrue(true);
 	}
 	
 }
