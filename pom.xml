@@ -5,14 +5,14 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>BombGameSE</name>
   
-  <repositories>
-	  <repository>
-		<id>slick</id>
-		<name>slick</name>
-		<url>http://slick.cokeandcode.com/mavenrepo<;/url>
-	  </repository>
-  </repositories>
-  
+	<repositories>
+		<repository>
+			<id>slick</id>
+			<name>slick</name>
+			<url>http://slick.cokeandcode.com/mavenrepo<;/url>
+		</repository>
+	</repositories>
+
   <build>
     <sourceDirectory>src</sourceDirectory>
     <testSourceDirectory>test</testSourceDirectory>
