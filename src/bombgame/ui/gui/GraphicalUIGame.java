@@ -124,6 +124,7 @@ public final class GraphicalUIGame extends BasicGameState {
 	throws SlickException {
 	
 		handler.getPlayer().move(user_input);
+		user_input = '?';
 		handler.updateAll();
 		field = handler.getField().getField();
 		}
