@@ -8,7 +8,7 @@
 	<repository>
 		<id>slick</id>
 		<name>slick</name>
-		<url>http://slick.cokeandcode.com/mavenrepo<;/url>
+		<url>http://slick.cokeandcode.com/mavenrepo</url>
 	</repository>
   </repositories>
   <build>
