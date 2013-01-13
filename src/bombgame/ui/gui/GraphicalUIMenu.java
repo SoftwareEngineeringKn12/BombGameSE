@@ -85,22 +85,4 @@ public final class GraphicalUIMenu extends BasicGameState implements ComponentLi
 			container.exit();
 		}
 	}
-	
-	/*
-	public void keyReleased(int key, char c) {
-		if (key == Input.KEY_DOWN) {
-			selected++;
-			if (selected > numberOfMenuItems) {
-				selected = 0;
-			}
-		}
-		if (key == Input.KEY_UP) {
-			selected--;
-			if (selected < 1) {
-				selected = numberOfMenuItems;
-			}
-		}
-	}
-	*/
-
 }

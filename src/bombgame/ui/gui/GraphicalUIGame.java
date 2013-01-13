@@ -12,13 +12,17 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-import bombgame.controller.ai.IManAI;
 import bombgame.controller.gamehandler.IGameHandler;
 import bombgame.entities.IBomb;
 import bombgame.entities.IExplosion;
-import bombgame.entities.IGameObject;
+import bombgame.entities.IField;
 import bombgame.entities.IMan;
 
+/**
+ * Defines the game component of the gui.
+ * @author Jega, Rookfighter
+ *
+ */
 public final class GraphicalUIGame extends BasicGameState {
 	
 	public static final int ID = 2;
@@ -33,7 +37,7 @@ public final class GraphicalUIGame extends BasicGameState {
 	//private int tile_size = 30; // 30 * 30 tiles
 	
 	private IGameHandler handler;
-	private IGameObject[][] field;
+	private IField field;
 	private char user_input = '?';
 	
 	private static final String WALL = "res/wall.png";
@@ -50,31 +54,37 @@ public final class GraphicalUIGame extends BasicGameState {
 	private int width_px;
 	private int height_px;
 	
-	private GameContainer container;
 	private StateBasedGame game;
 	
 	//test
 	Animation anim;
 	
+	/**
+	 * Creates an interface for a bomberman game.
+	 * @param handler - handler of the game.
+	 */
 	public GraphicalUIGame(IGameHandler handler) {
 		this.handler = handler;
-		field = handler.getField().getField();
+		field = handler.getField();
 	}
 	
+	/**
+	 * Initializes the interface.
+	 */
 	public void init(GameContainer container, StateBasedGame game)
 	throws SlickException {
 	
-		this.container = container;
 		this.game = game;
 		
 		// Tile size
-		int width = field.length;
-		int height = field[0].length;
+		int width = field.getWidth();
+		int height = field.getHeight();
 		
-		// Real display size
+		// pixel size of each element
 		width_px = container.getWidth() / width;
 		height_px = container.getHeight() / height;
 		
+		// load images
 		wall_img = new Image(WALL);
 		path_img = new Image(PATH);
 		man_img = new Image(MAN);
@@ -83,35 +93,27 @@ public final class GraphicalUIGame extends BasicGameState {
 		
 		//container.setTargetFrameRate(80);
 		container.setMinimumLogicUpdateInterval(250);
-		
-		// test
-		//anim = new Animation(new Image[]{man_img, man_img, man_img}, 250);
 	}
 	
+	/**
+	 * Renders the images for the gui.
+	 */
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 	throws SlickException {
 		
 		// Go through the complete field
-		for (int i = 0; i < field[0].length; i++) {
-			for (int j = 0; j < field.length; j++) {
+		for (int i = 0; i < field.getHeight(); i++) {
+			for (int j = 0; j < field.getWidth(); j++) {
 					int x = j * width_px;
-						int y = i * height_px;
+					int y = i * height_px;
 		
-				if (field[j][i] == null) {
+				if (field.getField()[j][i] == null) {
 					path_img.draw(x, y, width_px, height_px);
-				} else if (field[j][i] instanceof IMan) {
-				
-					/*if (changed) {
-					for (IManAI ai : handler.getAIs()) {
-					smoothMove(ai.getMan().getX(), ai.getMan().getY());
-					}
-					changed = false;
-					}*/
-					
+				} else if (field.getField()[j][i] instanceof IMan) {
 					man_img.draw(x, y, width_px, height_px);
-				} else if (field[j][i] instanceof IBomb) {
+				} else if (field.getField()[j][i] instanceof IBomb) {
 					bomb_img.draw(x, y, width_px, height_px);
-				} else if (field[j][i] instanceof IExplosion) {
+				} else if (field.getField()[j][i] instanceof IExplosion) {
 					explosion_img.draw(x, y, width_px, height_px);
 				} else {
 					wall_img.draw(x, y, width_px, height_px);
@@ -120,47 +122,64 @@ public final class GraphicalUIGame extends BasicGameState {
 		}
 	}
 	
+	/**
+	 * Updates the logic of the game.
+	 */
 	public void update(GameContainer container, StateBasedGame game, int delta)
 	throws SlickException {
 	
 		handler.getPlayer().move(user_input);
-		user_input = '?';
 		handler.updateAll();
-		field = handler.getField().getField();
-		}
+		field = handler.getField();
+	}
 		
+	/**
+	 * Returns the ID of this component.
+	 */
 	public int getID() {
 		return ID;
 	}
 	
+	/**
+	 * Checks key inputs.
+	 */
 	public void keyPressed(int key, char c) {
 		if (key == Input.KEY_W) {
 			user_input = UP;
 		}
-		
 		if (key == Input.KEY_A) {
 			user_input = LEFT;
 		}
-		
 		if (key == Input.KEY_S) {
 			user_input = DOWN;
 		}
-		
 		if (key == Input.KEY_D) {
 			user_input = RIGHT;
 		}
-		
 		if (key == Input.KEY_SPACE) {
 			user_input = BOMB;
 		}
-		
 		if (key == Input.KEY_ESCAPE) {
 			game.enterState(GraphicalUIMenu.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
 		}
 	}
 	
 	public void keyReleased(int key, char c) {
-		//user_input = '?';
+		if (key == Input.KEY_W && user_input == UP) {
+			user_input = '?';
+		}
+		if (key == Input.KEY_A && user_input == LEFT) {
+			user_input = '?';
+		}
+		if (key == Input.KEY_S && user_input == DOWN) {
+			user_input = '?';
+		}
+		if (key == Input.KEY_D && user_input == RIGHT) {
+			user_input = '?';
+		}
+		if (key == Input.KEY_SPACE && user_input == BOMB) {
+			user_input = '?';
+		}
 	}
 
 }
