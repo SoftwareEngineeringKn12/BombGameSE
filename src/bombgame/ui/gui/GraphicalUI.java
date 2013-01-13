@@ -34,6 +34,7 @@ public final class GraphicalUI extends StateBasedGame {
 	public void initStatesList(GameContainer container) {
 		addState(new GraphicalUIMenu());
 		addState(new GraphicalUIGame(handler));
+		addState(new GraphicalUIGameOver(handler));
 	}
 
 }

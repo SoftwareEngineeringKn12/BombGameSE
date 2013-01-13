@@ -14,5 +14,6 @@ public interface IGameHandler {
 	List<IManAI> getAIs();
 	void addObserver(Observer observer);
 	IField getField();
+	boolean gameOver();
 
 }

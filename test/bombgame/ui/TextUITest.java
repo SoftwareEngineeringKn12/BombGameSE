@@ -28,6 +28,7 @@ public final class TextUITest extends TestCase {
 		IGameObject field[][] = new GameObject[2][2];
 		GameHandler gh2 = new GameHandler(new Field(field));
 		gh2.setPlayer(new Player(new Man(0, 0)));
+		gh2.addObject(new Man(1,1));
 		tui2 = new TextUI(gh2);
 	}
 	
@@ -36,6 +37,7 @@ public final class TextUITest extends TestCase {
 	}
 	
 	public void testUpdate() {
+		
 		tui2.update("d");
 		tui2.update("s");
 		

@@ -25,7 +25,7 @@ public final class App {
 		// Configure log4j
 		PropertyConfigurator.configureAndWatch("log4j.properties");
 		
-		// Create TUI
+		// Create TUI & GUI
 		GameHandlerConfiguration config = new GameHandlerConfiguration(30, 20, 3);
 		TextUI tui = new TextUI(config.createSingleGameHandler());
 		GraphicalUI gui = new GraphicalUI("BombGameSE", config.createSingleGameHandler());

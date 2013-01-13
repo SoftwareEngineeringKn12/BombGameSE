@@ -32,7 +32,7 @@ public final class GraphicalUIMenu extends BasicGameState implements ComponentLi
 	private StateBasedGame game;
 	
 	public void init(GameContainer container, StateBasedGame game)
-	throws SlickException {
+			throws SlickException {
 	
 		this.container = container;
 		this.game = game;
@@ -58,13 +58,13 @@ public final class GraphicalUIMenu extends BasicGameState implements ComponentLi
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
-	throws SlickException {
+			throws SlickException {
 		menu_start.render(container, g);
 		menu_exit.render(container, g);
 		}
 		
 	public void update(GameContainer container, StateBasedGame game, int delta)
-		throws SlickException {
+			throws SlickException {
 		
 		
 	}
@@ -74,7 +74,6 @@ public final class GraphicalUIMenu extends BasicGameState implements ComponentLi
 	}
 	
 	public void componentActivated(AbstractComponent source) {
-		System.out.println("activated");
 		
 		if (source == menu_start) {
 			game.enterState(GraphicalUIGame.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));

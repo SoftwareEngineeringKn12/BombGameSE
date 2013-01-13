@@ -128,9 +128,11 @@ public final class GraphicalUIGame extends BasicGameState {
 	public void update(GameContainer container, StateBasedGame game, int delta)
 	throws SlickException {
 	
+		if(handler.gameOver()) {
+			game.enterState(GraphicalUIGameOver.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+		}
 		handler.getPlayer().move(user_input);
 		handler.updateAll();
-		field = handler.getField();
 	}
 		
 	/**
@@ -175,9 +177,6 @@ public final class GraphicalUIGame extends BasicGameState {
 			user_input = '?';
 		}
 		if (key == Input.KEY_D && user_input == RIGHT) {
-			user_input = '?';
-		}
-		if (key == Input.KEY_SPACE && user_input == BOMB) {
 			user_input = '?';
 		}
 	}

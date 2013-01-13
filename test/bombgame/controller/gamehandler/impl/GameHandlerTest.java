@@ -180,4 +180,11 @@ public final class GameHandlerTest extends TestCase {
 	public void testToString() {
 		
 	}
+	
+	public void testGameOver() {
+		assertTrue(gh1.gameOver());
+		gh1.addObject(new Man(0,0));
+		gh1.addObject(new Man(1,1));
+		assertFalse(gh1.gameOver());
+	}
 }

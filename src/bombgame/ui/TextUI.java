@@ -44,6 +44,11 @@ public final class TextUI implements UserInterface, Observer {
 	 */
 	@Override
 	public boolean update(String str) {
+		if(handler.gameOver()) {
+			logger.info("Game Over");
+			return false;
+		}
+		
 		if (handler.getPlayer() != null) {
 			handler.getPlayer().move(str.charAt(0));
 		}

@@ -316,6 +316,13 @@ public final class GameHandler extends Observable implements IGameHandler {
 	}
 	
 	/**
+	 * Returns true if the game is over.
+	 */
+	public boolean gameOver() {
+		return field.getMen().size() < 2;
+	}
+	
+	/**
 	 * Calls GameToString to convert the game into a String
 	 * for console output.
 	 */
