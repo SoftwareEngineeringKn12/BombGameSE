@@ -36,11 +36,7 @@ public final class GameHandlerConfiguration {
 	
 	private int numberOfAIs;
 	
-	private GameHandler handler;
-	
 	private IField field;
-	
-	private Player player;
 	
 	private List<ManAI> ais;
 	
@@ -80,11 +76,11 @@ public final class GameHandlerConfiguration {
 		}
 		
 		// Create player
-		player = new Player(new Man(fieldwidth/2, fieldheight/2));
+		Player player = new Player(new Man(fieldwidth/2, fieldheight/2));
 		
 		// Create GameHandler
 		// (to run a minimal game GameHandler needs the width, height and a player.
-		handler = new GameHandler(fieldwidth, fieldheight);
+		GameHandler handler = new GameHandler(fieldwidth, fieldheight);
 		field = handler.getField();
 		
 		// Set player
@@ -98,6 +94,10 @@ public final class GameHandlerConfiguration {
 		return handler;
 	}
 	
+	/**
+	 * Creates a single GameHandler and returns always same reference.
+	 * @return - gamehandler
+	 */
 	public IGameHandler createSingleGameHandler() {
 		if(singlehandler == null) {
 			singlehandler = createGameHandler();

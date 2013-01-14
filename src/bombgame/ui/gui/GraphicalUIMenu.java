@@ -13,74 +13,92 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
+/**
+ * Creates a main menu.
+ * @author Jega
+ *
+ */
 public final class GraphicalUIMenu extends BasicGameState implements ComponentListener {
 
 	public static final int ID = 1;
+	
+	private static final float NORMAL_COL = 0.7f;
+	private static final float MOUSEOVER_COL = 0.9f;
 	
 	private static final String CURSOR = "res/cursor.png";
 	private static final String MENU_START_IMAGE = "res/menu_start.png";
 	private static final String MENU_EXIT_IMAGE = "res/menu_exit.png";
 	
-	private MouseOverArea menu_start;
-	//private MouseOverArea menu_configuration;
-	//private MouseOverArea menu_instructions;
-	private MouseOverArea menu_exit;
-	//private int numberOfMenuItems = 2;
-	//private int selected;
+	private MouseOverArea menustart;
+	private MouseOverArea menuexit;
 	
 	private GameContainer container;
 	private StateBasedGame game;
 	
+	/**
+	 * Initializes the menu.
+	 */
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
 	
 		this.container = container;
 		this.game = game;
-		//selected = 1;
 		
 		// Menus
 		Image start = new Image(MENU_START_IMAGE);
 		Image exit = new Image(MENU_EXIT_IMAGE);
 		
-		menu_start = new MouseOverArea(container, start, container.getWidth()
+		menustart = new MouseOverArea(container, start, container.getWidth()
 		/ 2 - start.getWidth() / 2, container.getHeight() / 2
 		- (start.getHeight()), this);
-		menu_start.setNormalColor(new Color(1, 1, 1, 0.7f));
-		menu_start.setMouseOverColor(new Color(1, 1, 1, 0.9f));
+		menustart.setNormalColor(new Color(1, 1, 1, NORMAL_COL));
+		menustart.setMouseOverColor(new Color(1, 1, 1, MOUSEOVER_COL));
 		
-		menu_exit = new MouseOverArea(container, exit, container.getWidth() / 2
+		menuexit = new MouseOverArea(container, exit, container.getWidth() / 2
 		- exit.getWidth() / 2, container.getHeight() / 2, this);
-		menu_exit.setNormalColor(new Color(1, 1, 1, 0.7f));
-		menu_exit.setMouseOverColor(new Color(1, 1, 1, 0.9f));
+		menuexit.setNormalColor(new Color(1, 1, 1, NORMAL_COL));
+		menuexit.setMouseOverColor(new Color(1, 1, 1, MOUSEOVER_COL));
 		
 		// Set Cursor
 		container.setMouseCursor(CURSOR, 0, 0);
 	}
 	
+	/**
+	 * Renders the buttons of the menu.
+	 */
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
-		menu_start.render(container, g);
-		menu_exit.render(container, g);
-		}
-		
+		menustart.render(container, g);
+		menuexit.render(container, g);
+	}
+	
+	/**
+	 * Does nothing.
+	 */
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		
 		
 	}
 	
+	/**
+	 * Returns the ID of this state.
+	 */
 	public int getID() {
 		return ID;
 	}
 	
+	/**
+	 * Checks button hits.
+	 */
 	public void componentActivated(AbstractComponent source) {
 		
-		if (source == menu_start) {
+		if (source.equals(menustart)) {
 			game.enterState(GraphicalUIGame.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
 			// Create new game
 			// deactivate menu
 			// ...
-		} else if (source == menu_exit) {
+		} else if (source.equals(menuexit)) {
 			container.exit();
 		}
 	}

@@ -172,7 +172,8 @@ public final class GameCalculator {
 	 */
 	protected boolean nextExplosion(int x, int y, boolean free, List<IExplosion> list) {
 		IField field = handler.getField();
-		if( free && x < field.getWidth() && x >= 0 && y < field.getHeight() && y >= 0 && !(field.getField()[x][y] instanceof IWall)) {
+		boolean tmp = free && x < field.getWidth() && x >= 0 && y < field.getHeight();
+		if( tmp && y >= 0 && !(field.getField()[x][y] instanceof IWall)) {
 			
 			list.add(new Explosion(x, y));
 			
@@ -205,7 +206,7 @@ public final class GameCalculator {
 	 * @param height - height of field
 	 */
 	protected void initializeField(final int width, final int height) {
-		IMazeGen generator = new MazeGen(width, height); //!! to creator class
+		IMazeGen generator = new MazeGen(width, height);
 		IGameObject[][] field = new GameObject[width][height];
 
 		generator.genNonPerfectMaze();

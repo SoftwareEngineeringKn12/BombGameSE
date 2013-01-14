@@ -169,9 +169,11 @@ public final class MazeGen implements IMazeGen {
 			while (!foundWay && !allChecked) {
 
 				// Check if theres a way
-				if (!temp.equals(temp = tryDirection(temp, checked))) {
+				Cell tmp =tryDirection(temp, checked);
+				if (!temp.equals(tmp)) {
 					foundWay = true;
 				}
+				temp = tmp;
 
 				if (!foundWay) {
 					if (checked[0] && checked[1] && checked[2] && checked[3]) {
@@ -225,7 +227,8 @@ public final class MazeGen implements IMazeGen {
 			wayToTemp = new Cell(temp.x, temp.y - 1);
 			checked[2] = true;
 			break;
-		default: //case 3:
+		//case 3:
+		default: 
 			// W
 			tryDirection = new Cell(temp.x - 2, temp.y);
 			wayToTemp = new Cell(temp.x - 1, temp.y);

@@ -10,7 +10,7 @@ public class FleeTargetFinder implements TargetFinder {
 	/**
 	 * Flee range.
 	 */
-	private final static int RANGE = 10;
+	private static final int RANGE = 10;
 	
 	/**
 	 * Ai that wants to flee.

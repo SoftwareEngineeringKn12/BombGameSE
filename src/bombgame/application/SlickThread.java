@@ -5,6 +5,11 @@ import org.newdawn.slick.SlickException;
 
 import bombgame.ui.gui.GraphicalUI;
 
+/**
+ * Creates a Thread for the SlickGUI.
+ * @author Rookfighter
+ *
+ */
 public class SlickThread implements Runnable{
 
 	private AppGameContainer container;
@@ -12,26 +17,29 @@ public class SlickThread implements Runnable{
 	private static final int WIDTH = 800;
 	private static final int HEIGHT = 600;
 	
+	/**
+	 * Creates a Thread for the given GUI.
+	 * @param gui - gui that runs in the Thread.
+	 */
 	public SlickThread(GraphicalUI gui) {
 		try {
 			container = new AppGameContainer(gui);
 			container.setDisplayMode(WIDTH, HEIGHT, false);
 			container.setIcon(ICON);
 		} catch (SlickException e) {
-			e.printStackTrace();
+			//nothing
 		}
 	}
 	
+	/**
+	 * Starts the GUI.
+	 */
 	public void run() {
 		try {
 			container.start();
 		} catch (SlickException e) {
-			e.printStackTrace();
+			//nothing
 		}
-	}
-	
-	protected AppGameContainer getContainer() {
-		return container;
 	}
 
 }

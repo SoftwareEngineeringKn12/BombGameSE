@@ -7,11 +7,26 @@ import bombgame.ui.TextUI;
 import bombgame.ui.gui.GraphicalUI;
 
 /**
- * 
+ * Starts the game.
  * @author Rookfighter
  *
  */
 public final class App {
+	
+	/**
+	 * Width of the field.
+	 */
+	private static final int WIDTH = 30;
+	
+	/**
+	 * Height of the field.
+	 */
+	private static final int HEIGHT = 20;
+	
+	/**
+	 * Number of AIs.
+	 */
+	private static final int AIS = 3;
 	
 	/**
 	 * Thread that holds TUI.
@@ -31,7 +46,7 @@ public final class App {
 		PropertyConfigurator.configureAndWatch("log4j.properties");
 		
 		// Create TUI & GUI
-		GameHandlerConfiguration config = new GameHandlerConfiguration(30, 20, 3);
+		GameHandlerConfiguration config = new GameHandlerConfiguration(WIDTH, HEIGHT, AIS);
 		TextUI tui = new TextUI(config.createSingleGameHandler());
 		GraphicalUI gui = new GraphicalUI("BombGameSE", config.createSingleGameHandler());
 		
