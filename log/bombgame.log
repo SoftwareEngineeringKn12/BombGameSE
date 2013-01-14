@@ -484,3 +484,39 @@ Explosions:
 
 2013-01-13 22:50:14,962 INFO  [main] bombgame.ui.TextUI: 
 Game Over
+2013-01-14 12:17:35,891 INFO  [main] bombgame.ui.TextUI: 
+Players:
+-> Player: [1] [0] Direction: 3
+AI:
+Bombs:
+Explosions:
+
+ -  M 
+ -  M 
+
+2013-01-14 12:17:35,901 INFO  [main] bombgame.ui.TextUI: 
+Players:
+-> Player: [1] [1] Direction: 2
+AI:
+Bombs:
+Explosions:
+
+ -  - 
+ -  M 
+
+2013-01-14 12:17:35,901 INFO  [main] bombgame.ui.TextUI: 
+Game Over
+2013-01-14 12:17:35,901 INFO  [main] bombgame.ui.TextUI: 
+Players:
+null
+AI:
+Bombs:
+Explosions:
+
+ M  - 
+ -  M 
+
+2013-01-14 12:27:28,465 INFO  [main] bombgame.ui.TextUI: 
+Game Over
+2013-01-14 12:30:10,295 INFO  [main] bombgame.ui.TextUI: 
+Game Over

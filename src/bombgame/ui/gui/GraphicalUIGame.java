@@ -131,7 +131,9 @@ public final class GraphicalUIGame extends BasicGameState {
 		if(handler.gameOver()) {
 			game.enterState(GraphicalUIGameOver.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
 		}
-		handler.getPlayer().move(user_input);
+		if(handler.getPlayer() != null) {
+			handler.getPlayer().move(user_input);
+		}
 		handler.updateAll();
 	}
 		

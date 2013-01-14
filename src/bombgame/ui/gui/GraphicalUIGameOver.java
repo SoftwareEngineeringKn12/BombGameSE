@@ -26,10 +26,10 @@ public class GraphicalUIGameOver extends BasicGameState{
 	private static Image aiwin;
 	private static Image playerwin;
 	private boolean win;
+	private IGameHandler handler;
 
 	public GraphicalUIGameOver(IGameHandler handler) {
-		this.win = handler.getField().getMen().contains(handler.getPlayer().getMan());
-		
+		this.handler = handler;
 	}
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1)
@@ -43,6 +43,11 @@ public class GraphicalUIGameOver extends BasicGameState{
 	@Override
 	public void render(GameContainer cont, StateBasedGame game, Graphics arg2)
 			throws SlickException {
+		
+		if(handler.getPlayer() != null) {
+			this.win = handler.getField().getMen().contains(handler.getPlayer().getMan());
+		}
+		
 		gameover.draw((cont.getWidth()-WIDTH) / 2 ,(cont.getHeight() - HEIGHT) / 2, WIDTH, HEIGHT);
 		if(win) {
 			playerwin.draw((cont.getWidth()-WIDTH) / 2, (cont.getHeight() - HEIGHT) / 2 + HEIGHT, WIDTH, HEIGHT);

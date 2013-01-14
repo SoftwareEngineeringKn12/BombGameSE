@@ -51,5 +51,12 @@ public final class TextUITest extends TestCase {
 		TextUI tui3 = new TextUI(gh2);
 		tui3.update("j");
 		
+		GameHandler gh3 = new GameHandler(new Field(new GameObject[2][2]));
+		gh3.addObject(new Man(0,0));
+		gh3.addObject(new Man(1,1));
+		TextUI tui4 = new TextUI(gh3);
+		assertTrue(tui4.update("?"));
+		
+		
 	}
 }

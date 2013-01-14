@@ -29,5 +29,9 @@ public class SlickThread implements Runnable{
 			e.printStackTrace();
 		}
 	}
+	
+	protected AppGameContainer getContainer() {
+		return container;
+	}
 
 }
