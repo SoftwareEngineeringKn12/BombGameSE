@@ -35,7 +35,7 @@ The game should...
 ### Idea
 
 The idea was to create a Bombermanesque game without destructable boxes. However the field should not be like the standard
-Bomberman field, but be like a maze and random generated. It should also provide an AI to provide opponents.
+Bomberman field, but be like a maze and random generated. It should also feature an AI to provide opponents.
 
 [STANDARD BM FELD]
 
@@ -150,16 +150,23 @@ The AI uses the following patterns:
 * a strategy for the extracost calculation e.g. if a position is threatened by a bomb
 * a strategy for the targetfinding process e.g. Fleemode or Attackmode
 
+[STRUCTURE AI]
+
 ### Redesigns
 
 After the **Dependency Injection** pattern was introduced, the project needed a complete redesign. Every access should only happen
 through **interfaces**. The direct implemntation should be invisible for the using classes. The implemented classes should
 lie in an extra package 'impl'.
+
+[STRUCTURE IMPL]
+
 The second redesign was needed, because the GameHandler managed the 2D array and the lists of objects. These lists should
 not be in the controller layer, but in the modellayer. This wrong storage caused the **package tangle index to increase**.
 So every access to the lists and the tests had to be redesigned.
 
 ### GUI
+
+
 
 ## Final Product
 
