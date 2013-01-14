@@ -152,6 +152,13 @@ The AI uses the following patterns:
 
 ### Redesigns
 
+After the **Dependency Injection** pattern was introduced, the project needed a complete redesign. Every access should only happen
+through **interfaces**. The direct implemntation should be invisible for the using classes. The implemented classes should
+lie in an extra package 'impl'.
+The second redesign was needed, because the GameHandler managed the 2D array and the lists of objects. These lists should
+not be in the controller layer, but in the modellayer. This wrong storage caused the **package tangle index to increase**.
+So every access to the lists and the tests had to be redesigned.
+
 ### GUI
 
 ## Final Product
