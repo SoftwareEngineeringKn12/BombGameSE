@@ -1,5 +1,7 @@
 # BombGameSE
 
+## Overview
+
 ## Purpose of the project
 
 This project was part of the subject "Software Engineering" at the HTWG Konstanz. The exercise should teach the students
@@ -83,7 +85,7 @@ Movement done by the GameHandler:
 ```java
 switch(man.getDirection()) {
   	
-		case Man.NO_DIR:
+    case Man.NO_DIR:
       //no movement
     case Man.UP:
       //move if possible
@@ -92,6 +94,8 @@ switch(man.getDirection()) {
     case Man.RIGHT:
       //move if possible
     case Man.LEFT:
+      //move if possible
+}
 ```
 
 The TUI draws the field on the console. The symbol's meanings are the following:
@@ -107,6 +111,39 @@ The TUI draws the field on the console. The symbol's meanings are the following:
 The developement also leaded to our first implementation of a **Design Pattern**: the Observer Pattern. The TUI should
 only redraw the field, if anything has changed. So the TUI got the role of the **observer** and the GameHandler served as
 **observable**. The GameHandler only notifies the TUI, if anything has changed to redraw the field.
+
+### AI
+
+After completing the developement of a fully functional TUI and fixing some bugs, we wanted to have oponents on the field.
+Nobody from the team ever wrote code for an AI, so the first intention was to let a Man simply move from one Position to
+another in the maze. This required a **pathfinding algorythm**, so the man would not be irritated by a Wall in his way.
+The one to be chosen was the **A* algorythm**, that is the mostly used algorythm for games.
+After many tests the pathfinding worked well. For optimisation the algorythm also takes bombs and explosions on the way
+into account. Bombs higher the cost of nearby positions and explosions are not useable, if the distance is lower than the
+remaining explosion timer.
+So the next step was to find a suitable target to walk to. In fact the AI differntiates between an **Attackmode** and
+**Fleemode**.
+In Attackmode the AI **focuses a random Man** on the field. The it gathers data from the focused enemy's last few directions
+and creates a **limited hitory** of its movement. The AI uses this information to predict the next step of its focused enemy
+and searches a target that lies in that direction, but not too far away. It only considers blank positions that include
+at least one turn.
+
+Example:
+```
+# # #	# - #
+- - #	- - -		=> are for example possible target situations
+# - #	# - #
+
+# - #
+# - #				=> is not a possible target position
+# - #
+```
+
+If the AI reaches its target position, it drops a bomb and changes to **Fleemode**.
+In Fleemode, the AI calculates the direction to its focused enemy and searches a target in a certain distance in the
+oppsite direction.
+
+Every movement is done with the A* algorythm.
 
 ### Redesigns
 
