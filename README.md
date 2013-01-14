@@ -166,7 +166,8 @@ So every access to the lists and the tests had to be redesigned.
 
 ### GUI
 
-
+The GUI was developed by using Slick2D, which itself uses LWJGL. It has a main Menu with the options 'start' and 'exit',
+a gamescreen and a gameover screen.
 
 ## Final Product
 
