@@ -32,6 +32,13 @@ The game should...
 
 ## Developement
 
+### Idea
+
+The idea was to create a Bombermanesque game without destructable boxes. However the field should not be like the standard
+Bomberman field, but be like a maze and random generated. It should also provide an AI to provide opponents.
+
+[STANDARD BM FELD]
+
 ### Beginnig
 
 The developement started in mid-october and in this early period the team did not know much about design patterns, usage
@@ -41,13 +48,6 @@ The team discussed the fundamental structure of the software, defined the main c
 and created a simple UML diagram.
 
 [UML]
-
-## Idea
-
-The idea was to create a Bombermanesque game without destructable boxes. However the field should not be like the standard
-Bomberman field, but be like a maze and random generated. It should also provide an AI to provide opponents.
-
-[STANDARD BM FELD]
 
 ### Early developement
 
@@ -144,6 +144,11 @@ In Fleemode, the AI calculates the direction to its focused enemy and searches a
 oppsite direction.
 
 Every movement is done with the A* algorythm.
+
+The AI uses the following patterns:
+* a strategy for the pathfinding algorythm -> AI only uses interface and gets correct path
+* a strategy for the extracost calculation e.g. if a position is threatened by a bomb
+* a strategy for the targetfinding process e.g. Fleemode or Attackmode
 
 ### Redesigns
 
