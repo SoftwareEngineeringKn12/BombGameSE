@@ -202,6 +202,8 @@ public final class MazeGen implements IMazeGen {
 		int neighborLookDirection;
 		Cell wayToTemp = null;
 		Cell tryDirection = null;
+		
+		Cell tmp = temp;
 
 		// Get random neighbor
 		neighborLookDirection = rand.nextInt(4);
@@ -211,27 +213,27 @@ public final class MazeGen implements IMazeGen {
 		switch (neighborLookDirection) {
 		case 0:
 			// S
-			tryDirection = new Cell(temp.x, temp.y + 2);
-			wayToTemp = new Cell(temp.x, temp.y + 1);
+			tryDirection = new Cell(tmp.x, tmp.y + 2);
+			wayToTemp = new Cell(tmp.x, tmp.y + 1);
 			checked[0] = true;
 			break;
 		case 1:
 			// O
-			tryDirection = new Cell(temp.x + 2, temp.y);
-			wayToTemp = new Cell(temp.x + 1, temp.y);
+			tryDirection = new Cell(tmp.x + 2, tmp.y);
+			wayToTemp = new Cell(tmp.x + 1, tmp.y);
 			checked[1] = true;
 			break;
 		case 2:
 			// N
-			tryDirection = new Cell(temp.x, temp.y - 2);
-			wayToTemp = new Cell(temp.x, temp.y - 1);
+			tryDirection = new Cell(tmp.x, tmp.y - 2);
+			wayToTemp = new Cell(tmp.x, tmp.y - 1);
 			checked[2] = true;
 			break;
 		//case 3:
 		default: 
 			// W
-			tryDirection = new Cell(temp.x - 2, temp.y);
-			wayToTemp = new Cell(temp.x - 1, temp.y);
+			tryDirection = new Cell(tmp.x - 2, tmp.y);
+			wayToTemp = new Cell(tmp.x - 1, tmp.y);
 			checked[3] = true;
 			break;
 		}
@@ -240,16 +242,16 @@ public final class MazeGen implements IMazeGen {
 			// If not checked indexing would throw exception
 			if (!maze[tryDirection.x][tryDirection.y].visited) {
 				maze[wayToTemp.x][wayToTemp.y].wall = false;
+				
+				tmp = maze[tryDirection.x][tryDirection.y];
+				tmp.wall = false;
+				tmp.visited = true;
 
-				temp = maze[tryDirection.x][tryDirection.y];
-				temp.wall = false;
-				temp.visited = true;
-
-				backtrack.push(temp);
+				backtrack.push(tmp);
 			}
 		}
 
-		return temp;
+		return tmp;
 	}
 
 	/**

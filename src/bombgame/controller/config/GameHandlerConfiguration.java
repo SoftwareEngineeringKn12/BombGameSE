@@ -180,13 +180,17 @@ public final class GameHandlerConfiguration {
 	private void placeMen(int mencount, int xfac, int yfac, int x, int y) {
 		int distx = field.getWidth() / (mencount + 1);
 		int disty = field.getHeight() / (mencount + 1);
+		
+		int xtmp = x;
+		int ytmp = y;
+		int mencounttmp = mencount;
 
 		
-		while(mencount > 0) {
-			x += distx * xfac;
-			y += disty * yfac;
-			ais.add(new ManAI(new Man(x, y), field));
-			mencount--;
+		while(mencounttmp > 0) {
+			xtmp += distx * xfac;
+			ytmp += disty * yfac;
+			ais.add(new ManAI(new Man(xtmp, ytmp), field));
+			mencounttmp--;
 		}
 	}
 }
