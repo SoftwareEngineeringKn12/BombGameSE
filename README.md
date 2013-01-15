@@ -37,7 +37,7 @@ The game should...
 The idea was to create a Bomberman game without destructable boxes. However the field should not be like the standard
 Bomberman field, but be like a maze and random generated. It should also feature an AI to provide opponents.
 
-[STANDARDBM]
+![STANDARDBM](https://raw.github.com/SoftwareEngineeringKn12/BombGameSE/master/docimg/standardbomberman.png)
 
 ### Beginnig
 
@@ -47,7 +47,7 @@ own game. This fact leaded to many redesigns in the following developemnet stage
 The team discussed the fundamental structure of the software, defined the main components and classes and their functions
 and created a simple UML diagram.
 
-[UML]
+![UML]()
 
 ### Early developement
 
@@ -105,8 +105,7 @@ The TUI draws the field on the console. The symbol's meanings are the following:
 * 'B' is a Bomb
 * 'x' is an Explosion
 
-[TUI]
-
+![TUI](https://raw.github.com/SoftwareEngineeringKn12/BombGameSE/master/docimg/TUI.png)
 
 The developement also leaded to our first implementation of a **Design Pattern**: the Observer Pattern. The TUI should
 only redraw the field, if anything has changed. So the TUI got the role of the **observer** and the GameHandler served as
@@ -150,7 +149,7 @@ The AI uses the following patterns:
 * a strategy for the extracost calculation e.g. if a position is threatened by a bomb
 * a strategy for the targetfinding process e.g. Fleemode or Attackmode
 
-[STRUCTURE AI]
+![STRUCTURE AI](https://raw.github.com/SoftwareEngineeringKn12/BombGameSE/master/docimg/aistruc.jpg)
 
 ### MazeGen
 
@@ -165,7 +164,7 @@ After the **Dependency Injection** pattern was introduced, the project needed a 
 through **interfaces**. The direct implemntation should be invisible for the using classes. The implemented classes should
 lie in an extra package 'impl'.
 
-[STRUCTURE IMPL]
+![STRUCTURE IMPL](https://raw.github.com/SoftwareEngineeringKn12/BombGameSE/master/docimg/implstruc.png)
 
 The second redesign was needed, because the GameHandler managed the 2D array and the lists of objects. These lists should
 not be in the controller layer, but in the modellayer. This wrong storage caused the **package tangle index to increase**.
