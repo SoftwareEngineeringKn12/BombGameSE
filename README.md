@@ -37,7 +37,7 @@ The game should...
 The idea was to create a Bombermanesque game without destructable boxes. However the field should not be like the standard
 Bomberman field, but be like a maze and random generated. It should also feature an AI to provide opponents.
 
-[STANDARD BM FELD]
+[STANDARDBM]
 
 ### Beginnig
 
@@ -105,7 +105,7 @@ The TUI draws the field on the console. The symbol's meanings are the following:
 * 'B' is a Bomb
 * 'x' is an Explosion
 
-[TUI BILD]
+[TUI]
 
 
 The developement also leaded to our first implementation of a **Design Pattern**: the Observer Pattern. The TUI should
