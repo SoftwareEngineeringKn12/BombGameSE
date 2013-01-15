@@ -34,7 +34,7 @@ The game should...
 
 ### Idea
 
-The idea was to create a Bombermanesque game without destructable boxes. However the field should not be like the standard
+The idea was to create a Bomberman game without destructable boxes. However the field should not be like the standard
 Bomberman field, but be like a maze and random generated. It should also feature an AI to provide opponents.
 
 [STANDARDBM]
@@ -116,8 +116,8 @@ only redraw the field, if anything has changed. So the TUI got the role of the *
 
 After completing the developement of a fully functional TUI and fixing some bugs, we wanted to have oponents on the field.
 Nobody from the team ever wrote code for an AI, so the first intention was to let a Man simply move from one Position to
-another in the maze. This required a **pathfinding algorythm**, so the man would not be irritated by a Wall in his way.
-The one to be chosen was the **A* algorythm**, that is the mostly used algorythm for games.
+another in the maze. This required a **pathfinding algorithm**, so the man would not be irritated by a Wall in his way.
+The one to be chosen was the **A* algorithm**, that is the mostly used algorythm for games.
 After many tests the pathfinding worked well. For optimisation the algorythm also takes bombs and explosions on the way
 into account. Bombs higher the cost of nearby positions and explosions are not useable, if the distance is lower than the
 remaining explosion timer.
@@ -151,6 +151,13 @@ The AI uses the following patterns:
 * a strategy for the targetfinding process e.g. Fleemode or Attackmode
 
 [STRUCTURE AI]
+
+### MazeGen
+
+For the game field, we did not want to create a field by hand. So we decided to implement a random maze generation algorithm
+to get every new game a new field. To create a nice and random game field we used a **randomized depth first search** algorithm.
+This algorithm moves every field in a random direction and holds a backtrack list to cover the whole game field. Because we
+wanted a non-perfect maze we removed a random number of blocks on every line, so there are multiple ways between two points.
 
 ### Redesigns
 
