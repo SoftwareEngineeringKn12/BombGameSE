@@ -102,11 +102,11 @@ public class GraphicalUIGameOver extends BasicGameState{
 			this.win = handler.getField().getMen().contains(handler.getPlayer().getMan());
 		}
 		
-		gameover.draw((cont.getWidth()-WIDTH) / 2 ,(cont.getHeight() - HEIGHT) / 2, WIDTH, HEIGHT);
+		gameover.draw((cont.getWidth()-WIDTH) / 2 ,(cont.getHeight() - HEIGHT) / 4, WIDTH, HEIGHT);
 		if(win) {
-			playerwin.draw((cont.getWidth()-WIDTH) / 2, (cont.getHeight() - HEIGHT) / 2 + HEIGHT, WIDTH, HEIGHT);
+			playerwin.draw((cont.getWidth()-WIDTH) / 2, (cont.getHeight() - HEIGHT) / 4 + HEIGHT, WIDTH, HEIGHT);
 		} else {
-			aiwin.draw((cont.getWidth()-WIDTH) / 2, (cont.getHeight() - HEIGHT) / 2 + HEIGHT, WIDTH, HEIGHT);
+			aiwin.draw((cont.getWidth()-WIDTH) / 2, (cont.getHeight() - HEIGHT) / 4 + HEIGHT, WIDTH, HEIGHT);
 		}
 	}
 	
