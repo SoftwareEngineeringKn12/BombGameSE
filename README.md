@@ -171,7 +171,13 @@ a gamescreen and a gameover screen.
 
 ## Final Product
 
+The final game features a GUI and TUI, a random generated Maze and an AI. The control of the player can happen through the GUI or
+TUI and both Interface can run parallel. 
+
 ## How to install
+
+Just pull the repository and import it to Eclipse to run the App or modify the code. If you do not use Windows you have
+to change the referenced natives for LWJGL. There are seperate versions for Linux and Mac in the native folder of the repo.
 
 ## Open Issues
 * the game does not catch highscores
