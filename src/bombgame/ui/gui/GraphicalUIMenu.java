@@ -26,8 +26,8 @@ public final class GraphicalUIMenu extends BasicGameState implements ComponentLi
 	private static final float MOUSEOVER_COL = 0.9f;
 	
 	private static final String CURSOR = "res/cursor.png";
-	private static final String MENU_START_IMAGE = "res/menu_start.gif";
-	private static final String MENU_EXIT_IMAGE = "res/menu_exit.gif";
+	private static final String MENU_START_IMAGE = "res/menu_start.png";
+	private static final String MENU_EXIT_IMAGE = "res/menu_exit.png";
 	
 	private MouseOverArea menustart;
 	private MouseOverArea menuexit;
@@ -42,7 +42,7 @@ public final class GraphicalUIMenu extends BasicGameState implements ComponentLi
 			throws SlickException {
 	
 		this.container = container;
-		container.getGraphics().setBackground(Color.lightGray);
+		container.getGraphics().setBackground(Color.black);
 		this.game = game;
 		
 		// Menus

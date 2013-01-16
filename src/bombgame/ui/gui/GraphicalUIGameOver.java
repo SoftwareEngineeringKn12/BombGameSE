@@ -24,17 +24,17 @@ public class GraphicalUIGameOver extends BasicGameState{
 	/**
 	 * Gameover path.
 	 */
-	private static final String GAMEOVER = "res/gameover.gif";
+	private static final String GAMEOVER = "res/gameover.png";
 	
 	/**
 	 * aiwin path.
 	 */
-	private static final String AIWIN = "res/winnerai.gif";
+	private static final String AIWIN = "res/winnerai.png";
 	
 	/**
 	 * playerwin path.
 	 */
-	private static final String PLAYERWIN = "res/winnerspieler.gif";
+	private static final String PLAYERWIN = "res/winnerspieler.png";
 	
 	/**
 	 * width of the emblems.
