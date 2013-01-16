@@ -128,8 +128,6 @@ public final class GraphicalUIGame extends BasicGameState {
 			emitter = ParticleIO.loadEmitter(xmlFile);
 			emitter.setPosition(200, 200);
 		} catch (Exception e) {
-			System.out.println("Exception: " + e.getMessage());
-			e.printStackTrace();
 			System.exit(0);
 		}
 		
@@ -171,11 +169,7 @@ public final class GraphicalUIGame extends BasicGameState {
 				} else if (field.getField()[j][i] instanceof IExplosion) {
 					
 					
-					try {
-						emitter = ParticleIO.loadEmitter(xmlFile);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
+					emitter = emitter.duplicate();
 					emitter.setPosition(x+10, y+10);
 					
 					//explosionimg.draw(x, y, widthpx, heightpx);
