@@ -43,6 +43,7 @@ public final class GraphicalUIGame extends BasicGameState {
 	
 	private static final int UPDATE_INTERVAL = 150;
 	private static final int UPDATE_INTERVAL_RESET = 10;
+	private static final int FPS = 60;
 	
 	private IGameHandler handler;
 	private IField field;
@@ -104,6 +105,8 @@ public final class GraphicalUIGame extends BasicGameState {
 		int width = field.getWidth();
 		int height = field.getHeight();
 		
+		container.setTargetFrameRate(FPS);
+		
 		// pixel size of each element
 		widthpx = container.getWidth() / width;
 		heightpx = container.getHeight() / height;
@@ -128,7 +131,6 @@ public final class GraphicalUIGame extends BasicGameState {
 		i1 = new Image(MANDOWN1);
 		i2 = new Image(MANDOWN2);
 		anim_man_down = new Animation(new Image[]{i1, i2}, 250);
-		//container.setMinimumLogicUpdateInterval(UPDATE_INTERVAL);
 		
 		Image pimage = new Image(MAN, false);
 		system = new ParticleSystem(pimage);
@@ -138,7 +140,6 @@ public final class GraphicalUIGame extends BasicGameState {
 			System.exit(0);
 		}
 		
-		//system.addEmitter(emitter);
 		system.setRemoveCompletedEmitters(true);
 		system.setBlendingMode(ParticleSystem.BLEND_ADDITIVE);
 		system.setUsePoints(false);
