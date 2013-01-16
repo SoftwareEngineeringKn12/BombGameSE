@@ -135,8 +135,6 @@ public final class GraphicalUIGame extends BasicGameState {
 		try {
 			emitter = ParticleIO.loadEmitter(xmlFile);
 		} catch (Exception e) {
-			System.out.println("Exception: " + e.getMessage());
-			e.printStackTrace();
 			System.exit(0);
 		}
 		
