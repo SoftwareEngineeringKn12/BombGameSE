@@ -96,9 +96,6 @@ public final class GraphicalUIMenu extends BasicGameState implements ComponentLi
 		
 		if (source.equals(menustart)) {
 			game.enterState(GraphicalUIGame.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
-			// Create new game
-			// deactivate menu
-			// ...
 		} else if (source.equals(menuexit)) {
 			container.exit();
 		}

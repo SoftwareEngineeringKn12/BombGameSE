@@ -22,6 +22,11 @@ public class GraphicalUIGameOver extends BasicGameState{
 	public static final int ID = 3;
 	
 	/**
+	 * For resetting.
+	 */
+	private static final int UPDATE_INTERVAL_RESET = 10;
+	
+	/**
 	 * Gameover path.
 	 */
 	private static final String GAMEOVER = "res/gameover.png";
@@ -85,6 +90,9 @@ public class GraphicalUIGameOver extends BasicGameState{
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
+		
+		arg0.setMinimumLogicUpdateInterval(UPDATE_INTERVAL_RESET);
+		
 		gameover = new Image(GAMEOVER);
 		aiwin = new Image(AIWIN);
 		playerwin = new Image(PLAYERWIN);
