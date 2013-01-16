@@ -54,12 +54,21 @@ public final class GraphicalUIGame extends BasicGameState {
 	private static final String BOMBS = "res/bomb.png";
 	private static final String EXPLOSION = "res/explosion.png";
 	private static final String MUSIC = "res/dstbreakout.ogg";
+	// Man walk
+	private static final String MANRIGHT1 = "res/man_walk1_right.png";
+	private static final String MANRIGHT2 = "res/man_walk2_right.png";
+	private static final String MANLEFT1 = "res/man_walk1_left.png";
+	private static final String MANLEFT2 = "res/man_walk2_left.png";
+	private static final String MANUP1 = "res/man_walk1_up.png";
+	private static final String MANUP2 = "res/man_walk2_up.png";
+	private static final String MANDOWN1 = "res/man_walk1_down.png";
+	private static final String MANDOWN2 = "res/man_walk2_down.png";
+	
 	private Music music;
 	private Image wallimg;
 	private Image pathimg;
 	private Image manimg;
 	private Image bombimg;
-	private Image explosionimg;
 	
 	private Animation anim_man_right;
 	private Animation anim_man_left;
@@ -104,21 +113,20 @@ public final class GraphicalUIGame extends BasicGameState {
 		pathimg = new Image(PATH);
 		manimg = new Image(MAN);
 		bombimg = new Image(BOMBS);
-		explosionimg = new Image(EXPLOSION);
 		music = new Music(MUSIC);
 		music.loop();
 		
-		Image i1 = new Image("res/man_walk1_right.png");
-		Image i2 = new Image("res/man_walk2_right.png");
+		Image i1 = new Image(MANRIGHT1);
+		Image i2 = new Image(MANRIGHT2);
 		anim_man_right = new Animation(new Image[]{i1, i2}, 250);
-		i1 = new Image("res/man_walk1_left.png");
-		i2 = new Image("res/man_walk2_left.png");
+		i1 = new Image(MANLEFT1);
+		i2 = new Image(MANLEFT2);
 		anim_man_left = new Animation(new Image[]{i1, i2}, 250);
-		i1 = new Image("res/man_walk1_up.png");
-		i2 = new Image("res/man_walk2_up.png");
+		i1 = new Image(MANUP1);
+		i2 = new Image(MANUP2);
 		anim_man_up = new Animation(new Image[]{i1, i2}, 250);
-		i1 = new Image("res/man_walk1_down.png");
-		i2 = new Image("res/man_walk2_down.png");
+		i1 = new Image(MANDOWN1);
+		i2 = new Image(MANDOWN2);
 		anim_man_down = new Animation(new Image[]{i1, i2}, 250);
 		//container.setMinimumLogicUpdateInterval(UPDATE_INTERVAL);
 		
@@ -126,16 +134,15 @@ public final class GraphicalUIGame extends BasicGameState {
 		system = new ParticleSystem(pimage);
 		try {
 			emitter = ParticleIO.loadEmitter(xmlFile);
-			emitter.setPosition(200, 200);
 		} catch (Exception e) {
 			System.out.println("Exception: " + e.getMessage());
 			e.printStackTrace();
 			System.exit(0);
 		}
 		
-		system.addEmitter(emitter);
-		system.setBlendingMode(ParticleSystem.BLEND_ADDITIVE);
+		//system.addEmitter(emitter);
 		system.setRemoveCompletedEmitters(true);
+		system.setBlendingMode(ParticleSystem.BLEND_ADDITIVE);
 		system.setUsePoints(false);
 	}
 	
@@ -169,20 +176,13 @@ public final class GraphicalUIGame extends BasicGameState {
 				} else if (field.getField()[j][i] instanceof IBomb) {
 					bombimg.draw(x, y, widthpx, heightpx);
 				} else if (field.getField()[j][i] instanceof IExplosion) {
+					ConfigurableEmitter emitter_tmp = null;
 					
+					emitter_tmp = emitter.duplicate();
+					emitter_tmp.setPosition(x+15, y+15);
 					
-					try {
-						emitter = ParticleIO.loadEmitter(xmlFile);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					emitter.setPosition(x+10, y+10);
-					
-					//explosionimg.draw(x, y, widthpx, heightpx);
 					pathimg.draw(x, y, widthpx, heightpx);
-			
-					system.addEmitter(emitter);
-					//system.reset();
+					system.addEmitter(emitter_tmp);
 				} else {
 					wallimg.draw(x, y, widthpx, heightpx);
 				}
@@ -223,9 +223,6 @@ public final class GraphicalUIGame extends BasicGameState {
 	public void keyPressed(int key, char c) {
 		if (key == Input.KEY_W) {
 			userinput = UP;
-			
-			system.addEmitter(emitter);
-			system.reset();
 		}
 		if (key == Input.KEY_A) {
 			userinput = LEFT;
