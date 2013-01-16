@@ -14,7 +14,7 @@ public class SlickThread implements Runnable{
 
 	private AppGameContainer container;
 	private static final String ICON = "res/icon.png";
-	private static final int WIDTH = 800;
+	private static final int WIDTH = 900;
 	private static final int HEIGHT = 600;
 	
 	/**

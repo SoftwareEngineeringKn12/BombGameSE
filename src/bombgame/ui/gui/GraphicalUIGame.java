@@ -1,8 +1,6 @@
 package bombgame.ui.gui;
 
 import java.io.File;
-import java.io.IOException;
-
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -53,7 +51,6 @@ public final class GraphicalUIGame extends BasicGameState {
 	private static final String PATH = "res/path.png";
 	private static final String MAN = "res/man.png";
 	private static final String BOMBS = "res/bomb.png";
-	private static final String EXPLOSION = "res/explosion.png";
 	private static final String MUSIC = "res/dstbreakout.ogg";
 	// Man walk
 	private static final String MANRIGHT1 = "res/man_walk1_right.png";
