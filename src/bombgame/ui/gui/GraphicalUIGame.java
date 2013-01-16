@@ -5,6 +5,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -44,6 +45,8 @@ public final class GraphicalUIGame extends BasicGameState {
 	private static final String MAN = "res/man.png";
 	private static final String BOMBS = "res/bomb.png";
 	private static final String EXPLOSION = "res/explosion.png";
+	private static final String MUSIC = "res/dstbreakout.ogg";
+	private Music music;
 	private Image wallimg;
 	private Image pathimg;
 	private Image manimg;
@@ -86,6 +89,8 @@ public final class GraphicalUIGame extends BasicGameState {
 		manimg = new Image(MAN);
 		bombimg = new Image(BOMBS);
 		explosionimg = new Image(EXPLOSION);
+		music = new Music(MUSIC);
+		music.loop();
 		
 		container.setMinimumLogicUpdateInterval(UPDATE_INTERVAL);
 	}
