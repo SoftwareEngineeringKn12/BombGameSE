@@ -26,11 +26,12 @@ public class ManAITest extends TestCase {
 	
 	public void testCalcNextStep() {
 		ai.calcNextStep();
-		assertNull(ai.getTarget());
-		assertNull(ai.getFocusedEnemy());
+		assertNotNull(ai.getTarget());
+		assertNotNull(ai.getFocusedEnemy());
 		
 		gh.addObject(new Man(9,9));		
 		ai.setTurns( 0);
+		ai.setTarget(null);
 		ai.calcNextStep();
 		assertNotNull(ai.getTarget());
 		assertNotNull(ai.getFocusedEnemy());
