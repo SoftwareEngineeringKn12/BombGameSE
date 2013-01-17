@@ -1,10 +1,12 @@
-Hello
+BombGameSE
 ===
-* A 
-* a
-* d
+
+![STANDARDBM](https://raw.github.com/SoftwareEngineeringKn12/BombGameSE/master/docimg/standardbomberman.png)
 
 !
 
-![STANDARDBM](sonar.png)
+Architecture
 ===
+
+* MVC-Structure
+* Component interfaces
