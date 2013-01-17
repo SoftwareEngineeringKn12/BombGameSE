@@ -52,6 +52,11 @@ public class GraphicalUIGameOver extends BasicGameState{
 	private static final int HEIGHT = 142;
 	
 	/**
+	 * Divisionfactor
+	 */
+	private static final int DIV = 4;
+	
+	/**
 	 * gameover image.
 	 */
 	private static Image gameover;
@@ -110,11 +115,11 @@ public class GraphicalUIGameOver extends BasicGameState{
 			this.win = handler.getField().getMen().contains(handler.getPlayer().getMan());
 		}
 		
-		gameover.draw((cont.getWidth()-WIDTH) / 2 ,(cont.getHeight() - HEIGHT) / 4, WIDTH, HEIGHT);
+		gameover.draw((cont.getWidth()-WIDTH) / 2 ,(cont.getHeight() - HEIGHT) / DIV, WIDTH, HEIGHT);
 		if(win) {
-			playerwin.draw((cont.getWidth()-WIDTH) / 2, (cont.getHeight() - HEIGHT) / 4 + HEIGHT, WIDTH, HEIGHT);
+			playerwin.draw((cont.getWidth()-WIDTH) / 2, (cont.getHeight() - HEIGHT) / DIV + HEIGHT, WIDTH, HEIGHT);
 		} else {
-			aiwin.draw((cont.getWidth()-WIDTH) / 2, (cont.getHeight() - HEIGHT) / 4 + HEIGHT, WIDTH, HEIGHT);
+			aiwin.draw((cont.getWidth()-WIDTH) / 2, (cont.getHeight() - HEIGHT) / DIV + HEIGHT, WIDTH, HEIGHT);
 		}
 	}
 	
