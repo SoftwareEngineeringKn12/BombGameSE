@@ -77,6 +77,9 @@ public final class MazeGen implements IMazeGen {
 	 * Output String for path.
 	 */
 	public static final String PATH = "o";
+	
+	private static final int THREE = 3;
+	private static final int FOUR = 4;
 
 	/**
 	 * Cell represent the objects in the maze. It can be a wall or path.
@@ -146,7 +149,7 @@ public final class MazeGen implements IMazeGen {
 		// 0 = N, 1 = O, 2 = S, 3 = W
 		boolean foundWay = false;
 		boolean allChecked = false;
-		boolean checked[] = new boolean[4];
+		boolean checked[] = new boolean[FOUR];
 		Cell startCell, temp;
 
 		// Random start cell
@@ -163,7 +166,7 @@ public final class MazeGen implements IMazeGen {
 			checked[0] = false;
 			checked[1] = false;
 			checked[2] = false;
-			checked[3] = false;
+			checked[THREE] = false;
 
 			// Loop for one Cell
 			while (!foundWay && !allChecked) {
@@ -176,7 +179,7 @@ public final class MazeGen implements IMazeGen {
 				temp = tmp;
 
 				if (!foundWay) {
-					if (checked[0] && checked[1] && checked[2] && checked[3]) {
+					if (checked[0] && checked[1] && checked[2] && checked[THREE]) {
 						allChecked = true;
 						temp = backtrack.pop();
 					}
@@ -206,7 +209,7 @@ public final class MazeGen implements IMazeGen {
 		Cell tmp = temp;
 
 		// Get random neighbor
-		neighborLookDirection = rand.nextInt(4);
+		neighborLookDirection = rand.nextInt(FOUR);
 
 		// Could have used normal integers to store the coordinates,
 		// but its cooler and easier in that way.
@@ -234,7 +237,7 @@ public final class MazeGen implements IMazeGen {
 			// W
 			tryDirection = new Cell(tmp.x - 2, tmp.y);
 			wayToTemp = new Cell(tmp.x - 1, tmp.y);
-			checked[3] = true;
+			checked[THREE] = true;
 			break;
 		}
 
