@@ -1,6 +1,5 @@
 package bombgame.ui.gui;
 
-import java.io.File;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -9,9 +8,6 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.particles.ConfigurableEmitter;
-import org.newdawn.slick.particles.ParticleIO;
-import org.newdawn.slick.particles.ParticleSystem;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
@@ -43,7 +39,6 @@ public final class GraphicalUIGame extends BasicGameState {
 	private static final int UPDATE_INTERVAL_RESET = 10;
 	private static final int FPS = 60;
 	private static final int ANIM_LENGTH = 250;
-	private static final int PARTICLEPOS = 15;
 	
 	private IGameHandler handler;
 	private IField field;
@@ -53,7 +48,7 @@ public final class GraphicalUIGame extends BasicGameState {
 	private static final String PATH = "res/path.png";
 	private static final String MAN = "res/man.png";
 	private static final String BOMBS = "res/bomb.png";
-	private static final String DUMMY = "res/0.png";
+	private static final String EXPLOSION = "res/explosion.png";
 	private static final String MUSIC = "res/dstbreakout.ogg";
 	// Man walk
 	private static final String MANRIGHT1 = "res/man_walk1_right.png";
@@ -70,14 +65,12 @@ public final class GraphicalUIGame extends BasicGameState {
 	private Image pathimg;
 	private Image manimg;
 	private Image bombimg;
+	private Image explosion;
 	
 	private Animation anim_man_right;
 	private Animation anim_man_left;
 	private Animation anim_man_up;
 	private Animation anim_man_down;
-	private ParticleSystem system;
-	private ConfigurableEmitter emitter;
-	private File xmlFile = new File("res/explode.xml");
 	
 	private int widthpx;
 	private int heightpx;
@@ -116,6 +109,7 @@ public final class GraphicalUIGame extends BasicGameState {
 		pathimg = new Image(PATH);
 		manimg = new Image(MAN);
 		bombimg = new Image(BOMBS);
+		explosion = new Image(EXPLOSION);
 		music = new Music(MUSIC);
 		music.loop();
 		
@@ -131,17 +125,6 @@ public final class GraphicalUIGame extends BasicGameState {
 		i1 = new Image(MANDOWN1);
 		i2 = new Image(MANDOWN2);
 		anim_man_down = new Animation(new Image[]{i1, i2}, ANIM_LENGTH);
-		
-		system = new ParticleSystem(new Image(DUMMY));
-		try {
-			emitter = ParticleIO.loadEmitter(xmlFile);
-		} catch (Exception e) {
-			System.exit(0);
-		}
-		
-		system.setRemoveCompletedEmitters(true);
-		system.setBlendingMode(ParticleSystem.BLEND_ADDITIVE);
-		system.setUsePoints(false);
 	}
 	
 	/**
@@ -174,20 +157,13 @@ public final class GraphicalUIGame extends BasicGameState {
 				} else if (field.getField()[j][i] instanceof IBomb) {
 					bombimg.draw(x, y, widthpx, heightpx);
 				} else if (field.getField()[j][i] instanceof IExplosion) {
-					ConfigurableEmitter emittertmp = null;
-					
-					emittertmp = emitter.duplicate();
-					emittertmp.setPosition(x+PARTICLEPOS, y+PARTICLEPOS, false);
-					
-					pathimg.draw(x, y, widthpx, heightpx);
-					system.addEmitter(emittertmp);
+					explosion.draw(x, y, widthpx, heightpx);
 				} else {
 					wallimg.draw(x, y, widthpx, heightpx);
 				}
 			}
 		}
 		
-		system.render();
 	}
 	
 	/**
@@ -197,7 +173,6 @@ public final class GraphicalUIGame extends BasicGameState {
 	throws SlickException {
 		
 		container.setMinimumLogicUpdateInterval(UPDATE_INTERVAL);
-		system.update(delta);
 	
 		if(handler.gameOver()) {
 			container.setMinimumLogicUpdateInterval(UPDATE_INTERVAL_RESET);
