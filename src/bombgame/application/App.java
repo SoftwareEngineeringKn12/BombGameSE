@@ -26,7 +26,7 @@ public final class App {
 	/**
 	 * Number of AIs.
 	 */
-	private static final int AIS = 3;
+	private static final int AIS = 4;
 	
 	/**
 	 * Thread that holds TUI.

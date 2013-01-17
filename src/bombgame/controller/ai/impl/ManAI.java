@@ -254,7 +254,7 @@ public final class ManAI implements IManAI{
 				return;
 			}
 		}
-		
+		focusedEnemy = man;
 	}
 	
 	/**

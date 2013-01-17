@@ -42,6 +42,8 @@ public final class GraphicalUIGame extends BasicGameState {
 	private static final int UPDATE_INTERVAL = 150;
 	private static final int UPDATE_INTERVAL_RESET = 10;
 	private static final int FPS = 60;
+	private static final int ANIM_LENGTH = 250;
+	private static final int PARTICLEPOS = 15;
 	
 	private IGameHandler handler;
 	private IField field;
@@ -51,6 +53,7 @@ public final class GraphicalUIGame extends BasicGameState {
 	private static final String PATH = "res/path.png";
 	private static final String MAN = "res/man.png";
 	private static final String BOMBS = "res/bomb.png";
+	private static final String DUMMY = "res/0.png";
 	private static final String MUSIC = "res/dstbreakout.ogg";
 	// Man walk
 	private static final String MANRIGHT1 = "res/man_walk1_right.png";
@@ -118,19 +121,18 @@ public final class GraphicalUIGame extends BasicGameState {
 		
 		Image i1 = new Image(MANRIGHT1);
 		Image i2 = new Image(MANRIGHT2);
-		anim_man_right = new Animation(new Image[]{i1, i2}, 250);
+		anim_man_right = new Animation(new Image[]{i1, i2}, ANIM_LENGTH);
 		i1 = new Image(MANLEFT1);
 		i2 = new Image(MANLEFT2);
-		anim_man_left = new Animation(new Image[]{i1, i2}, 250);
+		anim_man_left = new Animation(new Image[]{i1, i2}, ANIM_LENGTH);
 		i1 = new Image(MANUP1);
 		i2 = new Image(MANUP2);
-		anim_man_up = new Animation(new Image[]{i1, i2}, 250);
+		anim_man_up = new Animation(new Image[]{i1, i2}, ANIM_LENGTH);
 		i1 = new Image(MANDOWN1);
 		i2 = new Image(MANDOWN2);
-		anim_man_down = new Animation(new Image[]{i1, i2}, 250);
+		anim_man_down = new Animation(new Image[]{i1, i2}, ANIM_LENGTH);
 		
-		Image pimage = new Image(MAN, false);
-		system = new ParticleSystem(pimage);
+		system = new ParticleSystem(new Image(DUMMY));
 		try {
 			emitter = ParticleIO.loadEmitter(xmlFile);
 		} catch (Exception e) {
@@ -172,13 +174,13 @@ public final class GraphicalUIGame extends BasicGameState {
 				} else if (field.getField()[j][i] instanceof IBomb) {
 					bombimg.draw(x, y, widthpx, heightpx);
 				} else if (field.getField()[j][i] instanceof IExplosion) {
-					ConfigurableEmitter emitter_tmp = null;
+					ConfigurableEmitter emittertmp = null;
 					
-					emitter_tmp = emitter.duplicate();
-					emitter_tmp.setPosition(x+15, y+15);
+					emittertmp = emitter.duplicate();
+					emittertmp.setPosition(x+PARTICLEPOS, y+PARTICLEPOS, false);
 					
 					pathimg.draw(x, y, widthpx, heightpx);
-					system.addEmitter(emitter_tmp);
+					system.addEmitter(emittertmp);
 				} else {
 					wallimg.draw(x, y, widthpx, heightpx);
 				}

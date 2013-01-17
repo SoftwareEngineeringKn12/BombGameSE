@@ -43,7 +43,7 @@ public final class GameHandlerConfiguration {
 	/**
 	 * Maximal number of AIs
 	 */
-	public static final int MAXAI = 6;
+	public static final int MAXAI = 20;
 	
 	/**
 	 * Maximal width of the game field.
@@ -119,7 +119,7 @@ public final class GameHandlerConfiguration {
 		if (fieldheight <= 0 || fieldheight > MAX_HEIGHT) {
 			ret = false;
 		}
-		
+
 		if (numberOfAIs <= 0 || numberOfAIs > MAXAI) {
 			ret = false;
 		}
