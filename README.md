@@ -47,8 +47,6 @@ own game. This fact leaded to many redesigns in the following developemnet stage
 The team discussed the fundamental structure of the software, defined the main components and classes and their functions
 and created a simple UML diagram.
 
-![UML]()
-
 ### Early developement
 
 In this period the team mostly worked on the controller layer. This layer's most important class was the **GameHandler**
