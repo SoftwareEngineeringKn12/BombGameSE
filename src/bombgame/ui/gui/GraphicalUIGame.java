@@ -47,6 +47,7 @@ public final class GraphicalUIGame extends BasicGameState {
 	private static final String WALL = "res/wall.png";
 	private static final String PATH = "res/path.png";
 	private static final String MAN = "res/man.png";
+	private static final String PLAYER_MAN = "res/player_man.png";
 	private static final String BOMBS = "res/bomb.png";
 	private static final String EXPLOSION = "res/explosion.png";
 	private static final String MUSIC = "res/dstbreakout.ogg";
@@ -59,11 +60,21 @@ public final class GraphicalUIGame extends BasicGameState {
 	private static final String MANUP2 = "res/man_walk2_up.png";
 	private static final String MANDOWN1 = "res/man_walk1_down.png";
 	private static final String MANDOWN2 = "res/man_walk2_down.png";
+	// Player man walk
+	private static final String PLAYER_MANRIGHT1 = "res/player_man_walk1_right.png";
+	private static final String PLAYER_MANRIGHT2 = "res/player_man_walk2_right.png";
+	private static final String PLAYER_MANLEFT1 = "res/player_man_walk1_left.png";
+	private static final String PLAYER_MANLEFT2 = "res/player_man_walk2_left.png";
+	private static final String PLAYER_MANUP1 = "res/player_man_walk1_up.png";
+	private static final String PLAYER_MANUP2 = "res/player_man_walk2_up.png";
+	private static final String PLAYER_MANDOWN1 = "res/player_man_walk1_down.png";
+	private static final String PLAYER_MANDOWN2 = "res/player_man_walk2_down.png";
 	
 	private Music music;
 	private Image wallimg;
 	private Image pathimg;
 	private Image manimg;
+	private Image playermanimg;
 	private Image bombimg;
 	private Image explosion;
 	
@@ -71,6 +82,11 @@ public final class GraphicalUIGame extends BasicGameState {
 	private Animation anim_man_left;
 	private Animation anim_man_up;
 	private Animation anim_man_down;
+	// Player
+	private Animation player_anim_man_right;
+	private Animation player_anim_man_left;
+	private Animation player_anim_man_up;
+	private Animation player_anim_man_down;
 	
 	private int widthpx;
 	private int heightpx;
@@ -108,6 +124,7 @@ public final class GraphicalUIGame extends BasicGameState {
 		wallimg = new Image(WALL);
 		pathimg = new Image(PATH);
 		manimg = new Image(MAN);
+		playermanimg = new Image(PLAYER_MAN);
 		bombimg = new Image(BOMBS);
 		explosion = new Image(EXPLOSION);
 		music = new Music(MUSIC);
@@ -125,6 +142,20 @@ public final class GraphicalUIGame extends BasicGameState {
 		i1 = new Image(MANDOWN1);
 		i2 = new Image(MANDOWN2);
 		anim_man_down = new Animation(new Image[]{i1, i2}, ANIM_LENGTH);
+		
+		// Player
+		i1 = new Image(PLAYER_MANRIGHT1);
+		i2 = new Image(PLAYER_MANRIGHT2);
+		player_anim_man_right = new Animation(new Image[]{i1, i2}, ANIM_LENGTH);
+		i1 = new Image(PLAYER_MANLEFT1);
+		i2 = new Image(PLAYER_MANLEFT2);
+		player_anim_man_left = new Animation(new Image[]{i1, i2}, ANIM_LENGTH);
+		i1 = new Image(PLAYER_MANUP1);
+		i2 = new Image(PLAYER_MANUP2);
+		player_anim_man_up = new Animation(new Image[]{i1, i2}, ANIM_LENGTH);
+		i1 = new Image(PLAYER_MANDOWN1);
+		i2 = new Image(PLAYER_MANDOWN2);
+		player_anim_man_down = new Animation(new Image[]{i1, i2}, ANIM_LENGTH);
 	}
 	
 	/**
@@ -143,17 +174,33 @@ public final class GraphicalUIGame extends BasicGameState {
 					pathimg.draw(x, y, widthpx, heightpx);
 				} else if (field.getField()[j][i] instanceof IMan) {
 					IMan man = (IMan) field.getField()[j][i];
-					if (man.getDirection() == Man.RIGHT) {
-						anim_man_right.draw(x, y, widthpx, heightpx);
-					} else if (man.getDirection() == Man.LEFT) {
-						anim_man_left.draw(x, y, widthpx, heightpx);
-					} else if (man.getDirection() == Man.UP) {
-						anim_man_up.draw(x, y, widthpx, heightpx);
-					} else if (man.getDirection() == Man.DOWN) {
-						anim_man_down.draw(x, y, widthpx, heightpx);
+					
+					if (handler.getPlayer().getMan().equals(man)) {
+						if (man.getDirection() == Man.RIGHT) {
+							player_anim_man_right.draw(x, y, widthpx, heightpx);
+						} else if (man.getDirection() == Man.LEFT) {
+							player_anim_man_left.draw(x, y, widthpx, heightpx);
+						} else if (man.getDirection() == Man.UP) {
+							player_anim_man_up.draw(x, y, widthpx, heightpx);
+						} else if (man.getDirection() == Man.DOWN) {
+							player_anim_man_down.draw(x, y, widthpx, heightpx);
+						} else {
+							playermanimg.draw(x, y, widthpx, heightpx);
+						}
 					} else {
-						manimg.draw(x, y, widthpx, heightpx);
+						if (man.getDirection() == Man.RIGHT) {
+							anim_man_right.draw(x, y, widthpx, heightpx);
+						} else if (man.getDirection() == Man.LEFT) {
+							anim_man_left.draw(x, y, widthpx, heightpx);
+						} else if (man.getDirection() == Man.UP) {
+							anim_man_up.draw(x, y, widthpx, heightpx);
+						} else if (man.getDirection() == Man.DOWN) {
+							anim_man_down.draw(x, y, widthpx, heightpx);
+						} else {
+							manimg.draw(x, y, widthpx, heightpx);
+						}
 					}
+					
 				} else if (field.getField()[j][i] instanceof IBomb) {
 					bombimg.draw(x, y, widthpx, heightpx);
 				} else if (field.getField()[j][i] instanceof IExplosion) {
