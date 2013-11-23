@@ -8,7 +8,7 @@
 	<repository>
 		<id>slick</id>
 		<name>slick</name>
-		<url>https://github.com/nguillaumin/slick2d-maven</url>
+		<url>http://nifty-gui.sourceforge.net/nifty-maven-repo/</url>
 	</repository>
   </repositories>
   <build>
