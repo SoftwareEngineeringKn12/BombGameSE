@@ -8,7 +8,7 @@
 	<repository>
 		<id>slick</id>
 		<name>slick</name>
-		<url>http://slick.cokeandcode.com/mavenrepo</url>
+		<url>https://github.com/nguillaumin/slick2d-maven</url>
 	</repository>
   </repositories>
   <build>
