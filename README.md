@@ -37,7 +37,7 @@ The game should...
 The idea was to create a Bomberman game without destructable boxes. However the field should not be like the standard
 Bomberman field, but be like a maze and random generated. It should also feature an AI to provide opponents.
 
-![STANDARDBM](https://raw.github.com/SoftwareEngineeringKn12/BombGameSE/master/docimg/standardbomberman.png)
+![STANDARDBM](https://raw.github.com/SoftwareEngineeringKn12/BombGameSE/master/docimg/bombgame.png)
 
 ### Beginnig
 
